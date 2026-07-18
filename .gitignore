@@ -17,3 +17,5 @@
    # Environment/secrets (important once you add LLM API keys!)
    .env
    *.env
+
+   legacy-app/bin/
