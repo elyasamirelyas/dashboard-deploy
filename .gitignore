@@ -1,21 +1,19 @@
 # Build output
-   target/
-   *.class
+target/
+*.class
 
-   # IDE files
-   .vscode/
-   .idea/
-   *.iml
+# IDE files
+.vscode/
+.idea/
+*.iml
 
-   # OS files
-   .DS_Store
-   Thumbs.db
+# OS files
+.DS_Store
+Thumbs.db
 
-   # Logs
-   *.log
+# Logs
+*.log
 
-   # Environment/secrets (important once you add LLM API keys!)
-   .env
-   *.env
-
-   legacy-app/bin/
+# Environment/secrets
+.env
+*.env
