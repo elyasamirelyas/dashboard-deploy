@@ -865,6 +865,7 @@ components:
           example: cat
       required:
         - id
+        - name
     User:
       title: User
       description: An user.
