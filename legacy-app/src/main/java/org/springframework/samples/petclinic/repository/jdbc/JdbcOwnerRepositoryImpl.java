@@ -15,7 +15,7 @@
  */
 package org.springframework.samples.petclinic.repository.jdbc;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.sql.init.dependency.DependsOnDatabaseInitialization;
 import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -33,7 +33,7 @@ import org.springframework.samples.petclinic.util.EntityUtils;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +51,7 @@ import java.util.Map;
  * @author Antoine Rey
  * @author Vitaliy Fedoriv
  */
+@DependsOnDatabaseInitialization
 @Repository
 @Profile("jdbc")
 public class JdbcOwnerRepositoryImpl implements OwnerRepository {
@@ -59,7 +60,6 @@ public class JdbcOwnerRepositoryImpl implements OwnerRepository {
 
     private SimpleJdbcInsert insertOwner;
 
-    @Autowired
     public JdbcOwnerRepositoryImpl(DataSource dataSource) {
 
         this.insertOwner = new SimpleJdbcInsert(dataSource)

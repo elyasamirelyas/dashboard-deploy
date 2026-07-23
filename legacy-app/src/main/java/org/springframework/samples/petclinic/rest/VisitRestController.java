@@ -28,8 +28,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.transaction.Transactional;
-import javax.validation.Valid;
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -53,7 +53,7 @@ public class VisitRestController {
 
 
     @PreAuthorize("hasRole(@roles.OWNER_ADMIN)")
-    @RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
+    @GetMapping(value = "", produces = "application/json")
     public ResponseEntity<Collection<VisitDto>> getAllVisitDtos() {
         Collection<Visit> visits = new ArrayList<>();
 
@@ -65,7 +65,7 @@ public class VisitRestController {
     }
 
     @PreAuthorize("hasRole(@roles.OWNER_ADMIN)")
-    @RequestMapping(value = "/{visitId}", method = RequestMethod.GET, produces = "application/json")
+    @GetMapping(value = "/{visitId}", produces = "application/json")
     public ResponseEntity<VisitDto> getVisitDto(@PathVariable("visitId") int visitId) {
         Visit visit = this.clinicService.findVisitById(visitId);
         if (visit == null) {
@@ -75,7 +75,7 @@ public class VisitRestController {
     }
 
     @PreAuthorize("hasRole(@roles.OWNER_ADMIN)")
-    @RequestMapping(value = "", method = RequestMethod.POST, produces = "application/json")
+    @PostMapping(value = "", produces = "application/json")
     public ResponseEntity<VisitDto> addVisit(@RequestBody @Valid VisitDto visitDto, BindingResult bindingResult, UriComponentsBuilder ucBuilder) {
         BindingErrorsResponse errors = new BindingErrorsResponse();
         HttpHeaders headers = new HttpHeaders();
@@ -92,7 +92,7 @@ public class VisitRestController {
     }
 
     @PreAuthorize("hasRole(@roles.OWNER_ADMIN)")
-    @RequestMapping(value = "/{visitId}", method = RequestMethod.PUT, produces = "application/json")
+    @PutMapping(value = "/{visitId}", produces = "application/json")
     public ResponseEntity<VisitDto> updateVisit(@PathVariable("visitId") int visitId, @RequestBody @Valid VisitDto visitDto, BindingResult bindingResult) {
         BindingErrorsResponse errors = new BindingErrorsResponse();
         HttpHeaders headers = new HttpHeaders();
@@ -112,7 +112,7 @@ public class VisitRestController {
     }
 
     @PreAuthorize("hasRole(@roles.OWNER_ADMIN)")
-    @RequestMapping(value = "/{visitId}", method = RequestMethod.DELETE, produces = "application/json")
+    @DeleteMapping(value = "/{visitId}", produces = "application/json")
     @Transactional
     public ResponseEntity<Void> deleteVisit(@PathVariable("visitId") int visitId) {
         Visit visit = this.clinicService.findVisitById(visitId);

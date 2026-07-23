@@ -28,8 +28,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.transaction.Transactional;
-import javax.validation.Valid;
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import java.util.Collection;
 
 /**
@@ -50,7 +50,7 @@ public class OwnerRestController {
     }
 
     @PreAuthorize("hasRole(@roles.OWNER_ADMIN)")
-    @RequestMapping(value = "/*/lastname/{lastName}", method = RequestMethod.GET, produces = "application/json")
+    @GetMapping(value = "/*/lastname/{lastName}", produces = "application/json")
     public ResponseEntity<Collection<OwnerDto>> getOwnersList(@PathVariable("lastName") String ownerLastName) {
         if (ownerLastName == null) {
             ownerLastName = "";
@@ -63,7 +63,7 @@ public class OwnerRestController {
     }
 
     @PreAuthorize("hasRole(@roles.OWNER_ADMIN)")
-    @RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
+    @GetMapping(value = "", produces = "application/json")
     public ResponseEntity<Collection<OwnerDto>> getOwners() {
         Collection<Owner> owners = this.clinicService.findAllOwners();
         if (owners.isEmpty()) {
@@ -73,7 +73,7 @@ public class OwnerRestController {
     }
 
     @PreAuthorize("hasRole(@roles.OWNER_ADMIN)")
-    @RequestMapping(value = "/{ownerId}", method = RequestMethod.GET, produces = "application/json")
+    @GetMapping(value = "/{ownerId}", produces = "application/json")
     public ResponseEntity<OwnerDto> getOwner(@PathVariable("ownerId") int ownerId) {
         Owner owner = null;
         owner = this.clinicService.findOwnerById(ownerId);
@@ -84,7 +84,7 @@ public class OwnerRestController {
     }
 
     @PreAuthorize("hasRole(@roles.OWNER_ADMIN)")
-    @RequestMapping(value = "", method = RequestMethod.POST, produces = "application/json")
+    @PostMapping(value = "", produces = "application/json")
     public ResponseEntity<OwnerDto> addOwner(@RequestBody @Valid OwnerDto ownerDto, BindingResult bindingResult,
                                              UriComponentsBuilder ucBuilder) {
         HttpHeaders headers = new HttpHeaders();
@@ -102,7 +102,7 @@ public class OwnerRestController {
     }
 
     @PreAuthorize("hasRole(@roles.OWNER_ADMIN)")
-    @RequestMapping(value = "/{ownerId}", method = RequestMethod.PUT, produces = "application/json")
+    @PutMapping(value = "/{ownerId}", produces = "application/json")
     public ResponseEntity<OwnerDto> updateOwner(@PathVariable("ownerId") int ownerId, @RequestBody @Valid OwnerDto ownerDto,
                                                 BindingResult bindingResult, UriComponentsBuilder ucBuilder) {
         boolean bodyIdMatchesPathId = ownerDto.getId() == null || ownerId == ownerDto.getId();
@@ -127,7 +127,7 @@ public class OwnerRestController {
     }
 
     @PreAuthorize("hasRole(@roles.OWNER_ADMIN)")
-    @RequestMapping(value = "/{ownerId}", method = RequestMethod.DELETE, produces = "application/json")
+    @DeleteMapping(value = "/{ownerId}", produces = "application/json")
     @Transactional
     public ResponseEntity<Void> deleteOwner(@PathVariable("ownerId") int ownerId) {
         Owner owner = this.clinicService.findOwnerById(ownerId);

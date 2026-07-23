@@ -17,7 +17,6 @@ package org.springframework.samples.petclinic.service;
 
 import java.util.Collection;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -55,8 +54,7 @@ public class ClinicServiceImpl implements ClinicService {
     private SpecialtyRepository specialtyRepository;
 	private PetTypeRepository petTypeRepository;
 
-    @Autowired
-     public ClinicServiceImpl(
+    public ClinicServiceImpl(
        		 PetRepository petRepository,
     		 VetRepository vetRepository,
     		 OwnerRepository ownerRepository,

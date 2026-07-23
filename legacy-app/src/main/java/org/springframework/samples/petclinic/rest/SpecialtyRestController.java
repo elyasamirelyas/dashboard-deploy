@@ -28,8 +28,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.transaction.Transactional;
-import javax.validation.Valid;
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -52,7 +52,7 @@ public class SpecialtyRestController {
     }
 
     @PreAuthorize("hasRole(@roles.VET_ADMIN)")
-    @RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
+    @GetMapping(value = "", produces = "application/json")
     public ResponseEntity<Collection<SpecialtyDto>> getAllSpecialtys() {
         Collection<SpecialtyDto> specialties = new ArrayList<SpecialtyDto>();
         specialties.addAll(specialtyMapper.toSpecialtyDtos(this.clinicService.findAllSpecialties()));
@@ -63,7 +63,7 @@ public class SpecialtyRestController {
     }
 
     @PreAuthorize("hasRole(@roles.VET_ADMIN)")
-    @RequestMapping(value = "/{specialtyId}", method = RequestMethod.GET, produces = "application/json")
+    @GetMapping(value = "/{specialtyId}", produces = "application/json")
     public ResponseEntity<SpecialtyDto> getSpecialty(@PathVariable("specialtyId") int specialtyId) {
         Specialty specialty = this.clinicService.findSpecialtyById(specialtyId);
         if (specialty == null) {
@@ -73,7 +73,7 @@ public class SpecialtyRestController {
     }
 
     @PreAuthorize("hasRole(@roles.VET_ADMIN)")
-    @RequestMapping(value = "", method = RequestMethod.POST, produces = "application/json")
+    @PostMapping(value = "", produces = "application/json")
     public ResponseEntity<SpecialtyDto> addSpecialty(@RequestBody @Valid SpecialtyDto specialtyDto, BindingResult bindingResult, UriComponentsBuilder ucBuilder) {
         BindingErrorsResponse errors = new BindingErrorsResponse();
         HttpHeaders headers = new HttpHeaders();
@@ -89,7 +89,7 @@ public class SpecialtyRestController {
     }
 
     @PreAuthorize("hasRole(@roles.VET_ADMIN)")
-    @RequestMapping(value = "/{specialtyId}", method = RequestMethod.PUT, produces = "application/json")
+    @PutMapping(value = "/{specialtyId}", produces = "application/json")
     public ResponseEntity<SpecialtyDto> updateSpecialty(@PathVariable("specialtyId") int specialtyId, @RequestBody @Valid SpecialtyDto specialtyDto, BindingResult bindingResult) {
         BindingErrorsResponse errors = new BindingErrorsResponse();
         HttpHeaders headers = new HttpHeaders();
@@ -108,7 +108,7 @@ public class SpecialtyRestController {
     }
 
     @PreAuthorize("hasRole(@roles.VET_ADMIN)")
-    @RequestMapping(value = "/{specialtyId}", method = RequestMethod.DELETE, produces = "application/json")
+    @DeleteMapping(value = "/{specialtyId}", produces = "application/json")
     @Transactional
     public ResponseEntity<Void> deleteSpecialty(@PathVariable("specialtyId") int specialtyId) {
         Specialty specialty = this.clinicService.findSpecialtyById(specialtyId);

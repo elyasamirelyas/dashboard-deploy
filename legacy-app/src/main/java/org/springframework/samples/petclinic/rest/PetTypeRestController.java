@@ -28,8 +28,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.transaction.Transactional;
-import javax.validation.Valid;
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -48,7 +48,7 @@ public class PetTypeRestController {
     }
 
     @PreAuthorize("hasAnyRole(@roles.OWNER_ADMIN, @roles.VET_ADMIN)")
-    @RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
+    @GetMapping(value = "", produces = "application/json")
     public ResponseEntity<Collection<PetTypeDto>> getAllPetTypes() {
         Collection<PetType> petTypes = new ArrayList<PetType>();
         petTypes.addAll(this.clinicService.findAllPetTypes());
@@ -59,7 +59,7 @@ public class PetTypeRestController {
     }
 
     @PreAuthorize("hasAnyRole(@roles.OWNER_ADMIN, @roles.VET_ADMIN)")
-    @RequestMapping(value = "/{petTypeId}", method = RequestMethod.GET, produces = "application/json")
+    @GetMapping(value = "/{petTypeId}", produces = "application/json")
     public ResponseEntity<PetTypeDto> getPetType(@PathVariable("petTypeId") int petTypeId) {
         PetType petType = this.clinicService.findPetTypeById(petTypeId);
         if (petType == null) {
@@ -69,7 +69,7 @@ public class PetTypeRestController {
     }
 
     @PreAuthorize("hasRole(@roles.VET_ADMIN)")
-    @RequestMapping(value = "", method = RequestMethod.POST, produces = "application/json")
+    @PostMapping(value = "", produces = "application/json")
     public ResponseEntity<PetTypeDto> addPetType(@RequestBody @Valid PetTypeDto petType, BindingResult bindingResult, UriComponentsBuilder ucBuilder) {
         BindingErrorsResponse errors = new BindingErrorsResponse();
         HttpHeaders headers = new HttpHeaders();
@@ -85,7 +85,7 @@ public class PetTypeRestController {
     }
 
     @PreAuthorize("hasRole(@roles.VET_ADMIN)")
-    @RequestMapping(value = "/{petTypeId}", method = RequestMethod.PUT, produces = "application/json")
+    @PutMapping(value = "/{petTypeId}", produces = "application/json")
     public ResponseEntity<PetTypeDto> updatePetType(@PathVariable("petTypeId") int petTypeId, @RequestBody @Valid PetTypeDto petType, BindingResult bindingResult) {
         BindingErrorsResponse errors = new BindingErrorsResponse();
         HttpHeaders headers = new HttpHeaders();
@@ -104,7 +104,7 @@ public class PetTypeRestController {
     }
 
     @PreAuthorize("hasRole(@roles.VET_ADMIN)")
-    @RequestMapping(value = "/{petTypeId}", method = RequestMethod.DELETE, produces = "application/json")
+    @DeleteMapping(value = "/{petTypeId}", produces = "application/json")
     @Transactional
     public ResponseEntity<Void> deletePetType(@PathVariable("petTypeId") int petTypeId) {
         PetType petType = this.clinicService.findPetTypeById(petTypeId);

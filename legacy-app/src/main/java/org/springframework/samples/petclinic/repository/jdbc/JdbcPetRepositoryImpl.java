@@ -23,7 +23,7 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.sql.init.dependency.DependsOnDatabaseInitialization;
 import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -51,6 +51,7 @@ import org.springframework.stereotype.Repository;
  * @author Mark Fisher
  * @author Vitaliy Fedoriv
  */
+@DependsOnDatabaseInitialization
 @Repository
 @Profile("jdbc")
 public class JdbcPetRepositoryImpl implements PetRepository {
@@ -64,7 +65,6 @@ public class JdbcPetRepositoryImpl implements PetRepository {
     private VisitRepository visitRepository;
 
 
-    @Autowired
     public JdbcPetRepositoryImpl(DataSource dataSource,
     		OwnerRepository ownerRepository,
     		VisitRepository visitRepository) {

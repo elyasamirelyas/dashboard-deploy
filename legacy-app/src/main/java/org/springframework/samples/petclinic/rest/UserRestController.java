@@ -27,7 +27,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 @RestController
 @CrossOrigin(exposedHeaders = "errors, content-type")
@@ -44,7 +44,7 @@ public class UserRestController {
 
 
     @PreAuthorize( "hasRole(@roles.ADMIN)" )
-    @RequestMapping(value = "", method = RequestMethod.POST, produces = "application/json")
+    @PostMapping(value = "", produces = "application/json")
     public ResponseEntity<UserDto> addOwner(@RequestBody @Valid UserDto userDto, BindingResult bindingResult) throws Exception {
         BindingErrorsResponse errors = new BindingErrorsResponse();
         HttpHeaders headers = new HttpHeaders();

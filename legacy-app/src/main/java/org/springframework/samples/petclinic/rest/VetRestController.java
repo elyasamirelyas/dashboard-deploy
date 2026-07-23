@@ -29,8 +29,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.transaction.Transactional;
-import javax.validation.Valid;
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -54,7 +54,7 @@ public class VetRestController {
     }
 
     @PreAuthorize("hasRole(@roles.VET_ADMIN)")
-    @RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
+    @GetMapping(value = "", produces = "application/json")
     public ResponseEntity<Collection<VetDto>> getAllVets() {
         Collection<VetDto> vets = new ArrayList<VetDto>();
         vets.addAll(vetMapper.toVetDtos(this.clinicService.findAllVets()));
@@ -65,7 +65,7 @@ public class VetRestController {
     }
 
     @PreAuthorize("hasRole(@roles.VET_ADMIN)")
-    @RequestMapping(value = "/{vetId}", method = RequestMethod.GET, produces = "application/json")
+    @GetMapping(value = "/{vetId}", produces = "application/json")
     public ResponseEntity<VetDto> getVet(@PathVariable("vetId") int vetId) {
         Vet vet = this.clinicService.findVetById(vetId);
         if (vet == null) {
@@ -75,7 +75,7 @@ public class VetRestController {
     }
 
     @PreAuthorize("hasRole(@roles.VET_ADMIN)")
-    @RequestMapping(value = "", method = RequestMethod.POST, produces = "application/json")
+    @PostMapping(value = "", produces = "application/json")
     public ResponseEntity<VetDto> addVet(@RequestBody @Valid VetDto vetDto, BindingResult bindingResult, UriComponentsBuilder ucBuilder) {
         BindingErrorsResponse errors = new BindingErrorsResponse();
         HttpHeaders headers = new HttpHeaders();
@@ -91,7 +91,7 @@ public class VetRestController {
     }
 
     @PreAuthorize("hasRole(@roles.VET_ADMIN)")
-    @RequestMapping(value = "/{vetId}", method = RequestMethod.PUT, produces = "application/json")
+    @PutMapping(value = "/{vetId}", produces = "application/json")
     public ResponseEntity<VetDto> updateVet(@PathVariable("vetId") int vetId, @RequestBody @Valid VetDto vetDto, BindingResult bindingResult) {
         BindingErrorsResponse errors = new BindingErrorsResponse();
         HttpHeaders headers = new HttpHeaders();
@@ -115,7 +115,7 @@ public class VetRestController {
     }
 
     @PreAuthorize("hasRole(@roles.VET_ADMIN)")
-    @RequestMapping(value = "/{vetId}", method = RequestMethod.DELETE, produces = "application/json")
+    @DeleteMapping(value = "/{vetId}", produces = "application/json")
     @Transactional
     public ResponseEntity<Void> deleteVet(@PathVariable("vetId") int vetId) {
         Vet vet = this.clinicService.findVetById(vetId);
