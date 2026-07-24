@@ -111,21 +111,38 @@ def apply_version_override(pom_path, group_id, artifact_id, new_version):
     )
 
     match = pattern.search(content)
-    if not match:
-        raise ValueError(f"Could not find dependency block for {group_id}:{artifact_id}")
 
-    before, existing_version_tag, after = match.groups()
-    new_version_tag = f"<version>{new_version}</version>\n            "
-
-    new_block = before + new_version_tag + after
-    new_content = content[:match.start()] + new_block + content[match.end():]
+    if match:
+        before, existing_version_tag, after = match.groups()
+        new_version_tag = f"<version>{new_version}</version>\n            "
+        new_block = before + new_version_tag + after
+        new_content = content[:match.start()] + new_block + content[match.end():]
+        action = "Updated"
+    else:
+        # Not a direct dependency (likely transitive) - add an explicit
+        # override entry. Maven's "nearest declaration wins" rule means
+        # this takes precedence over the transitive version.
+        new_dependency_block = (
+            f"        <dependency>\n"
+            f"            <groupId>{group_id}</groupId>\n"
+            f"            <artifactId>{artifact_id}</artifactId>\n"
+            f"            <version>{new_version}</version>\n"
+            f"        </dependency>\n"
+        )
+        # Insert right after the first <dependencies> tag
+        insert_point = content.find("<dependencies>")
+        if insert_point == -1:
+            raise ValueError("Could not find <dependencies> section in pom.xml")
+        insert_point += len("<dependencies>")
+        new_content = (
+            content[:insert_point] + "\n" + new_dependency_block + content[insert_point:]
+        )
+        action = "Added new explicit override for transitive dependency"
 
     with open(pom_path, "w", encoding="utf-8") as f:
         f.write(new_content)
 
-    action = "Updated" if existing_version_tag else "Inserted"
-    print(f"{action} version for {group_id}:{artifact_id} -> {new_version}")
-
+    print(f"{action}: {group_id}:{artifact_id} -> {new_version}")
 
 if __name__ == "__main__":
     findings = load_vulnerabilities()
