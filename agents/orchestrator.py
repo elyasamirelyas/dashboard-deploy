@@ -2,6 +2,7 @@ import os
 import subprocess
 import json
 import sys
+import re
 from dotenv import load_dotenv
 from remediation_agent import load_vulnerabilities, get_prioritized_targets, ask_llm_for_fix, apply_version_override
 
@@ -107,6 +108,53 @@ def apply_known_migration_fixes(legacy_app_dir):
 
     return fixes_applied
 
+EVAL_DIR = os.path.join(SCRIPT_DIR, "..", "evaluation", "reference-run")
+
+def stage_baseline():
+    print("\n=== STAGE 0: Capture Baseline (before any changes) ===")
+    os.makedirs(EVAL_DIR, exist_ok=True)
+
+    print("--- Baseline vulnerability scan ---")
+    success, output = run_mvn([
+        "org.owasp:dependency-check-maven:check",
+        f"-DnvdApiKey={NVD_API_KEY}", "-Dformats=JSON"
+    ])
+    log_stage("Baseline vulnerability scan", success, output)
+    src = os.path.join(LEGACY_APP_DIR, "target", "dependency-check-report.json")
+    if os.path.exists(src):
+        import shutil
+        shutil.copy(src, os.path.join(EVAL_DIR, "vulnerabilities_before.json"))
+
+    print("--- Baseline test run + coverage ---")
+    success, output = run_mvn(["clean", "test", "jacoco:report"])
+    log_stage("Baseline test run", success, output)
+
+    jacoco_src = os.path.join(LEGACY_APP_DIR, "target", "site", "jacoco", "jacoco.xml")
+    if os.path.exists(jacoco_src):
+        import shutil
+        shutil.copy(jacoco_src, os.path.join(EVAL_DIR, "coverage_before.xml"))
+
+    surefire_dir = os.path.join(LEGACY_APP_DIR, "target", "surefire-reports")
+    test_count, failures = count_tests(surefire_dir)
+    log_stage("Baseline test count", True, f"Tests: {test_count}, Failures: {failures}")
+
+    return True
+
+
+def count_tests(surefire_dir):
+    total_tests, total_failures = 0, 0
+    if not os.path.exists(surefire_dir):
+        return 0, 0
+    for f in os.listdir(surefire_dir):
+        if f.endswith(".txt"):
+            with open(os.path.join(surefire_dir, f), "r", encoding="utf-8", errors="replace") as fh:
+                for line in fh:
+                    m = re.search(r"Tests run: (\d+), Failures: (\d+), Errors: (\d+)", line)
+                    if m:
+                        total_tests += int(m.group(1))
+                        total_failures += int(m.group(2)) + int(m.group(3))
+                        break
+    return total_tests, total_failures
 
 def stage_migration():
     print("\n=== STAGE 1: Migration (OpenRewrite) ===")
@@ -188,6 +236,19 @@ def stage_vulnerability_remediation():
             failed.append({"target": target["dependency"], "reason": str(e)})
             print(f"Error applying fix, reverted: {e}")
 
+    print("\n--- Post-remediation vulnerability scan ---")
+    success, output = run_mvn([
+        "org.owasp:dependency-check-maven:check",
+        f"-DnvdApiKey={NVD_API_KEY}", "-Dformats=JSON"
+    ])
+    if success:
+        import shutil
+        os.makedirs(EVAL_DIR, exist_ok=True)
+        shutil.copy(
+            os.path.join(LEGACY_APP_DIR, "target", "dependency-check-report.json"),
+            os.path.join(EVAL_DIR, "vulnerabilities_after.json")
+        )
+    
     log_stage(
         "Remediation batch complete",
         True,
@@ -210,6 +271,15 @@ def stage_test_generation():
 
     print("--- Generating coverage report ---")
     success, output = run_mvn(["test", "jacoco:report"])
+    import shutil
+    jacoco_src = os.path.join(LEGACY_APP_DIR, "target", "site", "jacoco", "jacoco.xml")
+    if os.path.exists(jacoco_src):
+        shutil.copy(jacoco_src, os.path.join(EVAL_DIR, "coverage_after.xml"))
+
+    surefire_dir = os.path.join(LEGACY_APP_DIR, "target", "surefire-reports")
+    test_count, failures = count_tests(surefire_dir)
+    log_stage("Final test count", True, f"Tests: {test_count}, Failures: {failures}")
+    
     if not success or not os.path.exists(jacoco_xml_path):
         log_stage("Test generation", False, "Could not generate/find JaCoCo XML report.\n" + output)
         return False
@@ -273,7 +343,9 @@ def stage_final_report():
 if __name__ == "__main__":
     print("Starting multi-agent modernization pipeline...\n")
 
-    ok = stage_migration()
+    ok = stage_baseline()
+    if ok:
+        ok = stage_migration()
     if ok:
         ok = stage_vulnerability_remediation()
     if ok:
