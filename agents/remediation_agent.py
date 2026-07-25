@@ -15,8 +15,9 @@ REPORT_PATH = "../legacy-app/target/dependency-check-report.json"
 POM_PATH = "../legacy-app/pom.xml"
 
 
-def load_vulnerabilities(min_severity=("HIGH", "CRITICAL")):
-    with open(REPORT_PATH, "r", encoding="utf-8") as f:
+def load_vulnerabilities(report_path=None, min_severity=("HIGH", "CRITICAL")):
+    path = report_path or REPORT_PATH
+    with open(path, "r", encoding="utf-8") as f:
         data = json.load(f)
 
     findings = []
