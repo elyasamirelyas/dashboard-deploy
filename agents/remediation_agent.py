@@ -65,6 +65,27 @@ def pick_top_priority(findings):
     ))
     return candidates[0] if candidates else None
 
+def get_prioritized_targets(findings, max_targets=5):
+    severity_rank = {"CRITICAL": 0, "HIGH": 1}
+    confidence_rank = {"HIGHEST": 0, "HIGH": 1, "MEDIUM": 2, "LOW": 3, "UNKNOWN": 4}
+
+    candidates = [f for f in findings if f["group_id"] and f["artifact_id"]]
+    candidates.sort(key=lambda f: (
+        severity_rank.get(f["severity"], 99),
+        confidence_rank.get(f["confidence"].upper(), 99)
+    ))
+
+    # Dedupe by (group_id, artifact_id) - keep first (highest priority) occurrence
+    seen = set()
+    unique_targets = []
+    for f in candidates:
+        key = (f["group_id"], f["artifact_id"])
+        if key not in seen:
+            seen.add(key)
+            unique_targets.append(f)
+
+    return unique_targets[:max_targets]
+
 
 def ask_llm_for_fix(vuln):
     prompt = f"""

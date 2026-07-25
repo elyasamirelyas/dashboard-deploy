@@ -23,13 +23,12 @@ class EntityUtilsTests {
         TestEntity entity1 = new TestEntity(1);
         TestEntity entity2 = new TestEntity(2);
         TestEntity entity3 = new TestEntity(3);
-        
         entities.add(entity1);
         entities.add(entity2);
         entities.add(entity3);
-        
+
         TestEntity result = EntityUtils.getById(entities, TestEntity.class, 2);
-        
+
         assertNotNull(result);
         assertEquals(2, result.getId());
         assertSame(entity2, result);
@@ -40,21 +39,26 @@ class EntityUtilsTests {
         Collection<TestEntity> entities = new ArrayList<>();
         TestEntity entity1 = new TestEntity(1);
         TestEntity entity2 = new TestEntity(2);
-        
         entities.add(entity1);
         entities.add(entity2);
-        
-        assertThrows(ObjectRetrievalFailureException.class, () -> {
-            EntityUtils.getById(entities, TestEntity.class, 99);
-        });
+
+        ObjectRetrievalFailureException exception = assertThrows(
+            ObjectRetrievalFailureException.class,
+            () -> EntityUtils.getById(entities, TestEntity.class, 99)
+        );
+
+        assertNotNull(exception);
     }
 
     @Test
     void testGetByIdEmptyCollection() {
         Collection<TestEntity> entities = new ArrayList<>();
-        
-        assertThrows(ObjectRetrievalFailureException.class, () -> {
-            EntityUtils.getById(entities, TestEntity.class, 1);
-        });
+
+        ObjectRetrievalFailureException exception = assertThrows(
+            ObjectRetrievalFailureException.class,
+            () -> EntityUtils.getById(entities, TestEntity.class, 1)
+        );
+
+        assertNotNull(exception);
     }
 }

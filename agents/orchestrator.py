@@ -3,6 +3,7 @@ import subprocess
 import json
 import sys
 from dotenv import load_dotenv
+from remediation_agent import load_vulnerabilities, get_prioritized_targets, ask_llm_for_fix, apply_version_override
 
 load_dotenv()
 
@@ -121,7 +122,7 @@ def stage_migration():
     log_stage("Known migration fixes applied", True, "\n".join(fixes) if fixes else "No known fixes needed")
 
     print("\n--- Verifying build after migration ---")
-    success, output = run_mvn(["clean", "compile"])
+    success, output = run_mvn(["clean", "test"])
     log_stage("Build verification after migration", success, output)
     return success
 
@@ -138,21 +139,66 @@ def stage_vulnerability_remediation():
 
     report_path = os.path.join(LEGACY_APP_DIR, "target", "dependency-check-report.json")
     findings = load_vulnerabilities(report_path=report_path)
-    top = pick_top_priority(findings)
-    if not top:
-        log_stage("Remediation", True, "No suitable high-confidence target found. Skipping.")
+    targets = get_prioritized_targets(findings, max_targets=5)
+
+    if not targets:
+        log_stage("Remediation", True, "No suitable high-confidence targets found. Skipping.")
         return True
 
-    print(f"Top priority target: {top['dependency']} | {top['cve']} | {top['severity']}")
-    fix = ask_llm_for_fix(top)
-    print(f"Proposed fix: {fix['group_id']}:{fix['artifact_id']} -> {fix['fixed_version']}")
+    pom_path = os.path.join(LEGACY_APP_DIR, "pom.xml")
+    applied = []
+    failed = []
 
-    apply_version_override(os.path.join(LEGACY_APP_DIR, "pom.xml"), fix["group_id"], fix["artifact_id"], fix["fixed_version"])
-    log_stage("Remediation applied", True, json.dumps(fix, indent=2))
+    for target in targets:
+        print(f"\nTarget: {target['dependency']} | {target['cve']} | {target['severity']} | confidence={target['confidence']}")
 
-    print("\n--- Verifying build after remediation ---")
+        with open(pom_path, "r", encoding="utf-8") as f:
+            pom_backup = f.read()
+
+        try:
+            fix = ask_llm_for_fix(target)
+            print(f"Proposed fix: {fix['group_id']}:{fix['artifact_id']} -> {fix['fixed_version']}")
+            apply_version_override(pom_path, fix["group_id"], fix["artifact_id"], fix["fixed_version"])
+
+            # Known matched-version-set handling: some libraries must move together
+            JACKSON_GROUP = "com.fasterxml.jackson.core"
+            JACKSON_MATCHED_ARTIFACTS = ["jackson-core", "jackson-annotations", "jackson-databind"]
+            if fix["group_id"] == JACKSON_GROUP and fix["artifact_id"] in JACKSON_MATCHED_ARTIFACTS:
+                for sibling in JACKSON_MATCHED_ARTIFACTS:
+                    if sibling != fix["artifact_id"]:
+                        try:
+                            apply_version_override(pom_path, JACKSON_GROUP, sibling, fix["fixed_version"])
+                            print(f"  Also aligned matched dependency: {JACKSON_GROUP}:{sibling} -> {fix['fixed_version']}")
+                        except Exception as e:
+                            print(f"  Could not align {sibling}: {e}")
+
+            build_ok, build_output = run_mvn(["clean", "compile"])
+            if build_ok:
+                applied.append(fix)
+                print(f"Applied and verified: {fix['group_id']}:{fix['artifact_id']}")
+            else:
+                # Roll back this specific change
+                with open(pom_path, "w", encoding="utf-8") as f:
+                    f.write(pom_backup)
+                failed.append({"target": target["dependency"], "reason": "build failed, reverted"})
+                print(f"Build failed after this fix - reverted: {fix['group_id']}:{fix['artifact_id']}")
+        except Exception as e:
+            with open(pom_path, "w", encoding="utf-8") as f:
+                f.write(pom_backup)
+            failed.append({"target": target["dependency"], "reason": str(e)})
+            print(f"Error applying fix, reverted: {e}")
+
+    log_stage(
+        "Remediation batch complete",
+        True,
+        f"Attempted: {len(targets)}, Applied: {len(applied)}, Failed/reverted: {len(failed)}\n"
+        f"Applied fixes: {json.dumps(applied, indent=2)}\n"
+        f"Failed: {json.dumps(failed, indent=2)}"
+    )
+
+    print("\n--- Final build verification after all remediation ---")
     success, output = run_mvn(["clean", "compile"])
-    log_stage("Build verification after remediation", success, output)
+    log_stage("Build verification after remediation batch", success, output)
     return success
 
 
