@@ -1,6 +1,7 @@
 import os
 import re
 import json
+import xml.etree.ElementTree as ET
 from dotenv import load_dotenv
 from openai import OpenAI
 
@@ -11,9 +12,10 @@ client = OpenAI(
     api_key=os.getenv("OPENROUTER_API_KEY")
 )
 
-TARGET_CLASS_PATH = "../legacy-app/src/main/java/org/springframework/samples/petclinic/util/EntityUtils.java"
-BASE_ENTITY_PATH = "../legacy-app/src/main/java/org/springframework/samples/petclinic/model/BaseEntity.java"
-OUTPUT_TEST_PATH = "../legacy-app/src/test/java/org/springframework/samples/petclinic/util/EntityUtilsTests.java"
+SPRING_STEREOTYPES = [
+    "@RestController", "@Controller", "@Service", "@Repository",
+    "@Configuration", "@Aspect", "@Component", "@SpringBootApplication"
+]
 
 
 def read_file(path):
@@ -21,20 +23,95 @@ def read_file(path):
         return f.read()
 
 
-def generate_test(target_source, dependency_source):
+def find_lowest_coverage_class(jacoco_xml_path, src_main_java_dir):
+    """
+    Parses a JaCoCo XML report and returns the source-testable class
+    (skipping Spring-managed components that need a live context) with
+    the lowest line coverage ratio.
+    """
+    tree = ET.parse(jacoco_xml_path)
+    root = tree.getroot()
+
+    candidates = []
+    for package in root.findall("package"):
+        for cls in package.findall("class"):
+            class_name = cls.get("name")  # e.g. org/springframework/.../EntityUtils
+            if "$" in class_name:  # skip inner/anonymous classes
+                continue
+
+            line_counter = None
+            for counter in cls.findall("counter"):
+                if counter.get("type") == "LINE":
+                    line_counter = counter
+                    break
+            if line_counter is None:
+                continue
+
+            missed = int(line_counter.get("missed"))
+            covered = int(line_counter.get("covered"))
+            total = missed + covered
+            if total == 0:
+                continue
+
+            ratio = covered / total
+            source_path = os.path.join(src_main_java_dir, class_name + ".java")
+            if not os.path.exists(source_path):
+                continue
+
+            source = read_file(source_path)
+            if any(stereo in source for stereo in SPRING_STEREOTYPES):
+                continue  # needs live Spring context, skip
+
+            candidates.append({
+                "class_name": class_name,
+                "ratio": ratio,
+                "missed": missed,
+                "total": total,
+                "source_path": source_path,
+            })
+
+    if not candidates:
+        return None
+
+    # Lowest coverage ratio first, tie-break by most missed lines (biggest opportunity)
+    candidates.sort(key=lambda c: (c["ratio"], -c["missed"]))
+    return candidates[0]
+
+
+def guess_local_dependency_source(target_source, src_main_java_dir):
+    """
+    Best-effort: if the target class extends a project class, try to also
+    load that superclass's source, since the LLM will likely need it.
+    """
+    match = re.search(r"class\s+\w+\s+extends\s+(\w+)", target_source)
+    if not match:
+        return None
+    superclass_name = match.group(1)
+
+    for root, _, files in os.walk(src_main_java_dir):
+        for f in files:
+            if f == f"{superclass_name}.java":
+                return read_file(os.path.join(root, f))
+    return None
+
+
+def generate_test(target_source, target_class_simple_name, target_package, dependency_source=None):
+    dep_block = f"\nIts likely dependency (for context):\n```java\n{dependency_source}\n```\n" if dependency_source else ""
+
     prompt = f"""
 You are a test generation agent for a Java Spring project using JUnit 5.
 
 Write a complete, compilable JUnit 5 test class for the class below.
 Requirements:
-- Package must be: org.springframework.samples.petclinic.util
-- Class name must be: EntityUtilsTests
-- Cover: the successful lookup case, and the case where the entity is not
-  found (should throw ObjectRetrievalFailureException).
-- Since BaseEntity and getById() use generics with a real entity type needed
-  for testing, create a small local concrete subclass of BaseEntity inside
-  the test file (e.g. a private static nested class) to use in the tests.
-- Use only JUnit 5 (org.junit.jupiter.api) and plain Java. No Mockito needed.
+- Package must be: {target_package}
+- Class name must be: {target_class_simple_name}Tests
+- Cover the main logic paths, including at least one success case and one
+  edge/error case if applicable.
+- If the class or its dependency uses generics or is abstract in a way that
+  requires a concrete type for testing, create a small local concrete
+  subclass inside the test file (e.g. a private static nested class).
+- Use only JUnit 5 (org.junit.jupiter.api) and plain Java. No Mockito, no
+  Spring context, no @SpringBootTest - this must run as a plain unit test.
 - Respond with ONLY the raw Java source code for the file. No markdown code
   fences, no explanation before or after.
 
@@ -42,11 +119,7 @@ Class to test:
 ```java
 {target_source}
 ```
-
-Its dependency (BaseEntity):
-```java
-{dependency_source}
-```
+{dep_block}
 """
     response = client.chat.completions.create(
         model="anthropic/claude-sonnet-4.5",
@@ -55,24 +128,3 @@ Its dependency (BaseEntity):
     raw = response.choices[0].message.content.strip()
     raw = re.sub(r"^```(java)?|```$", "", raw, flags=re.MULTILINE).strip()
     return raw
-
-
-if __name__ == "__main__":
-    target_source = read_file(TARGET_CLASS_PATH)
-    dependency_source = read_file(BASE_ENTITY_PATH)
-
-    print("Generating test for EntityUtils.java (lowest coverage: 19%)...\n")
-    test_code = generate_test(target_source, dependency_source)
-
-    print("--- Generated Test ---\n")
-    print(test_code)
-    print()
-
-    confirm = input(f"Write this to {OUTPUT_TEST_PATH}? [y/N] ")
-    if confirm.lower() == "y":
-        os.makedirs(os.path.dirname(OUTPUT_TEST_PATH), exist_ok=True)
-        with open(OUTPUT_TEST_PATH, "w", encoding="utf-8") as f:
-            f.write(test_code)
-        print(f"Test written to {OUTPUT_TEST_PATH}")
-    else:
-        print("Skipped writing the test.")
