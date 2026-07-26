@@ -20,3 +20,6 @@ Thumbs.db
 
 __pycache__/
 *.pyc
+
+legacy-app-demo-run/
+legacy-app-fresh-run/

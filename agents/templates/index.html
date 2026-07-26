@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Multi-Agent Modernization Framework</title>
+<style>
+    body { font-family: -apple-system, Segoe UI, Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; background: #f7f7f9; }
+    h1 { font-size: 1.5em; }
+    button { background: #2563eb; color: white; border: none; padding: 12px 24px; font-size: 1em; border-radius: 6px; cursor: pointer; }
+    button:disabled { background: #9ca3af; cursor: not-allowed; }
+    .stage { padding: 8px 12px; margin: 4px 0; border-radius: 4px; font-family: monospace; }
+    .ok { background: #dcfce7; color: #166534; }
+    .failed { background: #fee2e2; color: #991b1b; }
+    .pending { background: #f3f4f6; color: #6b7280; }
+    #report { background: white; padding: 20px; border-radius: 8px; margin-top: 20px; white-space: pre-wrap; font-family: monospace; font-size: 0.85em; }
+    table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+    th, td { border: 1px solid #ddd; padding: 6px 10px; text-align: left; }
+    th { background: #f3f4f6; }
+</style>
+</head>
+<body>
+    <h1>Multi-Agent Framework for Secure Legacy Java Modernization</h1>
+    <p>Runs migration, vulnerability remediation, and coverage-driven test generation agents on a fresh checkout of the target application.</p>
+    <button id="runBtn" onclick="startRun()">Run Pipeline</button>
+
+    <div id="stages" style="margin-top: 20px;"></div>
+    <div id="report" style="display:none;"></div>
+
+<script>
+const EXPECTED_STAGES = [
+    "Baseline vulnerability scan", "Baseline test run", "Baseline test count",
+    "Migration (OpenRewrite)", "Known migration fixes applied", "Build verification after migration",
+    "Vulnerability scan", "Remediation batch complete", "Build verification after remediation batch",
+    "Final test count", "Test generation", "New test verification", "Final full test suite + coverage"
+];
+
+let polling = null;
+
+function startRun() {
+    document.getElementById("runBtn").disabled = true;
+    document.getElementById("report").style.display = "none";
+    document.getElementById("stages").innerHTML = "";
+    fetch("/run", { method: "POST" })
+        .then(r => r.json())
+        .then(() => { polling = setInterval(pollStatus, 1500); });
+}
+
+function pollStatus() {
+    fetch("/status").then(r => r.json()).then(data => {
+        const container = document.getElementById("stages");
+        container.innerHTML = "";
+        data.stages.forEach(s => {
+            const div = document.createElement("div");
+            div.className = "stage " + (s.success ? "ok" : "failed");
+            div.textContent = (s.success ? "OK  " : "FAIL") + " - " + s.stage;
+            container.appendChild(div);
+        });
+
+        if (data.status === "done") {
+            clearInterval(polling);
+            document.getElementById("runBtn").disabled = false;
+            fetchReport();
+        }
+    });
+}
+
+function fetchReport() {
+    fetch("/report").then(r => r.json()).then(data => {
+        if (data.available) {
+            document.getElementById("report").style.display = "block";
+            document.getElementById("report").textContent = data.markdown;
+        }
+    });
+}
+</script>
+</body>
+</html>

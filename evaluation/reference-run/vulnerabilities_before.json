@@ -5,11 +5,11 @@
         "dataSource": [
 {
                 "name": "NVD API Last Checked",
-                "timestamp": "2026-07-25T16:44:38+01"
+                "timestamp": "2026-07-26T15:45:01+01"
             }
 ,{
                 "name": "NVD API Last Modified",
-                "timestamp": "2026-07-25T14:16:28Z"
+                "timestamp": "2026-07-26T13:17:12Z"
             }
         ]
 
@@ -17,7 +17,7 @@
     },
     "projectInfo": {
         "name": "spring-petclinic-rest",
-"groupID":"org.springframework.samples","artifactID":"spring-petclinic-rest","version":"2.6.2",        "reportDate": "2026-07-25T15:46:45.129853600Z",
+"groupID":"org.springframework.samples","artifactID":"spring-petclinic-rest","version":"2.6.2",        "reportDate": "2026-07-26T14:45:31.091174200Z",
         "credits": {
             "NVD": "This product uses the NVD API but is not endorsed or certified by the NVD. This report contains data retrieved from the National Vulnerability Database: https://nvd.nist.gov",
             "CISA": "This report may contain data retrieved from the CISA Known Exploited Vulnerability Catalog: https://www.cisa.gov/known-exploited-vulnerabilities-catalog",

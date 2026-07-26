@@ -26,6 +26,12 @@ def log_stage(name, success, details=""):
     print(f"\n[{status}] {name}")
     if details:
         print(details[:500])
+    save_report()  # write progress incrementally so the UI can poll it
+
+
+def save_report():
+    with open(os.path.join(SCRIPT_DIR, "pipeline_report.json"), "w", encoding="utf-8") as f:
+        json.dump(REPORT, f, indent=2)
 
 
 def run_mvn(args, cwd=LEGACY_APP_DIR):
