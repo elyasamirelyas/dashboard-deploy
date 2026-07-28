@@ -2,75 +2,360 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Multi-Agent Modernization Framework</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modernization Control Panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-    body { font-family: -apple-system, Segoe UI, Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; background: #f7f7f9; }
-    h1 { font-size: 1.5em; }
-    button { background: #2563eb; color: white; border: none; padding: 12px 24px; font-size: 1em; border-radius: 6px; cursor: pointer; }
-    button:disabled { background: #9ca3af; cursor: not-allowed; }
-    .stage { padding: 8px 12px; margin: 4px 0; border-radius: 4px; font-family: monospace; }
-    .ok { background: #dcfce7; color: #166534; }
-    .failed { background: #fee2e2; color: #991b1b; }
-    .pending { background: #f3f4f6; color: #6b7280; }
-    #report { background: white; padding: 20px; border-radius: 8px; margin-top: 20px; white-space: pre-wrap; font-family: monospace; font-size: 0.85em; }
-    table { border-collapse: collapse; width: 100%; margin: 10px 0; }
-    th, td { border: 1px solid #ddd; padding: 6px 10px; text-align: left; }
-    th { background: #f3f4f6; }
+  :root {
+    --ink: #0B1E33;
+    --ink-2: #0F2842;
+    --cyan: #5FD3E8;
+    --mint: #7FE0B4;
+    --amber: #F2A65A;
+    --paper: #EAF2F5;
+    --slate: #2C4A63;
+    --slate-dim: #1B3552;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ink);
+    background-image:
+      linear-gradient(rgba(95,211,232,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(95,211,232,0.05) 1px, transparent 1px);
+    background-size: 32px 32px;
+    color: var(--paper);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    padding: 32px 24px 80px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+
+  .wrap { max-width: 920px; margin: 0 auto; }
+
+  /* Title block, engineering-drawing style */
+  .titleblock {
+    border: 1px solid var(--slate);
+    border-radius: 4px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 4px 24px;
+    padding: 20px 24px;
+    margin-bottom: 40px;
+    background: linear-gradient(180deg, rgba(95,211,232,0.04), transparent);
+  }
+  .titleblock h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 0.01em;
+  }
+  .titleblock p {
+    margin: 6px 0 0;
+    color: #9FC0D4;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    max-width: 58ch;
+  }
+  .titleblock .meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: #6E92AC;
+    text-align: right;
+    align-self: start;
+    line-height: 1.8;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .engage-row { display: flex; align-items: center; gap: 16px; margin-bottom: 48px; }
+
+  button#runBtn {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.03em;
+    color: var(--ink);
+    background: var(--cyan);
+    border: none;
+    padding: 14px 28px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 0 0 0 0 rgba(95,211,232,0.5);
+    transition: box-shadow 0.2s, transform 0.1s, background 0.2s;
+  }
+  button#runBtn:hover:not(:disabled) { box-shadow: 0 0 24px 0 rgba(95,211,232,0.45); }
+  button#runBtn:active:not(:disabled) { transform: scale(0.98); }
+  button#runBtn:focus-visible { outline: 3px solid var(--paper); outline-offset: 2px; }
+  button#runBtn:disabled { background: var(--slate); color: #6E92AC; cursor: not-allowed; }
+
+  .engage-status {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    color: #6E92AC;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .engage-status.live { color: var(--cyan); }
+  .dot {
+    display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+    background: currentColor; margin-right: 8px; vertical-align: middle;
+  }
+  .live .dot { animation: pulse 1.4s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.25; } }
+
+  /* Schematic pipeline */
+  .schematic { margin-bottom: 48px; }
+  .phase { margin-bottom: 28px; }
+  .phase-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--cyan);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .phase-label::after {
+    content: ""; flex: 1; height: 1px; background: var(--slate);
+  }
+
+  .nodes { display: flex; flex-wrap: wrap; gap: 10px; }
+
+  .node {
+    border: 1px solid var(--slate);
+    background: var(--slate-dim);
+    border-radius: 4px;
+    padding: 10px 14px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: #6E92AC;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: border-color 0.3s, color 0.3s, background 0.3s;
+  }
+  .node .mark { width: 8px; height: 8px; border-radius: 50%; background: #3E5A72; flex-shrink: 0; transition: background 0.3s, box-shadow 0.3s; }
+
+  .node.running { border-color: var(--cyan); color: var(--cyan); background: rgba(95,211,232,0.08); }
+  .node.running .mark { background: var(--cyan); box-shadow: 0 0 8px var(--cyan); animation: pulse 1.2s ease-in-out infinite; }
+  .node.ok { border-color: var(--mint); color: var(--mint); background: rgba(127,224,180,0.08); }
+  .node.ok .mark { background: var(--mint); }
+  .node.failed { border-color: var(--amber); color: var(--amber); background: rgba(242,166,90,0.1); }
+  .node.failed .mark { background: var(--amber); }
+
+  /* Results */
+  .results { display: none; }
+  .results.visible { display: block; }
+  .results-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0 0 20px;
+  }
+
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 16px; }
+  .card {
+    border: 1px solid var(--slate);
+    border-radius: 6px;
+    padding: 18px 20px;
+    background: var(--slate-dim);
+  }
+  .card .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #6E92AC;
+    margin-bottom: 10px;
+  }
+  .card .readout {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.8rem;
+    font-weight: 600;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .card .readout .before { color: #6E92AC; font-size: 1.1rem; }
+  .card .readout .arrow { color: #6E92AC; font-size: 1.1rem; }
+  .card .readout .after.improved { color: var(--mint); }
+  .card .readout .after.same { color: var(--paper); }
+  .card .bar-track { height: 6px; background: var(--slate); border-radius: 3px; margin-top: 12px; overflow: hidden; position: relative; }
+  .card .bar-fill { height: 100%; background: var(--amber); border-radius: 3px; transition: width 0.6s ease; }
+  .card .bar-fill.mint { background: var(--mint); }
+
+  footer {
+    max-width: 920px; margin: 60px auto 0; font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem; color: #48657C; text-align: center;
+  }
 </style>
 </head>
 <body>
-    <h1>Multi-Agent Framework for Secure Legacy Java Modernization</h1>
-    <p>Runs migration, vulnerability remediation, and coverage-driven test generation agents on a fresh checkout of the target application.</p>
-    <button id="runBtn" onclick="startRun()">Run Pipeline</button>
+<div class="wrap">
 
-    <div id="stages" style="margin-top: 20px;"></div>
-    <div id="report" style="display:none;"></div>
+  <div class="titleblock">
+    <div>
+      <h1>Modernization Control Panel</h1>
+      <p>Multi-agent framework for secure modernization of legacy Java applications — migration, vulnerability remediation, and coverage-driven test generation, coordinated end to end.</p>
+    </div>
+    <div class="meta">
+      Target: spring-petclinic-rest v2.6.2<br>
+      Java 8 / Spring Boot 2.6.2<br>
+      &darr;<br>
+      Java 17 / Spring Boot 3.x
+    </div>
+  </div>
+
+  <div class="engage-row">
+    <button id="runBtn" onclick="startRun()">Run Pipeline</button>
+    <span id="engageStatus" class="engage-status">Idle — ready to run on a fresh checkout</span>
+  </div>
+
+  <div class="schematic" id="schematic"></div>
+
+  <div class="results" id="results">
+    <h2 class="results-title">Evaluation Readout</h2>
+    <div class="card-grid" id="cardGrid"></div>
+  </div>
+
+</div>
+
+<footer>MSc Software Development — Dissertation Evaluation Instrument</footer>
 
 <script>
-const EXPECTED_STAGES = [
-    "Baseline vulnerability scan", "Baseline test run", "Baseline test count",
-    "Migration (OpenRewrite)", "Known migration fixes applied", "Build verification after migration",
-    "Vulnerability scan", "Remediation batch complete", "Build verification after remediation batch",
-    "Final test count", "Test generation", "New test verification", "Final full test suite + coverage"
+const PHASES = [
+  { label: "Baseline", stages: ["Baseline vulnerability scan", "Baseline test run", "Baseline test count"] },
+  { label: "Migration", stages: ["Migration (OpenRewrite)", "Known migration fixes applied", "Build verification after migration"] },
+  { label: "Vulnerability Remediation", stages: ["Vulnerability scan", "Remediation batch complete", "Build verification after remediation batch"] },
+  { label: "Test Generation", stages: ["Final test count", "Test generation", "New test verification"] },
+  { label: "Verify", stages: ["Final full test suite + coverage"] },
 ];
+
+function renderSchematic(stageMap) {
+  const container = document.getElementById("schematic");
+  container.innerHTML = "";
+  PHASES.forEach(phase => {
+    const phaseDiv = document.createElement("div");
+    phaseDiv.className = "phase";
+    const label = document.createElement("div");
+    label.className = "phase-label";
+    label.textContent = phase.label;
+    phaseDiv.appendChild(label);
+
+    const nodes = document.createElement("div");
+    nodes.className = "nodes";
+    phase.stages.forEach(stageName => {
+      const node = document.createElement("div");
+      const state = stageMap[stageName];
+      let cls = "node";
+      if (state === true) cls += " ok";
+      else if (state === false) cls += " failed";
+      node.className = cls;
+      node.innerHTML = `<span class="mark"></span>${stageName}`;
+      nodes.appendChild(node);
+    });
+    phaseDiv.appendChild(nodes);
+    container.appendChild(phaseDiv);
+  });
+}
+
+renderSchematic({});
 
 let polling = null;
 
 function startRun() {
-    document.getElementById("runBtn").disabled = true;
-    document.getElementById("report").style.display = "none";
-    document.getElementById("stages").innerHTML = "";
-    fetch("/run", { method: "POST" })
-        .then(r => r.json())
-        .then(() => { polling = setInterval(pollStatus, 1500); });
+  document.getElementById("runBtn").disabled = true;
+  const status = document.getElementById("engageStatus");
+  status.textContent = "Cloning fresh baseline and starting pipeline...";
+  status.classList.add("live");
+  document.getElementById("results").classList.remove("visible");
+  renderSchematic({});
+
+  fetch("/run", { method: "POST" })
+    .then(r => r.json())
+    .then(() => { polling = setInterval(pollStatus, 1500); })
+    .catch(() => { status.textContent = "Failed to start."; status.classList.remove("live"); document.getElementById("runBtn").disabled = false; });
 }
 
 function pollStatus() {
-    fetch("/status").then(r => r.json()).then(data => {
-        const container = document.getElementById("stages");
-        container.innerHTML = "";
-        data.stages.forEach(s => {
-            const div = document.createElement("div");
-            div.className = "stage " + (s.success ? "ok" : "failed");
-            div.textContent = (s.success ? "OK  " : "FAIL") + " - " + s.stage;
-            container.appendChild(div);
-        });
+  fetch("/status").then(r => r.json()).then(data => {
+    const stageMap = {};
+    data.stages.forEach(s => { stageMap[s.stage] = s.success; });
+    renderSchematic(stageMap);
 
-        if (data.status === "done") {
-            clearInterval(polling);
-            document.getElementById("runBtn").disabled = false;
-            fetchReport();
-        }
-    });
+    const status = document.getElementById("engageStatus");
+    if (data.status === "done") {
+      clearInterval(polling);
+      document.getElementById("runBtn").disabled = false;
+      status.classList.remove("live");
+      status.textContent = "Run complete.";
+      fetchReport();
+    } else {
+      const last = data.stages[data.stages.length - 1];
+      status.textContent = last ? `Running — last: ${last.stage}` : "Starting...";
+    }
+  });
 }
 
 function fetchReport() {
-    fetch("/report").then(r => r.json()).then(data => {
-        if (data.available) {
-            document.getElementById("report").style.display = "block";
-            document.getElementById("report").textContent = data.markdown;
-        }
-    });
+  fetch("/report").then(r => r.json()).then(data => {
+    if (!data.available) return;
+    const grid = document.getElementById("cardGrid");
+    grid.innerHTML = "";
+
+    if (data.vulns_before && data.vulns_after) {
+      grid.appendChild(makeCard(
+        "Total CVEs", data.vulns_before.total_cves, data.vulns_after.total_cves, true
+      ));
+      grid.appendChild(makeCard(
+        "Vulnerable Dependencies", data.vulns_before.vulnerable_dependencies, data.vulns_after.vulnerable_dependencies, true
+      ));
+      grid.appendChild(makeCard(
+        "Critical Severity CVEs", data.vulns_before.by_severity.CRITICAL, data.vulns_after.by_severity.CRITICAL, true
+      ));
+    }
+    if (data.tests_before !== null) {
+      grid.appendChild(makeCard(
+        "Tests Passing", `${data.tests_before - (data.fail_before||0)}/${data.tests_before}`,
+        `${data.tests_after - (data.fail_after||0)}/${data.tests_after}`, false, true
+      ));
+    }
+    if (data.coverage_before && data.coverage_after) {
+      grid.appendChild(makeCard(
+        "Line Coverage", data.coverage_before.ratio.toFixed(1) + "%", data.coverage_after.ratio.toFixed(1) + "%",
+        false, false, data.coverage_before.ratio, data.coverage_after.ratio
+      ));
+    }
+
+    document.getElementById("results").classList.add("visible");
+  });
+}
+
+function makeCard(label, before, after, lowerIsBetter, isFraction, beforePct, afterPct) {
+  const card = document.createElement("div");
+  card.className = "card";
+  const improved = isFraction ? true : (lowerIsBetter ? after < before : after > before);
+  card.innerHTML = `
+    <div class="label">${label}</div>
+    <div class="readout">
+      <span class="before">${before}</span>
+      <span class="arrow">&rarr;</span>
+      <span class="after ${improved ? 'improved' : 'same'}">${after}</span>
+    </div>
+    ${beforePct !== undefined ? `<div class="bar-track"><div class="bar-fill mint" style="width:${afterPct}%"></div></div>` : ""}
+  `;
+  return card;
 }
 </script>
 </body>

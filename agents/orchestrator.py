@@ -6,6 +6,15 @@ import re
 from dotenv import load_dotenv
 from remediation_agent import load_vulnerabilities, get_prioritized_targets, ask_llm_for_fix, apply_version_override
 
+def print_environment_diagnostics():
+    print("\n=== ENVIRONMENT DIAGNOSTICS ===")
+    print(f"JAVA_HOME env var: {os.environ.get('JAVA_HOME', 'NOT SET')}")
+    result = subprocess.run(["java", "-version"], capture_output=True, text=True, shell=True)
+    print(f"java -version output:\n{result.stdout}{result.stderr}")
+    result2 = subprocess.run(["mvn", "-version"], capture_output=True, text=True, shell=True, cwd=LEGACY_APP_DIR)
+    print(f"mvn -version output:\n{result2.stdout}{result2.stderr}")
+    print("=== END DIAGNOSTICS ===\n")
+
 load_dotenv()
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -34,10 +43,16 @@ def save_report():
         json.dump(REPORT, f, indent=2)
 
 
+MVN_CMD = r"C:\Users\amiri\apache-maven-3.9.16-bin\apache-maven-3.9.16\bin\mvn.cmd"
+JAVA17_HOME = r"C:\Program Files\Eclipse Adoptium\jdk-17.0.17.10-hotspot"
+
 def run_mvn(args, cwd=LEGACY_APP_DIR):
+    env = os.environ.copy()
+    env["JAVA_HOME"] = JAVA17_HOME
+    env["PATH"] = os.path.join(JAVA17_HOME, "bin") + os.pathsep + env.get("PATH", "")
     result = subprocess.run(
-        ["mvn"] + args, cwd=cwd, capture_output=True, text=True, shell=True,
-        encoding="utf-8", errors="replace"
+        [MVN_CMD] + args, cwd=cwd, capture_output=True, text=True,
+        encoding="utf-8", errors="replace", env=env, shell=False
     )
     success = result.returncode == 0
     return success, result.stdout[-3000:] + result.stderr[-1000:]
@@ -70,8 +85,6 @@ def apply_known_migration_fixes(legacy_app_dir):
         )
         fixes_applied.append("Added useSpringBoot3=true to generator config")
 
-    with open(pom_path, "w", encoding="utf-8") as f:
-        f.write(pom)
 
     # Fix 2: Remove dead Springfox workaround class
     dead_file = os.path.join(
@@ -111,8 +124,44 @@ def apply_known_migration_fixes(legacy_app_dir):
             with open(spec_path, "w", encoding="utf-8") as f:
                 f.write(spec)
             fixes_applied.append("Added missing 'name' to PetType required fields in api-docs.yml")
+            
+    # Fix 5: Pin swagger-annotations version explicitly. Generated DTOs use
+    # Schema.requiredMode(), added in swagger-core 2.2.0+. Without an explicit
+    # pin, Maven's transitive dependency resolution can non-deterministically
+    # select an older version lacking this method.
+    if "<groupId>io.swagger.core.v3</groupId>" not in pom:
+        insert_point = pom.find("<dependencies>")
+        if insert_point != -1:
+            insert_point += len("<dependencies>")
+            swagger_dep = (
+                "\n        <dependency>\n"
+                "            <groupId>io.swagger.core.v3</groupId>\n"
+                "            <artifactId>swagger-annotations</artifactId>\n"
+                "            <version>2.2.21</version>\n"
+                "        </dependency>\n"
+            )
+            pom = pom[:insert_point] + swagger_dep + pom[insert_point:]
+            fixes_applied.append("Pinned swagger-annotations to 2.2.21 (fixes non-deterministic requiredMode() resolution)")
+            
+    with open(pom_path, "w", encoding="utf-8") as f:
+        f.write(pom)
+        
+    if "<groupId>jakarta.validation</groupId>" not in pom:
+        insert_point = pom.find("<dependencies>")
+        if insert_point != -1:
+            insert_point += len("<dependencies>")
+            validation_dep = (
+                "\n        <dependency>\n"
+                "            <groupId>jakarta.validation</groupId>\n"
+                "            <artifactId>jakarta.validation-api</artifactId>\n"
+                "            <version>3.0.2</version>\n"
+                "        </dependency>\n"
+            )
+            pom = pom[:insert_point] + validation_dep + pom[insert_point:]
+            fixes_applied.append("Pinned jakarta.validation-api to 3.0.2")
 
     return fixes_applied
+
 
 EVAL_DIR = os.path.join(SCRIPT_DIR, "..", "evaluation", "reference-run")
 
@@ -165,7 +214,7 @@ def count_tests(surefire_dir):
 def stage_migration():
     print("\n=== STAGE 1: Migration (OpenRewrite) ===")
     success, output = run_mvn([
-        "-U", "org.openrewrite.maven:rewrite-maven-plugin:run",
+        "org.openrewrite.maven:rewrite-maven-plugin:run",
         "-Drewrite.recipeArtifactCoordinates=org.openrewrite.recipe:rewrite-spring:RELEASE",
         "-Drewrite.activeRecipes=org.openrewrite.java.spring.boot3.UpgradeSpringBoot_3_0"
     ])
@@ -347,6 +396,7 @@ def stage_final_report():
 
 
 if __name__ == "__main__":
+    print_environment_diagnostics()
     print("Starting multi-agent modernization pipeline...\n")
 
     ok = stage_baseline()

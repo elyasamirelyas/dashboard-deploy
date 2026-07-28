@@ -1,4 +1,5 @@
 import os
+import sys
 import subprocess
 import threading
 import json
@@ -11,6 +12,9 @@ PARENT_DIR = os.path.join(SCRIPT_DIR, "..")
 TARGET_DIR = os.path.join(PARENT_DIR, "legacy-app-demo-run")
 PIPELINE_REPORT_PATH = os.path.join(SCRIPT_DIR, "pipeline_report.json")
 EVAL_SUMMARY_PATH = os.path.join(PARENT_DIR, "evaluation", "reference-run", "EVALUATION_SUMMARY.md")
+
+sys.path.insert(0, SCRIPT_DIR)
+from generate_evaluation_report import count_vulnerabilities, get_jacoco_totals, get_stage_detail, parse_test_count, EVAL_DIR as REPORT_EVAL_DIR
 
 run_lock = threading.Lock()
 is_running = False
@@ -66,14 +70,29 @@ def status():
     return jsonify(report)
 
 
+
 @app.route("/report")
 def report():
-    if not os.path.exists(EVAL_SUMMARY_PATH):
+    vulns_before = count_vulnerabilities(os.path.join(REPORT_EVAL_DIR, "vulnerabilities_before.json"))
+    vulns_after = count_vulnerabilities(os.path.join(REPORT_EVAL_DIR, "vulnerabilities_after.json"))
+    cov_before = get_jacoco_totals(os.path.join(REPORT_EVAL_DIR, "coverage_before.xml"))
+    cov_after = get_jacoco_totals(os.path.join(REPORT_EVAL_DIR, "coverage_after.xml"))
+    tests_before, fail_before = parse_test_count(get_stage_detail("Baseline test count"))
+    tests_after, fail_after = parse_test_count(get_stage_detail("Final test count"))
+
+    if not vulns_before:
         return jsonify({"available": False})
-    with open(EVAL_SUMMARY_PATH, "r", encoding="utf-8") as f:
-        content = f.read()
-    return jsonify({"available": True, "markdown": content})
+
+    return jsonify({
+        "available": True,
+        "vulns_before": vulns_before,
+        "vulns_after": vulns_after,
+        "tests_before": tests_before, "fail_before": fail_before,
+        "tests_after": tests_after, "fail_after": fail_after,
+        "coverage_before": cov_before.get("LINE") if cov_before else None,
+        "coverage_after": cov_after.get("LINE") if cov_after else None,
+    })
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=5000, use_reloader=False)
