@@ -3,6 +3,7 @@ import subprocess
 import json
 import sys
 import re
+import time
 from dotenv import load_dotenv
 from remediation_agent import load_vulnerabilities, get_prioritized_targets, ask_llm_for_fix, apply_version_override
 
@@ -46,16 +47,28 @@ def save_report():
 MVN_CMD = r"C:\Users\amiri\apache-maven-3.9.16-bin\apache-maven-3.9.16\bin\mvn.cmd"
 JAVA17_HOME = r"C:\Program Files\Eclipse Adoptium\jdk-17.0.17.10-hotspot"
 
-def run_mvn(args, cwd=LEGACY_APP_DIR):
+import time
+
+def run_mvn(args, cwd=LEGACY_APP_DIR, retries=2, delay=3):
     env = os.environ.copy()
     env["JAVA_HOME"] = JAVA17_HOME
     env["PATH"] = os.path.join(JAVA17_HOME, "bin") + os.pathsep + env.get("PATH", "")
-    result = subprocess.run(
-        [MVN_CMD] + args, cwd=cwd, capture_output=True, text=True,
-        encoding="utf-8", errors="replace", env=env, shell=False
-    )
-    success = result.returncode == 0
-    return success, result.stdout[-3000:] + result.stderr[-1000:]
+
+    last_output = ""
+    for attempt in range(retries + 1):
+        result = subprocess.run(
+            [MVN_CMD] + args, cwd=cwd, capture_output=True, text=True,
+            encoding="utf-8", errors="replace", env=env, shell=False
+        )
+        success = result.returncode == 0
+        last_output = result.stdout[-3000:] + result.stderr[-1000:]
+        if success:
+            return success, last_output
+        if attempt < retries:
+            print(f"  (attempt {attempt + 1} failed, retrying in {delay}s...)")
+            time.sleep(delay)
+
+    return False, last_output
 
 def apply_known_migration_fixes(legacy_app_dir):
     """
