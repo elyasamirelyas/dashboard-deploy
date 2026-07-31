@@ -72,16 +72,13 @@ def run_mvn(args, cwd=None, retries=2, delay=3):
 
     return False, last_output
 
-def apply_known_migration_fixes(legacy_app_dir):
+def apply_generic_migration_fixes(legacy_app_dir):
     """
-    Applies fix patterns discovered during initial migration testing.
-    These address gaps OpenRewrite's automated recipes don't cover:
-    generator tooling config, dead code, Hibernate 6 JPQL strictness,
-    and a pre-existing spec defect.
+    Fixes that apply broadly to Spring Boot 2->3 Maven migrations using
+    OpenAPI Generator. Not specific to any one legacy codebase - these
+    should apply to most similarly-structured projects.
     """
     fixes_applied = []
-
-    # Fix 1: OpenAPI generator plugin - bump version, add useSpringBoot3
     pom_path = os.path.join(legacy_app_dir, "pom.xml")
     with open(pom_path, "r", encoding="utf-8") as f:
         pom = f.read()
@@ -91,25 +88,68 @@ def apply_known_migration_fixes(legacy_app_dir):
             "<openapi-generator-maven-plugin.version>5.2.1</openapi-generator-maven-plugin.version>",
             "<openapi-generator-maven-plugin.version>7.9.0</openapi-generator-maven-plugin.version>"
         )
-        fixes_applied.append("Bumped openapi-generator-maven-plugin to 7.9.0")
+        fixes_applied.append("[generic] Bumped openapi-generator-maven-plugin to 7.9.0")
 
     if "<serializationLibrary>jackson</serializationLibrary>" in pom and "<useSpringBoot3>" not in pom:
         pom = pom.replace(
             "<serializationLibrary>jackson</serializationLibrary>",
             "<serializationLibrary>jackson</serializationLibrary>\n                                <useSpringBoot3>true</useSpringBoot3>"
         )
-        fixes_applied.append("Added useSpringBoot3=true to generator config")
+        fixes_applied.append("[generic] Added useSpringBoot3=true to generator config")
+
+    if "<groupId>io.swagger.core.v3</groupId>" not in pom:
+        insert_point = pom.find("<dependencies>")
+        if insert_point != -1:
+            insert_point += len("<dependencies>")
+            swagger_dep = (
+                "\n        <dependency>\n"
+                "            <groupId>io.swagger.core.v3</groupId>\n"
+                "            <artifactId>swagger-annotations</artifactId>\n"
+                "            <version>2.2.21</version>\n"
+                "        </dependency>\n"
+            )
+            pom = pom[:insert_point] + swagger_dep + pom[insert_point:]
+            fixes_applied.append("[generic] Pinned swagger-annotations to 2.2.21")
+
+    if "<groupId>jakarta.validation</groupId>" not in pom:
+        insert_point = pom.find("<dependencies>")
+        if insert_point != -1:
+            insert_point += len("<dependencies>")
+            validation_dep = (
+                "\n        <dependency>\n"
+                "            <groupId>jakarta.validation</groupId>\n"
+                "            <artifactId>jakarta.validation-api</artifactId>\n"
+                "            <version>3.0.2</version>\n"
+                "        </dependency>\n"
+            )
+            pom = pom[:insert_point] + validation_dep + pom[insert_point:]
+            fixes_applied.append("[generic] Pinned jakarta.validation-api to 3.0.2")
+
+    # Single write, after ALL pom edits above (previously this wrote too
+    # early and silently discarded the validation-api pin - now fixed)
+    with open(pom_path, "w", encoding="utf-8") as f:
+        f.write(pom)
+
+    return fixes_applied
 
 
-    # Fix 2: Remove dead Springfox workaround class
+def apply_project_specific_fixes(legacy_app_dir):
+    """
+    Fixes tied to this specific codebase (spring-petclinic-rest)'s file
+    structure and pre-existing defects. Will NOT generalize automatically
+    to a different legacy application - a different codebase would need
+    its own equivalent fixes, discovered the same way (from failing build
+    output), documented here as a known limitation of the framework.
+    """
+    fixes_applied = []
+
     dead_file = os.path.join(
         legacy_app_dir, "src/main/java/org/springframework/samples/petclinic/util/ApplicationSwaggerConfig.java"
     )
     if os.path.exists(dead_file):
         os.remove(dead_file)
-        fixes_applied.append("Removed dead ApplicationSwaggerConfig.java (Springfox workaround)")
+        fixes_applied.append("[project-specific] Removed dead ApplicationSwaggerConfig.java")
 
-    # Fix 3: JPQL raw-column-name bugs (Hibernate 6 strictness)
     jpql_fixes = [
         ("repository/jpa/JpaPetRepositoryImpl.java", "WHERE pet_id=", "WHERE visit.pet.id="),
         ("repository/springdatajpa/SpringDataPetRepositoryImpl.java", "WHERE pet_id=", "WHERE visit.pet.id="),
@@ -125,9 +165,8 @@ def apply_known_migration_fixes(legacy_app_dir):
                 src = src.replace(old, new)
                 with open(full_path, "w", encoding="utf-8") as f:
                     f.write(src)
-                fixes_applied.append(f"Fixed JPQL column reference in {rel_path}")
+                fixes_applied.append(f"[project-specific] Fixed JPQL column reference in {rel_path}")
 
-    # Fix 4: Missing 'required' field in OpenAPI spec (pre-existing defect)
     spec_path = os.path.join(legacy_app_dir, "src/main/resources/api-docs.yml")
     if os.path.exists(spec_path):
         with open(spec_path, "r", encoding="utf-8") as f:
@@ -138,47 +177,25 @@ def apply_known_migration_fixes(legacy_app_dir):
             spec = spec.replace(old_required, new_required)
             with open(spec_path, "w", encoding="utf-8") as f:
                 f.write(spec)
-            fixes_applied.append("Added missing 'name' to PetType required fields in api-docs.yml")
-            
-    # Fix 5: Pin swagger-annotations version explicitly. Generated DTOs use
-    # Schema.requiredMode(), added in swagger-core 2.2.0+. Without an explicit
-    # pin, Maven's transitive dependency resolution can non-deterministically
-    # select an older version lacking this method.
-    if "<groupId>io.swagger.core.v3</groupId>" not in pom:
-        insert_point = pom.find("<dependencies>")
-        if insert_point != -1:
-            insert_point += len("<dependencies>")
-            swagger_dep = (
-                "\n        <dependency>\n"
-                "            <groupId>io.swagger.core.v3</groupId>\n"
-                "            <artifactId>swagger-annotations</artifactId>\n"
-                "            <version>2.2.21</version>\n"
-                "        </dependency>\n"
-            )
-            pom = pom[:insert_point] + swagger_dep + pom[insert_point:]
-            fixes_applied.append("Pinned swagger-annotations to 2.2.21 (fixes non-deterministic requiredMode() resolution)")
-            
-    with open(pom_path, "w", encoding="utf-8") as f:
-        f.write(pom)
-        
-    if "<groupId>jakarta.validation</groupId>" not in pom:
-        insert_point = pom.find("<dependencies>")
-        if insert_point != -1:
-            insert_point += len("<dependencies>")
-            validation_dep = (
-                "\n        <dependency>\n"
-                "            <groupId>jakarta.validation</groupId>\n"
-                "            <artifactId>jakarta.validation-api</artifactId>\n"
-                "            <version>3.0.2</version>\n"
-                "        </dependency>\n"
-            )
-            pom = pom[:insert_point] + validation_dep + pom[insert_point:]
-            fixes_applied.append("Pinned jakarta.validation-api to 3.0.2")
+            fixes_applied.append("[project-specific] Added missing 'name' to PetType required fields")
 
     return fixes_applied
 
 
-EVAL_DIR = os.path.join(SCRIPT_DIR, "..", "evaluation", "reference-run")
+def apply_known_migration_fixes(legacy_app_dir):
+    """
+    Combined entry point: generic fixes first, then project-specific ones.
+    Kept so existing callers don't need to change.
+    """
+    return apply_generic_migration_fixes(legacy_app_dir) + apply_project_specific_fixes(legacy_app_dir)
+
+
+_default_app_abspath = os.path.abspath(DEFAULT_LEGACY_APP_DIR)
+if os.path.abspath(LEGACY_APP_DIR) == _default_app_abspath:
+    _eval_subdir = "reference-run"  # unchanged - keeps your original petclinic-rest data path
+else:
+    _eval_subdir = os.path.basename(os.path.abspath(LEGACY_APP_DIR).rstrip(os.sep)) or "target-run"
+EVAL_DIR = os.path.join(SCRIPT_DIR, "..", "evaluation", _eval_subdir)
 
 def stage_baseline():
     print("\n=== STAGE 0: Capture Baseline (before any changes) ===")
