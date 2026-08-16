@@ -111,6 +111,11 @@ def _insert_dependency(pom, group_id, artifact_id, version):
 
 
 def apply_generic_migration_fixes(legacy_app_dir):
+    """
+    Fixes that apply broadly to Spring Boot 2->3 Maven migrations using
+    OpenAPI Generator. Not specific to any one legacy codebase - these
+    should apply to most similarly-structured projects.
+    """
     fixes_applied = []
     pom_path = os.path.join(legacy_app_dir, "pom.xml")
     with open(pom_path, "r", encoding="utf-8") as f:
@@ -121,14 +126,49 @@ def apply_generic_migration_fixes(legacy_app_dir):
             "<openapi-generator-maven-plugin.version>5.2.1</openapi-generator-maven-plugin.version>",
             "<openapi-generator-maven-plugin.version>7.9.0</openapi-generator-maven-plugin.version>"
         )
-        fixes_applied.append("Bumped openapi-generator-maven-plugin to 7.9.0")
+        fixes_applied.append("[generic] Bumped openapi-generator-maven-plugin to 7.9.0")
 
     if "<serializationLibrary>jackson</serializationLibrary>" in pom and "<useSpringBoot3>" not in pom:
         pom = pom.replace(
             "<serializationLibrary>jackson</serializationLibrary>",
             "<serializationLibrary>jackson</serializationLibrary>\n                                <useSpringBoot3>true</useSpringBoot3>"
         )
-        fixes_applied.append("Added useSpringBoot3=true to generator config")
+        fixes_applied.append("[generic] Added useSpringBoot3=true to generator config")
+
+    if "<groupId>io.swagger.core.v3</groupId>" not in pom:
+        insert_point = pom.find("<dependencies>")
+        if insert_point != -1:
+            insert_point += len("<dependencies>")
+            swagger_dep = (
+                "\n        <dependency>\n"
+                "            <groupId>io.swagger.core.v3</groupId>\n"
+                "            <artifactId>swagger-annotations</artifactId>\n"
+                "            <version>2.2.21</version>\n"
+                "        </dependency>\n"
+            )
+            pom = pom[:insert_point] + swagger_dep + pom[insert_point:]
+            fixes_applied.append("[generic] Pinned swagger-annotations to 2.2.21")
+
+    if "<groupId>jakarta.validation</groupId>" not in pom:
+        insert_point = pom.find("<dependencies>")
+        if insert_point != -1:
+            insert_point += len("<dependencies>")
+            validation_dep = (
+                "\n        <dependency>\n"
+                "            <groupId>jakarta.validation</groupId>\n"
+                "            <artifactId>jakarta.validation-api</artifactId>\n"
+                "            <version>3.0.2</version>\n"
+                "        </dependency>\n"
+            )
+            pom = pom[:insert_point] + validation_dep + pom[insert_point:]
+            fixes_applied.append("[generic] Pinned jakarta.validation-api to 3.0.2")
+
+    # Single write, after ALL pom edits above (previously this wrote too
+    # early and silently discarded the validation-api pin - now fixed)
+    with open(pom_path, "w", encoding="utf-8") as f:
+        f.write(pom)
+
+    return fixes_applied
 
     if not _pom_has_dependency(pom, "io.swagger.core.v3"):
         pom = _insert_dependency(pom, "io.swagger.core.v3", "swagger-annotations", "2.2.21")
@@ -355,7 +395,7 @@ def apply_project_specific_fixes(legacy_app_dir):
     )
     if os.path.exists(dead_file):
         os.remove(dead_file)
-        fixes_applied.append("Removed dead ApplicationSwaggerConfig.java (Springfox workaround)")
+        fixes_applied.append("[project-specific] Removed dead ApplicationSwaggerConfig.java")
 
     jpql_fixes = [
         ("repository/jpa/JpaPetRepositoryImpl.java", "WHERE pet_id=", "WHERE visit.pet.id="),
@@ -372,7 +412,7 @@ def apply_project_specific_fixes(legacy_app_dir):
                 src = src.replace(old, new)
                 with open(full_path, "w", encoding="utf-8") as f:
                     f.write(src)
-                fixes_applied.append(f"Fixed JPQL column reference in {rel_path}")
+                fixes_applied.append(f"[project-specific] Fixed JPQL column reference in {rel_path}")
 
     spec_path = os.path.join(legacy_app_dir, "src/main/resources/api-docs.yml")
     if os.path.exists(spec_path):
@@ -384,7 +424,7 @@ def apply_project_specific_fixes(legacy_app_dir):
             spec = spec.replace(old_required, new_required)
             with open(spec_path, "w", encoding="utf-8") as f:
                 f.write(spec)
-            fixes_applied.append("Added missing 'name' to PetType required fields in api-docs.yml")
+            fixes_applied.append("[project-specific] Added missing 'name' to PetType required fields")
 
     return fixes_applied
 
