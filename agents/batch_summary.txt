@@ -1,0 +1,20 @@
+=== app7-h2crud (https://github.com/bezkoder/spring-boot-h2-database-crud) ===
+PASSED - ALL STAGES CLEAN
+
+=== app8-restdemo (https://github.com/snehal0087/SpringBootRestDemo) ===
+FAILED STAGES: Migration (OpenRewrite), Build verification after migration, Generic build-failure diagnosis
+
+=== app9-crudh2 (https://github.com/santhoshvernekar/sample-spring-boot-crud-example-with-h2) ===
+PASSED - ALL STAGES CLEAN
+
+=== app10-example (https://github.com/cip-p/spring-boot-example) ===
+PASSED - ALL STAGES CLEAN
+
+=== app11-atomize (https://github.com/atomize/springboot-h2-rest_api-example) ===
+FAILED STAGES: Build verification after migration, Build verification after diagnosis
+
+=== app12-rafsan (https://github.com/rafsan-jany/spring-boot-rest-api-h2-database) ===
+PASSED - ALL STAGES CLEAN
+
+=== app13-vicky (https://github.com/iamvickyav/spring-boot-data-H2-embedded) ===
+FAILED STAGES: Test generation

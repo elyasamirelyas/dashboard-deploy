@@ -22,4 +22,10 @@ __pycache__/
 *.pyc
 
 legacy-app-demo-run/
-legacy-app-fresh-run/
+legacy-app-fresh-run/target/
+*.class
+.idea/
+*.iml
+dependency-check-data/
+*.mv.db
+*.trace.db

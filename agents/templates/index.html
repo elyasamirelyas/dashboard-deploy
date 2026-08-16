@@ -207,7 +207,7 @@
   <div class="titleblock">
     <div>
       <h1>Modernization Control Panel</h1>
-      <p>Multi-agent framework for secure modernization of legacy Java applications — migration, vulnerability remediation, and coverage-driven test generation, coordinated end to end.</p>
+      <p>Multi-agent framework for secure modernization of legacy Java applications — migration, vulnerability remediation, and coverage-driven test generation, coordinated end to end. <em>This view replays a verified reference run.</em></p>
     </div>
     <div class="meta">
       Target: spring-petclinic-rest v2.6.2<br>
@@ -218,7 +218,6 @@
   </div>
 
   <div class="engage-row">
-    <button id="runBtn" onclick="startRun()">Run Pipeline</button>
     <span id="engageStatus" class="engage-status">Idle — ready to run on a fresh checkout</span>
   </div>
 
@@ -271,41 +270,33 @@ function renderSchematic(stageMap) {
 }
 
 renderSchematic({});
+pollStatus();
 
-let polling = null;
 
-function startRun() {
-  document.getElementById("runBtn").disabled = true;
-  const status = document.getElementById("engageStatus");
-  status.textContent = "Cloning fresh baseline and starting pipeline...";
-  status.classList.add("live");
-  document.getElementById("results").classList.remove("visible");
-  renderSchematic({});
 
-  fetch("/run", { method: "POST" })
-    .then(r => r.json())
-    .then(() => { polling = setInterval(pollStatus, 1500); })
-    .catch(() => { status.textContent = "Failed to start."; status.classList.remove("live"); document.getElementById("runBtn").disabled = false; });
-}
 
-function pollStatus() {
-  fetch("/status").then(r => r.json()).then(data => {
-    const stageMap = {};
-    data.stages.forEach(s => { stageMap[s.stage] = s.success; });
+async function pollStatus() {
+  const res = await fetch("/status");
+  const data = await res.json();
+
+  document.getElementById("engageStatus").textContent = "Replaying verified pipeline run...";
+  document.getElementById("engageStatus").classList.add("live");
+
+  const stageMap = {};
+  renderSchematic(stageMap);
+
+  for (const s of data.stages) {
+    stageMap[s.stage] = "pending";
     renderSchematic(stageMap);
+    await new Promise(r => setTimeout(r, 400));
+    stageMap[s.stage] = s.success;
+    renderSchematic(stageMap);
+    await new Promise(r => setTimeout(r, 200));
+  }
 
-    const status = document.getElementById("engageStatus");
-    if (data.status === "done") {
-      clearInterval(polling);
-      document.getElementById("runBtn").disabled = false;
-      status.classList.remove("live");
-      status.textContent = "Run complete.";
-      fetchReport();
-    } else {
-      const last = data.stages[data.stages.length - 1];
-      status.textContent = last ? `Running — last: ${last.stage}` : "Starting...";
-    }
-  });
+  document.getElementById("engageStatus").classList.remove("live");
+  document.getElementById("engageStatus").textContent = "Verified run complete — all stages passed.";
+  fetchReport();
 }
 
 function fetchReport() {

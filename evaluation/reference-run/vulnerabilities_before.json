@@ -5,11 +5,11 @@
         "dataSource": [
 {
                 "name": "NVD API Last Checked",
-                "timestamp": "2026-07-26T15:45:01+01"
+                "timestamp": "2026-07-29T17:52:35+01"
             }
 ,{
                 "name": "NVD API Last Modified",
-                "timestamp": "2026-07-26T13:17:12Z"
+                "timestamp": "2026-07-29T16:51:18Z"
             }
         ]
 
@@ -17,7 +17,7 @@
     },
     "projectInfo": {
         "name": "spring-petclinic-rest",
-"groupID":"org.springframework.samples","artifactID":"spring-petclinic-rest","version":"2.6.2",        "reportDate": "2026-07-26T14:45:31.091174200Z",
+"groupID":"org.springframework.samples","artifactID":"spring-petclinic-rest","version":"2.6.2",        "reportDate": "2026-07-29T17:01:16.102942400Z",
         "credits": {
             "NVD": "This product uses the NVD API but is not endorsed or certified by the NVD. This report contains data retrieved from the National Vulnerability Database: https://nvd.nist.gov",
             "CISA": "This report may contain data retrieved from the CISA Known Exploited Vulnerability Catalog: https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
@@ -7787,10 +7787,6 @@
                     {
                         "id": "pkg:maven\/jakarta.transaction\/jakarta.transaction-api@1.3.3"
 ,"confidence": "HIGH"                    }
-            ]                ,"vulnerabilityIds": [
-                {
-                    "id": "cpe:2.3:a:oracle:projects:1.3.3:*:*:*:*:*:*:*"
-,"confidence": "LOW"                }
             ]
         },{
             "isVirtual": false,
@@ -29477,6 +29473,616 @@
 ,"versionEndExcluding":"3.4.0"                        }
                     }                ]
                 }, {
+                "source": "NVD",
+                "name": "CVE-2026-65902",
+                    "severity" : "MEDIUM",
+                    "cvssv3": {
+                        "baseScore": 6.1
+                        ,"attackVector": "NETWORK"
+                        ,"attackComplexity": "LOW"
+                        ,"privilegesRequired": "NONE"
+                        ,"userInteraction": "REQUIRED"
+                        ,"scope": "CHANGED"
+                        ,"confidentialityImpact": "LOW"
+                        ,"integrityImpact": "LOW"
+                        ,"availabilityImpact": "NONE"
+                        ,"baseSeverity": "MEDIUM"
+,"exploitabilityScore": "2.8","impactScore": "2.7","version": "3.1"                    },
+                    "cvssv4": {
+                        "vectorString": "CVSS:4.0\/AV:N\/AC:L\/AT:N\/PR:N\/UI:P\/VC:L\/VI:L\/VA:N\/SC:L\/SI:L\/SA:N\/E:X\/CR:X\/IR:X\/AR:X\/MAV:X\/MAC:X\/MAT:X\/MPR:X\/MUI:X\/MVC:X\/MVI:X\/MVA:X\/MSC:X\/MSI:X\/MSA:X\/S:X\/AU:X\/R:X\/V:X\/RE:X\/U:X"
+                        ,"source": "disclosure@vulncheck.com"
+                        ,"type": "Secondary"
+                        ,"version": "4.0"
+                        ,"attackVector": "NETWORK"
+                        ,"attackComplexity": "LOW"
+                        ,"attackRequirements": "NONE"
+                        ,"privilegesRequired": "NONE"
+                        ,"userInteraction": "PASSIVE"
+                        ,"vulnerableSystemConfidentiality": "LOW"
+                        ,"vulnerableSystemIntegrity": "LOW"
+                        ,"vulnerableSystemAvailability": "NONE"
+                        ,"subsequentSystemConfidentiality": "LOW"
+                        ,"subsequentSystemIntegrity": "LOW"
+                        ,"subsequentSystemAvailability": "NONE"
+                        ,"exploitMaturity": "NOT_DEFINED"
+                        ,"confidentialityRequirements": "NOT_DEFINED"
+                        ,"integrityRequirements": "NOT_DEFINED"
+                        ,"availabilityRequirements": "NOT_DEFINED"
+                        ,"modifiedAttackVector": "NOT_DEFINED"
+                        ,"modifiedAttackComplexity": "NOT_DEFINED"
+                        ,"modifiedAttackRequirements": "NOT_DEFINED"
+                        ,"modifiedPrivilegesRequired": "NOT_DEFINED"
+                        ,"modifiedUserInteraction": "NOT_DEFINED"
+                        ,"modifiedVulnerableSystemConfidentiality": "NOT_DEFINED"
+                        ,"modifiedVulnerableSystemIntegrity": "NOT_DEFINED"
+                        ,"modifiedVulnerableSystemAvailability": "NOT_DEFINED"
+                        ,"modifiedSubsequentSystemConfidentiality": "NOT_DEFINED"
+                        ,"modifiedSubsequentSystemIntegrity": "NOT_DEFINED"
+                        ,"modifiedSubsequentSystemAvailability": "NOT_DEFINED"
+                        ,"safety": "NOT_DEFINED"
+                        ,"automatable": "NOT_DEFINED"
+                        ,"recovery": "NOT_DEFINED"
+                        ,"valueDensity": "NOT_DEFINED"
+                        ,"vulnerabilityResponseEffort": "NOT_DEFINED"
+                        ,"providerUrgency": "NOT_DEFINED"
+                        ,"baseScore": 5.3
+                        ,"baseSeverity": "MEDIUM"
+                    },
+                    "cwes": [
+                        "CWE-501"                    ],
+                "description": "DOMPurify before 3.4.7 (affected versions <= 3.4.5) passes direct references to the module-level DEFAULT_ALLOWED_TAGS and DEFAULT_ALLOWED_ATTR sets to the uponSanitizeElement and uponSanitizeAttribute hooks via data.allowedTags \/ data.allowedAttributes when sanitize is called without an explicit cfg.ALLOWED_TAGS \/ cfg.ALLOWED_ATTR array. A hook that mutates these fields permanently widens the default allow-lists for the lifetime of the DOMPurify instance, so all subsequent default-config sanitize calls inherit the widened defaults and attacker payloads using the poisoned tag\/attribute name survive sanitization. removeAllHooks(), clearConfig(), and passing a fresh cfg do not recover the state; only constructing a new DOMPurify instance does.",
+                "notes": "",
+                "references": [
+ {
+                        "source": "disclosure@vulncheck.com"
+,"url": "https:\/\/github.com\/cure53\/DOMPurify\/commit\/7996f1dc78eb8b7922388aed75d94a9f8fad9a36","name": "PATCH"                    }, {
+                        "source": "info"
+,"url": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-76mc-f452-cxcm","name": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-76mc-f452-cxcm"                    }, {
+                        "source": "disclosure@vulncheck.com"
+,"url": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-76mc-f452-cxcm","name": "EXPLOIT,THIRD_PARTY_ADVISORY"                    }, {
+                        "source": "disclosure@vulncheck.com"
+,"url": "https:\/\/www.vulncheck.com\/advisories\/dompurify-before-hook-mutation-pollution-via-allowedtags","name": "THIRD_PARTY_ADVISORY"                    }, {
+                        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
+,"url": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-76mc-f452-cxcm","name": "EXPLOIT,THIRD_PARTY_ADVISORY"                    }                ],
+                "vulnerableSoftware": [
+ {
+                        "software": { 
+                            "id":"cpe:2.3:a:cure53:dompurify:*:*:*:*:*:*:*:*"
+,"versionEndExcluding":"3.4.7"                        }
+                    }                ]
+                }, {
+                "source": "NVD",
+                "name": "CVE-2026-65914",
+                    "severity" : "MEDIUM",
+                    "cvssv3": {
+                        "baseScore": 6.1
+                        ,"attackVector": "NETWORK"
+                        ,"attackComplexity": "LOW"
+                        ,"privilegesRequired": "NONE"
+                        ,"userInteraction": "REQUIRED"
+                        ,"scope": "CHANGED"
+                        ,"confidentialityImpact": "LOW"
+                        ,"integrityImpact": "LOW"
+                        ,"availabilityImpact": "NONE"
+                        ,"baseSeverity": "MEDIUM"
+,"exploitabilityScore": "2.8","impactScore": "2.7","version": "3.1"                    },
+                    "cvssv4": {
+                        "vectorString": "CVSS:4.0\/AV:N\/AC:L\/AT:N\/PR:N\/UI:P\/VC:N\/VI:N\/VA:N\/SC:L\/SI:L\/SA:N\/E:X\/CR:X\/IR:X\/AR:X\/MAV:X\/MAC:X\/MAT:X\/MPR:X\/MUI:X\/MVC:X\/MVI:X\/MVA:X\/MSC:X\/MSI:X\/MSA:X\/S:X\/AU:X\/R:X\/V:X\/RE:X\/U:X"
+                        ,"source": "disclosure@vulncheck.com"
+                        ,"type": "Secondary"
+                        ,"version": "4.0"
+                        ,"attackVector": "NETWORK"
+                        ,"attackComplexity": "LOW"
+                        ,"attackRequirements": "NONE"
+                        ,"privilegesRequired": "NONE"
+                        ,"userInteraction": "PASSIVE"
+                        ,"vulnerableSystemConfidentiality": "NONE"
+                        ,"vulnerableSystemIntegrity": "NONE"
+                        ,"vulnerableSystemAvailability": "NONE"
+                        ,"subsequentSystemConfidentiality": "LOW"
+                        ,"subsequentSystemIntegrity": "LOW"
+                        ,"subsequentSystemAvailability": "NONE"
+                        ,"exploitMaturity": "NOT_DEFINED"
+                        ,"confidentialityRequirements": "NOT_DEFINED"
+                        ,"integrityRequirements": "NOT_DEFINED"
+                        ,"availabilityRequirements": "NOT_DEFINED"
+                        ,"modifiedAttackVector": "NOT_DEFINED"
+                        ,"modifiedAttackComplexity": "NOT_DEFINED"
+                        ,"modifiedAttackRequirements": "NOT_DEFINED"
+                        ,"modifiedPrivilegesRequired": "NOT_DEFINED"
+                        ,"modifiedUserInteraction": "NOT_DEFINED"
+                        ,"modifiedVulnerableSystemConfidentiality": "NOT_DEFINED"
+                        ,"modifiedVulnerableSystemIntegrity": "NOT_DEFINED"
+                        ,"modifiedVulnerableSystemAvailability": "NOT_DEFINED"
+                        ,"modifiedSubsequentSystemConfidentiality": "NOT_DEFINED"
+                        ,"modifiedSubsequentSystemIntegrity": "NOT_DEFINED"
+                        ,"modifiedSubsequentSystemAvailability": "NOT_DEFINED"
+                        ,"safety": "NOT_DEFINED"
+                        ,"automatable": "NOT_DEFINED"
+                        ,"recovery": "NOT_DEFINED"
+                        ,"valueDensity": "NOT_DEFINED"
+                        ,"vulnerabilityResponseEffort": "NOT_DEFINED"
+                        ,"providerUrgency": "NOT_DEFINED"
+                        ,"baseScore": 5.3
+                        ,"baseSeverity": "MEDIUM"
+                    },
+                    "cwes": [
+                        "CWE-79"                    ],
+                "description": "DOMPurify before 3.3.2 contains a mutation-XSS vulnerability when sanitized HTML is reinserted into special parsing contexts using innerHTML with wrappers like script, xmp, iframe, noembed, noframes, or noscript. Attackers can craft payloads with closing sequences that break out of the wrapper context during reparsing, reactivating dangerous markup with event handlers to execute JavaScript.",
+                "notes": "",
+                "references": [
+ {
+                        "source": "disclosure@vulncheck.com"
+,"url": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-h8r8-wccr-v5f2","name": "EXPLOIT,THIRD_PARTY_ADVISORY"                    }, {
+                        "source": "disclosure@vulncheck.com"
+,"url": "https:\/\/www.vulncheck.com\/advisories\/dompurify-before-mutation-xss-via-re-contextualization","name": "THIRD_PARTY_ADVISORY"                    }, {
+                        "source": "info"
+,"url": "https:\/\/github.com\/cure53\/DOMPurify\/releases\/tag\/3.3.2","name": "https:\/\/github.com\/cure53\/DOMPurify\/releases\/tag\/3.3.2"                    }, {
+                        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
+,"url": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-h8r8-wccr-v5f2","name": "EXPLOIT,THIRD_PARTY_ADVISORY"                    }, {
+                        "source": "info"
+,"url": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-h8r8-wccr-v5f2","name": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-h8r8-wccr-v5f2"                    }                ],
+                "vulnerableSoftware": [
+ {
+                        "software": { 
+                            "id":"cpe:2.3:a:cure53:dompurify:*:*:*:*:*:*:*:*"
+,"versionEndExcluding":"3.3.2"                        }
+                    }                ]
+                }, {
+                "source": "NVD",
+                "name": "CVE-2026-65898",
+                    "severity" : "MEDIUM",
+                    "cvssv3": {
+                        "baseScore": 7.2
+                        ,"attackVector": "NETWORK"
+                        ,"attackComplexity": "LOW"
+                        ,"privilegesRequired": "NONE"
+                        ,"userInteraction": "NONE"
+                        ,"scope": "CHANGED"
+                        ,"confidentialityImpact": "LOW"
+                        ,"integrityImpact": "LOW"
+                        ,"availabilityImpact": "NONE"
+                        ,"baseSeverity": "HIGH"
+,"exploitabilityScore": "3.9","impactScore": "2.7","version": "3.1"                    },
+                    "cvssv4": {
+                        "vectorString": "CVSS:4.0\/AV:N\/AC:L\/AT:N\/PR:L\/UI:P\/VC:N\/VI:N\/VA:N\/SC:L\/SI:L\/SA:N\/E:X\/CR:X\/IR:X\/AR:X\/MAV:X\/MAC:X\/MAT:X\/MPR:X\/MUI:X\/MVC:X\/MVI:X\/MVA:X\/MSC:X\/MSI:X\/MSA:X\/S:X\/AU:X\/R:X\/V:X\/RE:X\/U:X"
+                        ,"source": "disclosure@vulncheck.com"
+                        ,"type": "Secondary"
+                        ,"version": "4.0"
+                        ,"attackVector": "NETWORK"
+                        ,"attackComplexity": "LOW"
+                        ,"attackRequirements": "NONE"
+                        ,"privilegesRequired": "LOW"
+                        ,"userInteraction": "PASSIVE"
+                        ,"vulnerableSystemConfidentiality": "NONE"
+                        ,"vulnerableSystemIntegrity": "NONE"
+                        ,"vulnerableSystemAvailability": "NONE"
+                        ,"subsequentSystemConfidentiality": "LOW"
+                        ,"subsequentSystemIntegrity": "LOW"
+                        ,"subsequentSystemAvailability": "NONE"
+                        ,"exploitMaturity": "NOT_DEFINED"
+                        ,"confidentialityRequirements": "NOT_DEFINED"
+                        ,"integrityRequirements": "NOT_DEFINED"
+                        ,"availabilityRequirements": "NOT_DEFINED"
+                        ,"modifiedAttackVector": "NOT_DEFINED"
+                        ,"modifiedAttackComplexity": "NOT_DEFINED"
+                        ,"modifiedAttackRequirements": "NOT_DEFINED"
+                        ,"modifiedPrivilegesRequired": "NOT_DEFINED"
+                        ,"modifiedUserInteraction": "NOT_DEFINED"
+                        ,"modifiedVulnerableSystemConfidentiality": "NOT_DEFINED"
+                        ,"modifiedVulnerableSystemIntegrity": "NOT_DEFINED"
+                        ,"modifiedVulnerableSystemAvailability": "NOT_DEFINED"
+                        ,"modifiedSubsequentSystemConfidentiality": "NOT_DEFINED"
+                        ,"modifiedSubsequentSystemIntegrity": "NOT_DEFINED"
+                        ,"modifiedSubsequentSystemAvailability": "NOT_DEFINED"
+                        ,"safety": "NOT_DEFINED"
+                        ,"automatable": "NOT_DEFINED"
+                        ,"recovery": "NOT_DEFINED"
+                        ,"valueDensity": "NOT_DEFINED"
+                        ,"vulnerabilityResponseEffort": "NOT_DEFINED"
+                        ,"providerUrgency": "NOT_DEFINED"
+                        ,"baseScore": 5.1
+                        ,"baseSeverity": "MEDIUM"
+                    },
+                    "cwes": [
+                        "CWE-79"                    ],
+                "description": "DOMPurify before 3.4.11 fails to clone the ALLOWED_ATTR allowlist when setConfig() is used with an uponSanitizeAttribute hook, allowing the hook to permanently mutate the shared allowlist. Attackers can register a hook that conditionally allows dangerous attributes like onerror for trusted elements, then submit untrusted content that inherits the polluted allowlist and executes event handlers as stored XSS.",
+                "notes": "",
+                "references": [
+ {
+                        "source": "disclosure@vulncheck.com"
+,"url": "https:\/\/www.vulncheck.com\/advisories\/dompurify-before-permanent-attribute-allowlist-pollution-via-setconfig","name": "THIRD_PARTY_ADVISORY"                    }, {
+                        "source": "disclosure@vulncheck.com"
+,"url": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-cmwh-pvxp-8882","name": "EXPLOIT,THIRD_PARTY_ADVISORY"                    }, {
+                        "source": "info"
+,"url": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-cmwh-pvxp-8882","name": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-cmwh-pvxp-8882"                    }, {
+                        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
+,"url": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-cmwh-pvxp-8882","name": "EXPLOIT,THIRD_PARTY_ADVISORY"                    }                ],
+                "vulnerableSoftware": [
+ {
+                        "software": { 
+                            "id":"cpe:2.3:a:cure53:dompurify:*:*:*:*:*:*:*:*"
+,"versionEndExcluding":"3.4.11"                        }
+                    }                ]
+                }, {
+                "source": "NVD",
+                "name": "CVE-2026-65899",
+                    "severity" : "MEDIUM",
+                    "cvssv3": {
+                        "baseScore": 6.1
+                        ,"attackVector": "NETWORK"
+                        ,"attackComplexity": "LOW"
+                        ,"privilegesRequired": "NONE"
+                        ,"userInteraction": "REQUIRED"
+                        ,"scope": "CHANGED"
+                        ,"confidentialityImpact": "LOW"
+                        ,"integrityImpact": "LOW"
+                        ,"availabilityImpact": "NONE"
+                        ,"baseSeverity": "MEDIUM"
+,"exploitabilityScore": "2.8","impactScore": "2.7","version": "3.1"                    },
+                    "cvssv4": {
+                        "vectorString": "CVSS:4.0\/AV:N\/AC:L\/AT:N\/PR:N\/UI:A\/VC:N\/VI:N\/VA:N\/SC:L\/SI:L\/SA:N\/E:X\/CR:X\/IR:X\/AR:X\/MAV:X\/MAC:X\/MAT:X\/MPR:X\/MUI:X\/MVC:X\/MVI:X\/MVA:X\/MSC:X\/MSI:X\/MSA:X\/S:X\/AU:X\/R:X\/V:X\/RE:X\/U:X"
+                        ,"source": "disclosure@vulncheck.com"
+                        ,"type": "Secondary"
+                        ,"version": "4.0"
+                        ,"attackVector": "NETWORK"
+                        ,"attackComplexity": "LOW"
+                        ,"attackRequirements": "NONE"
+                        ,"privilegesRequired": "NONE"
+                        ,"userInteraction": "ACTIVE"
+                        ,"vulnerableSystemConfidentiality": "NONE"
+                        ,"vulnerableSystemIntegrity": "NONE"
+                        ,"vulnerableSystemAvailability": "NONE"
+                        ,"subsequentSystemConfidentiality": "LOW"
+                        ,"subsequentSystemIntegrity": "LOW"
+                        ,"subsequentSystemAvailability": "NONE"
+                        ,"exploitMaturity": "NOT_DEFINED"
+                        ,"confidentialityRequirements": "NOT_DEFINED"
+                        ,"integrityRequirements": "NOT_DEFINED"
+                        ,"availabilityRequirements": "NOT_DEFINED"
+                        ,"modifiedAttackVector": "NOT_DEFINED"
+                        ,"modifiedAttackComplexity": "NOT_DEFINED"
+                        ,"modifiedAttackRequirements": "NOT_DEFINED"
+                        ,"modifiedPrivilegesRequired": "NOT_DEFINED"
+                        ,"modifiedUserInteraction": "NOT_DEFINED"
+                        ,"modifiedVulnerableSystemConfidentiality": "NOT_DEFINED"
+                        ,"modifiedVulnerableSystemIntegrity": "NOT_DEFINED"
+                        ,"modifiedVulnerableSystemAvailability": "NOT_DEFINED"
+                        ,"modifiedSubsequentSystemConfidentiality": "NOT_DEFINED"
+                        ,"modifiedSubsequentSystemIntegrity": "NOT_DEFINED"
+                        ,"modifiedSubsequentSystemAvailability": "NOT_DEFINED"
+                        ,"safety": "NOT_DEFINED"
+                        ,"automatable": "NOT_DEFINED"
+                        ,"recovery": "NOT_DEFINED"
+                        ,"valueDensity": "NOT_DEFINED"
+                        ,"vulnerabilityResponseEffort": "NOT_DEFINED"
+                        ,"providerUrgency": "NOT_DEFINED"
+                        ,"baseScore": 5.1
+                        ,"baseSeverity": "MEDIUM"
+                    },
+                    "cwes": [
+                        "CWE-693"                    ],
+                "description": "DOMPurify 3.0.0 before 3.4.9 does not reset the retained Trusted Types policy when clearConfig() is called, so a DOMPurify instance reused across trust boundaries stays bound to a previously supplied TRUSTED_TYPES_POLICY. A later caller that requests RETURN_TRUSTED_TYPE output receives a TrustedHTML object created by the old (potentially unsafe) policy rather than a clean default, which can lead to script execution at a Trusted Types sink. Passing TRUSTED_TYPES_POLICY: null on the later call also does not clear the retained policy.",
+                "notes": "",
+                "references": [
+ {
+                        "source": "info"
+,"url": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-vxr8-fq34-vvx9","name": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-vxr8-fq34-vvx9"                    }, {
+                        "source": "disclosure@vulncheck.com"
+,"url": "https:\/\/github.com\/cure53\/DOMPurify\/commit\/825e617753ac1169306a542d3174a77f717a0cf6","name": "PATCH"                    }, {
+                        "source": "disclosure@vulncheck.com"
+,"url": "https:\/\/www.vulncheck.com\/advisories\/dompurify-before-trusted-types-policy-state-contamination","name": "THIRD_PARTY_ADVISORY"                    }, {
+                        "source": "disclosure@vulncheck.com"
+,"url": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-vxr8-fq34-vvx9","name": "EXPLOIT,THIRD_PARTY_ADVISORY"                    }                ],
+                "vulnerableSoftware": [
+ {
+                        "software": { 
+                            "id":"cpe:2.3:a:cure53:dompurify:*:*:*:*:*:*:*:*"
+,"versionStartIncluding":"3.0.0","versionEndExcluding":"3.4.9"                        }
+                    }                ]
+                }, {
+                "source": "NVD",
+                "name": "CVE-2026-65901",
+                    "severity" : "MEDIUM",
+                    "cvssv3": {
+                        "baseScore": 6.1
+                        ,"attackVector": "NETWORK"
+                        ,"attackComplexity": "LOW"
+                        ,"privilegesRequired": "NONE"
+                        ,"userInteraction": "REQUIRED"
+                        ,"scope": "CHANGED"
+                        ,"confidentialityImpact": "LOW"
+                        ,"integrityImpact": "LOW"
+                        ,"availabilityImpact": "NONE"
+                        ,"baseSeverity": "MEDIUM"
+,"exploitabilityScore": "2.8","impactScore": "2.7","version": "3.1"                    },
+                    "cvssv4": {
+                        "vectorString": "CVSS:4.0\/AV:N\/AC:L\/AT:N\/PR:N\/UI:A\/VC:N\/VI:N\/VA:N\/SC:L\/SI:L\/SA:N\/E:X\/CR:X\/IR:X\/AR:X\/MAV:X\/MAC:X\/MAT:X\/MPR:X\/MUI:X\/MVC:X\/MVI:X\/MVA:X\/MSC:X\/MSI:X\/MSA:X\/S:X\/AU:X\/R:X\/V:X\/RE:X\/U:X"
+                        ,"source": "disclosure@vulncheck.com"
+                        ,"type": "Secondary"
+                        ,"version": "4.0"
+                        ,"attackVector": "NETWORK"
+                        ,"attackComplexity": "LOW"
+                        ,"attackRequirements": "NONE"
+                        ,"privilegesRequired": "NONE"
+                        ,"userInteraction": "ACTIVE"
+                        ,"vulnerableSystemConfidentiality": "NONE"
+                        ,"vulnerableSystemIntegrity": "NONE"
+                        ,"vulnerableSystemAvailability": "NONE"
+                        ,"subsequentSystemConfidentiality": "LOW"
+                        ,"subsequentSystemIntegrity": "LOW"
+                        ,"subsequentSystemAvailability": "NONE"
+                        ,"exploitMaturity": "NOT_DEFINED"
+                        ,"confidentialityRequirements": "NOT_DEFINED"
+                        ,"integrityRequirements": "NOT_DEFINED"
+                        ,"availabilityRequirements": "NOT_DEFINED"
+                        ,"modifiedAttackVector": "NOT_DEFINED"
+                        ,"modifiedAttackComplexity": "NOT_DEFINED"
+                        ,"modifiedAttackRequirements": "NOT_DEFINED"
+                        ,"modifiedPrivilegesRequired": "NOT_DEFINED"
+                        ,"modifiedUserInteraction": "NOT_DEFINED"
+                        ,"modifiedVulnerableSystemConfidentiality": "NOT_DEFINED"
+                        ,"modifiedVulnerableSystemIntegrity": "NOT_DEFINED"
+                        ,"modifiedVulnerableSystemAvailability": "NOT_DEFINED"
+                        ,"modifiedSubsequentSystemConfidentiality": "NOT_DEFINED"
+                        ,"modifiedSubsequentSystemIntegrity": "NOT_DEFINED"
+                        ,"modifiedSubsequentSystemAvailability": "NOT_DEFINED"
+                        ,"safety": "NOT_DEFINED"
+                        ,"automatable": "NOT_DEFINED"
+                        ,"recovery": "NOT_DEFINED"
+                        ,"valueDensity": "NOT_DEFINED"
+                        ,"vulnerabilityResponseEffort": "NOT_DEFINED"
+                        ,"providerUrgency": "NOT_DEFINED"
+                        ,"baseScore": 5.1
+                        ,"baseSeverity": "MEDIUM"
+                    },
+                    "cwes": [
+                        "CWE-79"                    ],
+                "description": "DOMPurify through 3.4.6 contains a cross-site scripting vulnerability in IN_PLACE mode that trusts attacker-controlled nodeName on live non-form nodes. Attackers can supply hostile live DOM objects with real script children whose observable nodeName is clobbered to appear as allowed elements, causing scripts to execute when the sanitized tree is inserted into a live document.",
+                "notes": "",
+                "references": [
+ {
+                        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
+,"url": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-x4vx-rjvf-j5p4","name": "EXPLOIT,THIRD_PARTY_ADVISORY"                    }, {
+                        "source": "disclosure@vulncheck.com"
+,"url": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-x4vx-rjvf-j5p4","name": "EXPLOIT,THIRD_PARTY_ADVISORY"                    }, {
+                        "source": "info"
+,"url": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-x4vx-rjvf-j5p4","name": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-x4vx-rjvf-j5p4"                    }, {
+                        "source": "disclosure@vulncheck.com"
+,"url": "https:\/\/www.vulncheck.com\/advisories\/dompurify-cross-site-scripting-via-in-place-nodename","name": "THIRD_PARTY_ADVISORY"                    }                ],
+                "vulnerableSoftware": [
+ {
+                        "software": { 
+                            "id":"cpe:2.3:a:cure53:dompurify:*:*:*:*:*:*:*:*"
+,"versionEndExcluding":"3.4.7"                        }
+                    }                ]
+                }, {
+                "source": "NVD",
+                "name": "CVE-2026-65903",
+                    "severity" : "MEDIUM",
+                    "cvssv3": {
+                        "baseScore": 6.1
+                        ,"attackVector": "NETWORK"
+                        ,"attackComplexity": "LOW"
+                        ,"privilegesRequired": "NONE"
+                        ,"userInteraction": "REQUIRED"
+                        ,"scope": "CHANGED"
+                        ,"confidentialityImpact": "LOW"
+                        ,"integrityImpact": "LOW"
+                        ,"availabilityImpact": "NONE"
+                        ,"baseSeverity": "MEDIUM"
+,"exploitabilityScore": "2.8","impactScore": "2.7","version": "3.1"                    },
+                    "cvssv4": {
+                        "vectorString": "CVSS:4.0\/AV:N\/AC:L\/AT:N\/PR:N\/UI:A\/VC:N\/VI:N\/VA:N\/SC:L\/SI:L\/SA:N\/E:X\/CR:X\/IR:X\/AR:X\/MAV:X\/MAC:X\/MAT:X\/MPR:X\/MUI:X\/MVC:X\/MVI:X\/MVA:X\/MSC:X\/MSI:X\/MSA:X\/S:X\/AU:X\/R:X\/V:X\/RE:X\/U:X"
+                        ,"source": "disclosure@vulncheck.com"
+                        ,"type": "Secondary"
+                        ,"version": "4.0"
+                        ,"attackVector": "NETWORK"
+                        ,"attackComplexity": "LOW"
+                        ,"attackRequirements": "NONE"
+                        ,"privilegesRequired": "NONE"
+                        ,"userInteraction": "ACTIVE"
+                        ,"vulnerableSystemConfidentiality": "NONE"
+                        ,"vulnerableSystemIntegrity": "NONE"
+                        ,"vulnerableSystemAvailability": "NONE"
+                        ,"subsequentSystemConfidentiality": "LOW"
+                        ,"subsequentSystemIntegrity": "LOW"
+                        ,"subsequentSystemAvailability": "NONE"
+                        ,"exploitMaturity": "NOT_DEFINED"
+                        ,"confidentialityRequirements": "NOT_DEFINED"
+                        ,"integrityRequirements": "NOT_DEFINED"
+                        ,"availabilityRequirements": "NOT_DEFINED"
+                        ,"modifiedAttackVector": "NOT_DEFINED"
+                        ,"modifiedAttackComplexity": "NOT_DEFINED"
+                        ,"modifiedAttackRequirements": "NOT_DEFINED"
+                        ,"modifiedPrivilegesRequired": "NOT_DEFINED"
+                        ,"modifiedUserInteraction": "NOT_DEFINED"
+                        ,"modifiedVulnerableSystemConfidentiality": "NOT_DEFINED"
+                        ,"modifiedVulnerableSystemIntegrity": "NOT_DEFINED"
+                        ,"modifiedVulnerableSystemAvailability": "NOT_DEFINED"
+                        ,"modifiedSubsequentSystemConfidentiality": "NOT_DEFINED"
+                        ,"modifiedSubsequentSystemIntegrity": "NOT_DEFINED"
+                        ,"modifiedSubsequentSystemAvailability": "NOT_DEFINED"
+                        ,"safety": "NOT_DEFINED"
+                        ,"automatable": "NOT_DEFINED"
+                        ,"recovery": "NOT_DEFINED"
+                        ,"valueDensity": "NOT_DEFINED"
+                        ,"vulnerabilityResponseEffort": "NOT_DEFINED"
+                        ,"providerUrgency": "NOT_DEFINED"
+                        ,"baseScore": 5.1
+                        ,"baseSeverity": "MEDIUM"
+                    },
+                    "cwes": [
+                        "CWE-697"                    ],
+                "description": "DOMPurify before 3.4.0 contains a logic error in the ADD_TAGS function where short-circuit evaluation allows forbidden tags to bypass FORBID_TAGS restrictions. Attackers can craft input containing tags listed in FORBID_TAGS that are also added via ADD_TAGS function, causing them to be retained in sanitized output.",
+                "notes": "",
+                "references": [
+ {
+                        "source": "info"
+,"url": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-39q2-94rc-95cp","name": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-39q2-94rc-95cp"                    }, {
+                        "source": "disclosure@vulncheck.com"
+,"url": "https:\/\/www.vulncheck.com\/advisories\/dompurify-before-add-tags-function-bypasses-forbid-tags","name": "THIRD_PARTY_ADVISORY"                    }, {
+                        "source": "disclosure@vulncheck.com"
+,"url": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-39q2-94rc-95cp","name": "EXPLOIT,THIRD_PARTY_ADVISORY"                    }                ],
+                "vulnerableSoftware": [
+ {
+                        "software": { 
+                            "id":"cpe:2.3:a:cure53:dompurify:*:*:*:*:*:*:*:*"
+,"versionEndExcluding":"3.4.0"                        }
+                    }                ]
+                }, {
+                "source": "NVD",
+                "name": "CVE-2026-65912",
+                    "severity" : "MEDIUM",
+                    "cvssv3": {
+                        "baseScore": 6.1
+                        ,"attackVector": "NETWORK"
+                        ,"attackComplexity": "LOW"
+                        ,"privilegesRequired": "NONE"
+                        ,"userInteraction": "REQUIRED"
+                        ,"scope": "CHANGED"
+                        ,"confidentialityImpact": "LOW"
+                        ,"integrityImpact": "LOW"
+                        ,"availabilityImpact": "NONE"
+                        ,"baseSeverity": "MEDIUM"
+,"exploitabilityScore": "2.8","impactScore": "2.7","version": "3.1"                    },
+                    "cvssv4": {
+                        "vectorString": "CVSS:4.0\/AV:N\/AC:L\/AT:N\/PR:N\/UI:A\/VC:N\/VI:N\/VA:N\/SC:L\/SI:L\/SA:N\/E:X\/CR:X\/IR:X\/AR:X\/MAV:X\/MAC:X\/MAT:X\/MPR:X\/MUI:X\/MVC:X\/MVI:X\/MVA:X\/MSC:X\/MSI:X\/MSA:X\/S:X\/AU:X\/R:X\/V:X\/RE:X\/U:X"
+                        ,"source": "disclosure@vulncheck.com"
+                        ,"type": "Secondary"
+                        ,"version": "4.0"
+                        ,"attackVector": "NETWORK"
+                        ,"attackComplexity": "LOW"
+                        ,"attackRequirements": "NONE"
+                        ,"privilegesRequired": "NONE"
+                        ,"userInteraction": "ACTIVE"
+                        ,"vulnerableSystemConfidentiality": "NONE"
+                        ,"vulnerableSystemIntegrity": "NONE"
+                        ,"vulnerableSystemAvailability": "NONE"
+                        ,"subsequentSystemConfidentiality": "LOW"
+                        ,"subsequentSystemIntegrity": "LOW"
+                        ,"subsequentSystemAvailability": "NONE"
+                        ,"exploitMaturity": "NOT_DEFINED"
+                        ,"confidentialityRequirements": "NOT_DEFINED"
+                        ,"integrityRequirements": "NOT_DEFINED"
+                        ,"availabilityRequirements": "NOT_DEFINED"
+                        ,"modifiedAttackVector": "NOT_DEFINED"
+                        ,"modifiedAttackComplexity": "NOT_DEFINED"
+                        ,"modifiedAttackRequirements": "NOT_DEFINED"
+                        ,"modifiedPrivilegesRequired": "NOT_DEFINED"
+                        ,"modifiedUserInteraction": "NOT_DEFINED"
+                        ,"modifiedVulnerableSystemConfidentiality": "NOT_DEFINED"
+                        ,"modifiedVulnerableSystemIntegrity": "NOT_DEFINED"
+                        ,"modifiedVulnerableSystemAvailability": "NOT_DEFINED"
+                        ,"modifiedSubsequentSystemConfidentiality": "NOT_DEFINED"
+                        ,"modifiedSubsequentSystemIntegrity": "NOT_DEFINED"
+                        ,"modifiedSubsequentSystemAvailability": "NOT_DEFINED"
+                        ,"safety": "NOT_DEFINED"
+                        ,"automatable": "NOT_DEFINED"
+                        ,"recovery": "NOT_DEFINED"
+                        ,"valueDensity": "NOT_DEFINED"
+                        ,"vulnerabilityResponseEffort": "NOT_DEFINED"
+                        ,"providerUrgency": "NOT_DEFINED"
+                        ,"baseScore": 5.1
+                        ,"baseSeverity": "MEDIUM"
+                    },
+                    "cwes": [
+                        "CWE-79"                    ],
+                "description": "DOMPurify before 3.3.2 contains a URI validation bypass vulnerability when ADD_ATTR is provided as a predicate function via EXTRA_ELEMENT_HANDLING.attributeCheck. Attackers can supply a predicate that accepts specific attribute and tag combinations to bypass URI-safe validation, allowing unsafe protocols like javascript: to survive sanitization and execute as DOM-based XSS when the link is activated.",
+                "notes": "",
+                "references": [
+ {
+                        "source": "info"
+,"url": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-cjmm-f4jc-qw8r","name": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-cjmm-f4jc-qw8r"                    }, {
+                        "source": "info"
+,"url": "https:\/\/github.com\/cure53\/DOMPurify\/releases\/tag\/3.3.2","name": "https:\/\/github.com\/cure53\/DOMPurify\/releases\/tag\/3.3.2"                    }, {
+                        "source": "disclosure@vulncheck.com"
+,"url": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-cjmm-f4jc-qw8r","name": "THIRD_PARTY_ADVISORY"                    }, {
+                        "source": "disclosure@vulncheck.com"
+,"url": "https:\/\/www.vulncheck.com\/advisories\/dompurify-before-uri-validation-bypass-via-add-attr","name": "THIRD_PARTY_ADVISORY"                    }                ],
+                "vulnerableSoftware": [
+ {
+                        "software": { 
+                            "id":"cpe:2.3:a:cure53:dompurify:*:*:*:*:*:*:*:*"
+,"versionEndExcluding":"3.3.2"                        }
+                    }                ]
+                }, {
+                "source": "NVD",
+                "name": "CVE-2026-65913",
+                    "severity" : "MEDIUM",
+                    "cvssv3": {
+                        "baseScore": 6.1
+                        ,"attackVector": "NETWORK"
+                        ,"attackComplexity": "LOW"
+                        ,"privilegesRequired": "NONE"
+                        ,"userInteraction": "REQUIRED"
+                        ,"scope": "CHANGED"
+                        ,"confidentialityImpact": "LOW"
+                        ,"integrityImpact": "LOW"
+                        ,"availabilityImpact": "NONE"
+                        ,"baseSeverity": "MEDIUM"
+,"exploitabilityScore": "2.8","impactScore": "2.7","version": "3.1"                    },
+                    "cvssv4": {
+                        "vectorString": "CVSS:4.0\/AV:N\/AC:L\/AT:N\/PR:N\/UI:A\/VC:N\/VI:N\/VA:N\/SC:L\/SI:L\/SA:N\/E:X\/CR:X\/IR:X\/AR:X\/MAV:X\/MAC:X\/MAT:X\/MPR:X\/MUI:X\/MVC:X\/MVI:X\/MVA:X\/MSC:X\/MSI:X\/MSA:X\/S:X\/AU:X\/R:X\/V:X\/RE:X\/U:X"
+                        ,"source": "disclosure@vulncheck.com"
+                        ,"type": "Secondary"
+                        ,"version": "4.0"
+                        ,"attackVector": "NETWORK"
+                        ,"attackComplexity": "LOW"
+                        ,"attackRequirements": "NONE"
+                        ,"privilegesRequired": "NONE"
+                        ,"userInteraction": "ACTIVE"
+                        ,"vulnerableSystemConfidentiality": "NONE"
+                        ,"vulnerableSystemIntegrity": "NONE"
+                        ,"vulnerableSystemAvailability": "NONE"
+                        ,"subsequentSystemConfidentiality": "LOW"
+                        ,"subsequentSystemIntegrity": "LOW"
+                        ,"subsequentSystemAvailability": "NONE"
+                        ,"exploitMaturity": "NOT_DEFINED"
+                        ,"confidentialityRequirements": "NOT_DEFINED"
+                        ,"integrityRequirements": "NOT_DEFINED"
+                        ,"availabilityRequirements": "NOT_DEFINED"
+                        ,"modifiedAttackVector": "NOT_DEFINED"
+                        ,"modifiedAttackComplexity": "NOT_DEFINED"
+                        ,"modifiedAttackRequirements": "NOT_DEFINED"
+                        ,"modifiedPrivilegesRequired": "NOT_DEFINED"
+                        ,"modifiedUserInteraction": "NOT_DEFINED"
+                        ,"modifiedVulnerableSystemConfidentiality": "NOT_DEFINED"
+                        ,"modifiedVulnerableSystemIntegrity": "NOT_DEFINED"
+                        ,"modifiedVulnerableSystemAvailability": "NOT_DEFINED"
+                        ,"modifiedSubsequentSystemConfidentiality": "NOT_DEFINED"
+                        ,"modifiedSubsequentSystemIntegrity": "NOT_DEFINED"
+                        ,"modifiedSubsequentSystemAvailability": "NOT_DEFINED"
+                        ,"safety": "NOT_DEFINED"
+                        ,"automatable": "NOT_DEFINED"
+                        ,"recovery": "NOT_DEFINED"
+                        ,"valueDensity": "NOT_DEFINED"
+                        ,"vulnerabilityResponseEffort": "NOT_DEFINED"
+                        ,"providerUrgency": "NOT_DEFINED"
+                        ,"baseScore": 5.1
+                        ,"baseSeverity": "MEDIUM"
+                    },
+                    "cwes": [
+                        "CWE-1321"                    ],
+                "description": "DOMPurify before 3.3.2 contains a prototype pollution vulnerability in USE_PROFILES mode that allows attackers to bypass attribute filtering by polluting Array.prototype properties. Attackers can set Array.prototype properties like onclick to true, causing DOMPurify to accept event handlers as allowlisted attributes and resulting in DOM-based XSS when sanitized markup is rendered.",
+                "notes": "",
+                "references": [
+ {
+                        "source": "info"
+,"url": "https:\/\/github.com\/cure53\/DOMPurify\/releases\/tag\/3.3.2","name": "https:\/\/github.com\/cure53\/DOMPurify\/releases\/tag\/3.3.2"                    }, {
+                        "source": "disclosure@vulncheck.com"
+,"url": "https:\/\/www.vulncheck.com\/advisories\/dompurify-before-prototype-pollution-via-use-profiles","name": "THIRD_PARTY_ADVISORY"                    }, {
+                        "source": "info"
+,"url": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-cj63-jhhr-wcxv","name": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-cj63-jhhr-wcxv"                    }, {
+                        "source": "disclosure@vulncheck.com"
+,"url": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-cj63-jhhr-wcxv","name": "THIRD_PARTY_ADVISORY"                    }                ],
+                "vulnerableSoftware": [
+ {
+                        "software": { 
+                            "id":"cpe:2.3:a:cure53:dompurify:*:*:*:*:*:*:*:*"
+,"versionEndExcluding":"3.3.2"                        }
+                    }                ]
+                }, {
                 "source": "RETIREJS",
                 "name": "CVE-2026-41239",
 "unscored": "true", "severity" : "medium",
@@ -29490,124 +30096,6 @@
 ,"name": "GHSA-crv5-9vww-q3g8"                    }, {
                         "source": "info"
 ,"url": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-crv5-9vww-q3g8","name": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-crv5-9vww-q3g8"                    }                ],
-                "vulnerableSoftware": [
-                ]
-                }, {
-                "source": "RETIREJS",
-                "name": "CVE-2026-65898",
-"unscored": "true", "severity" : "medium",
-                "description": "DOMPurify: Permanent `ALLOWED_ATTR` pollution via `setConfig()` bypassing the hook clone-guard (incomplete fix of the 3.4.7 hook-pollution patch)",
-                "notes": "",
-                "references": [
- {
-                        "source": "info"
-,"url": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-cmwh-pvxp-8882","name": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-cmwh-pvxp-8882"                    }, {
-                        "source": "ghsaId"
-,"name": "GHSA-cmwh-pvxp-8882"                    }                ],
-                "vulnerableSoftware": [
-                ]
-                }, {
-                "source": "RETIREJS",
-                "name": "CVE-2026-65902",
-"unscored": "true", "severity" : "medium",
-                "description": "DOMPurify: Hook mutation of `data.allowedTags` \/ `data.allowedAttributes` permanently pollutes `DEFAULT_ALLOWED_TAGS` \/ `DEFAULT_ALLOWED_ATTR`",
-                "notes": "",
-                "references": [
- {
-                        "source": "ghsaId"
-,"name": "GHSA-76mc-f452-cxcm"                    }, {
-                        "source": "info"
-,"url": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-76mc-f452-cxcm","name": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-76mc-f452-cxcm"                    }                ],
-                "vulnerableSoftware": [
-                ]
-                }, {
-                "source": "RETIREJS",
-                "name": "CVE-2026-65903",
-"unscored": "true", "severity" : "medium",
-                "description": "DOMPurify has a logic inconsistency where FORBID_TAGS is not checked when a function-based ADD_TAGS (tagCheck) returns true. Due to short-circuit evaluation, the FORBID_TAGS check is never evaluated, allowing explicitly forbidden elements to pass through sanitization when EXTRA_ELEMENT_HANDLING.tagCheck is configured.",
-                "notes": "",
-                "references": [
- {
-                        "source": "info"
-,"url": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-39q2-94rc-95cp","name": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-39q2-94rc-95cp"                    }, {
-                        "source": "ghsaId"
-,"name": "GHSA-39q2-94rc-95cp"                    }                ],
-                "vulnerableSoftware": [
-                ]
-                }, {
-                "source": "RETIREJS",
-                "name": "CVE-2026-65912",
-"unscored": "true", "severity" : "medium",
-                "description": "DOMPurify's ADD_ATTR predicate function mechanism (via EXTRA_ELEMENT_HANDLING.attributeCheck) short-circuits URI validation when the predicate returns true. This allows unsafe protocols such as javascript: to survive sanitization in href and similar attributes, enabling DOM-based XSS when such links are activated.",
-                "notes": "",
-                "references": [
- {
-                        "source": "info"
-,"url": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-cjmm-f4jc-qw8r","name": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-cjmm-f4jc-qw8r"                    }, {
-                        "source": "info"
-,"url": "https:\/\/github.com\/cure53\/DOMPurify\/releases\/tag\/3.3.2","name": "https:\/\/github.com\/cure53\/DOMPurify\/releases\/tag\/3.3.2"                    }, {
-                        "source": "ghsaId"
-,"name": "GHSA-cjmm-f4jc-qw8r"                    }                ],
-                "vulnerableSoftware": [
-                ]
-                }, {
-                "source": "RETIREJS",
-                "name": "CVE-2026-65913",
-"unscored": "true", "severity" : "medium",
-                "description": "When USE_PROFILES is enabled, DOMPurify rebuilds ALLOWED_ATTR as a plain array whose properties are looked up by name, making it susceptible to prototype pollution. If Array.prototype has been polluted with an event handler attribute name (e.g. onclick), DOMPurify will allow that event handler to survive sanitization, resulting in DOM-based XSS.",
-                "notes": "",
-                "references": [
- {
-                        "source": "ghsaId"
-,"name": "GHSA-cj63-jhhr-wcxv"                    }, {
-                        "source": "info"
-,"url": "https:\/\/github.com\/cure53\/DOMPurify\/releases\/tag\/3.3.2","name": "https:\/\/github.com\/cure53\/DOMPurify\/releases\/tag\/3.3.2"                    }, {
-                        "source": "info"
-,"url": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-cj63-jhhr-wcxv","name": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-cj63-jhhr-wcxv"                    }                ],
-                "vulnerableSoftware": [
-                ]
-                }, {
-                "source": "RETIREJS",
-                "name": "CVE-2026-65914",
-"unscored": "true", "severity" : "medium",
-                "description": "DOMPurify is vulnerable to mutation-XSS (mXSS) when sanitized HTML is embedded into special raw-text wrapper elements such as xmp, script, iframe, noembed, noframes, or noscript before being assigned via innerHTML. Attacker-controlled sequences like <\/xmp> inside attribute values close the raw-text context during the second parse, causing the sanitized output to mutate into executable markup.",
-                "notes": "",
-                "references": [
- {
-                        "source": "info"
-,"url": "https:\/\/github.com\/cure53\/DOMPurify\/releases\/tag\/3.3.2","name": "https:\/\/github.com\/cure53\/DOMPurify\/releases\/tag\/3.3.2"                    }, {
-                        "source": "ghsaId"
-,"name": "GHSA-h8r8-wccr-v5f2"                    }, {
-                        "source": "info"
-,"url": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-h8r8-wccr-v5f2","name": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-h8r8-wccr-v5f2"                    }                ],
-                "vulnerableSoftware": [
-                ]
-                }, {
-                "source": "RETIREJS",
-                "name": "CVE-2026-65899",
-"unscored": "true", "severity" : "low",
-                "description": "DOMPurify: Trusted Types policy survives `clearConfig()` and can poison later `RETURN_TRUSTED_TYPE` output",
-                "notes": "",
-                "references": [
- {
-                        "source": "info"
-,"url": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-vxr8-fq34-vvx9","name": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-vxr8-fq34-vvx9"                    }, {
-                        "source": "ghsaId"
-,"name": "GHSA-vxr8-fq34-vvx9"                    }                ],
-                "vulnerableSoftware": [
-                ]
-                }, {
-                "source": "RETIREJS",
-                "name": "CVE-2026-65901",
-"unscored": "true", "severity" : "low",
-                "description": "DOMPurify: `IN_PLACE` mode trusts attacker-controlled `nodeName` on live non-form nodes, allowing script retention and XSS via attacker-supplied DOM objects",
-                "notes": "",
-                "references": [
- {
-                        "source": "info"
-,"url": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-x4vx-rjvf-j5p4","name": "https:\/\/github.com\/cure53\/DOMPurify\/security\/advisories\/GHSA-x4vx-rjvf-j5p4"                    }, {
-                        "source": "ghsaId"
-,"name": "GHSA-x4vx-rjvf-j5p4"                    }                ],
                 "vulnerableSoftware": [
                 ]
                 }, {
