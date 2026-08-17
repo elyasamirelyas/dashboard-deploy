@@ -1,0 +1,10 @@
+{
+  "model": "anthropic/claude-sonnet-4.5",
+  "messages": [
+    {
+      "role": "user",
+      "content": "\nYou are a security remediation agent for a Java Maven project.\nGiven the vulnerability below, respond with ONLY a JSON object (no markdown, no\nexplanation outside the JSON) with exactly these fields:\n\n{\n  \"group_id\": \"...\",\n  \"artifact_id\": \"...\",\n  \"fixed_version\": \"...\",\n  \"reasoning\": \"one or two sentence explanation of why this version fixes it\"\n}\n\nVulnerability:\nDependency: jackson-databind-2.14.3.jar\nGroup ID: com.fasterxml.jackson.core\nArtifact ID: jackson-databind\nCurrent version: 2.14.3\nCVE: CVE-2026-54512\nSeverity: HIGH\nConfidence: HIGHEST\nDescription: jackson-databind contains the general-purpose data-binding functionality and tree-model for Jackson Data Processor. From 2.10.0 until 2.18.8, 2.21.4, and 3.1.4, jackson-databind's PolymorphicTypeValidator (PTV) is the primary safety mechanism guarding polymorphic deserialization. When polymorphic typing is enabled and a type identifier contains generic parameters (i.e. the type ID string contains <), DatabindContext._resolveAndValidateGeneric() validates only the raw container class name (the substring before <) against the configured PTV. If the container type is approved, the method parses the full canonical type string via TypeFactory.constructFromCanonical() and returns the fully parameterized type without ever validating the nested type arguments against the PTV. The nested type argum\n"
+    }
+  ],
+  "content": "```json\n{\n  \"group_id\": \"com.fasterxml.jackson.core\",\n  \"artifact_id\": \"jackson-databind\",\n  \"fixed_version\": \"2.18.8\",\n  \"reasoning\": \"Version 2.18.8 fixes CVE-2026-54512 by ensuring PolymorphicTypeValidator properly validates nested generic type arguments during polymorphic deserialization, preventing bypass of the PTV safety mechanism.\"\n}\n```"
+}

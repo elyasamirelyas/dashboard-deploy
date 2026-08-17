@@ -1,0 +1,10 @@
+{
+  "model": "anthropic/claude-sonnet-4.5",
+  "messages": [
+    {
+      "role": "user",
+      "content": "\nYou are a security remediation agent for a Java Maven project.\nGiven the vulnerability below, respond with ONLY a JSON object (no markdown, no\nexplanation outside the JSON) with exactly these fields:\n\n{\n  \"group_id\": \"...\",\n  \"artifact_id\": \"...\",\n  \"fixed_version\": \"...\",\n  \"reasoning\": \"one or two sentence explanation of why this version fixes it\"\n}\n\nVulnerability:\nDependency: snakeyaml-1.33.jar\nGroup ID: org.yaml\nArtifact ID: snakeyaml\nCurrent version: 1.33\nCVE: CVE-2022-1471\nSeverity: CRITICAL\nConfidence: HIGHEST\nDescription: SnakeYaml's Constructor() class does not restrict types which can be instantiated during deserialization.\u00a0Deserializing yaml content provided by an attacker can lead to remote code execution. We recommend using SnakeYaml's SafeConsturctor when parsing untrusted content to restrict deserialization. We recommend upgrading to version 2.0 and beyond.\n"
+    }
+  ],
+  "content": "```json\n{\n  \"group_id\": \"org.yaml\",\n  \"artifact_id\": \"snakeyaml\",\n  \"fixed_version\": \"2.0\",\n  \"reasoning\": \"Version 2.0 addresses CVE-2022-1471 by restricting types that can be instantiated during deserialization, preventing remote code execution attacks.\"\n}\n```"
+}

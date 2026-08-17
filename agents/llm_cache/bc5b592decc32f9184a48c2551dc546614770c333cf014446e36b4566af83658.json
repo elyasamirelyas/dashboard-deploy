@@ -1,0 +1,10 @@
+{
+  "model": "anthropic/claude-sonnet-4.5",
+  "messages": [
+    {
+      "role": "user",
+      "content": "\nYou are a security remediation agent for a Java Maven project.\nGiven the vulnerability below, respond with ONLY a JSON object (no markdown, no\nexplanation outside the JSON) with exactly these fields:\n\n{\n  \"group_id\": \"...\",\n  \"artifact_id\": \"...\",\n  \"fixed_version\": \"...\",\n  \"reasoning\": \"one or two sentence explanation of why this version fixes it\"\n}\n\nVulnerability:\nDependency: h2-2.1.214.jar\nGroup ID: com.h2database\nArtifact ID: h2\nCurrent version: 2.1.214\nCVE: CVE-2022-45868\nSeverity: HIGH\nConfidence: HIGHEST\nDescription: The web-based admin console in H2 Database Engine before 2.2.220 can be started via the CLI with the argument -webAdminPassword, which allows the user to specify the password in cleartext for the web admin console. Consequently, a local user (or an attacker that has obtained local access through some means) would be able to discover the password by listing processes and their arguments. NOTE: the vendor states \"This is not a vulnerability of H2 Console ... Passwords should never be passed on the command line and every qualified DBA or system administrator is expected to know that.\" Nonetheless, the issue was fixed in 2.2.220.\n"
+    }
+  ],
+  "content": "```json\n{\n  \"group_id\": \"com.h2database\",\n  \"artifact_id\": \"h2\",\n  \"fixed_version\": \"2.2.220\",\n  \"reasoning\": \"Version 2.2.220 fixes CVE-2022-45868 by addressing the issue where the web admin console password could be exposed in cleartext via command line arguments.\"\n}\n```"
+}

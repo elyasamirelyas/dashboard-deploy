@@ -1,0 +1,10 @@
+{
+  "model": "anthropic/claude-sonnet-4.5",
+  "messages": [
+    {
+      "role": "user",
+      "content": "\nYou are a security remediation agent for a Java Maven project.\nGiven the vulnerability below, respond with ONLY a JSON object (no markdown, no\nexplanation outside the JSON) with exactly these fields:\n\n{\n  \"group_id\": \"...\",\n  \"artifact_id\": \"...\",\n  \"fixed_version\": \"...\",\n  \"reasoning\": \"one or two sentence explanation of why this version fixes it\"\n}\n\nVulnerability:\nDependency: logback-core-1.4.11.jar\nGroup ID: ch.qos.logback\nArtifact ID: logback-core\nCurrent version: 1.4.11\nCVE: CVE-2023-6378\nSeverity: HIGH\nConfidence: HIGHEST\nDescription: A serialization vulnerability in logback receiver component part of \nlogback version 1.4.11 allows an attacker to mount a Denial-Of-Service \nattack by sending poisoned data.\n\n\n"
+    }
+  ],
+  "content": "```json\n{\n  \"group_id\": \"ch.qos.logback\",\n  \"artifact_id\": \"logback-core\",\n  \"fixed_version\": \"1.4.12\",\n  \"reasoning\": \"Version 1.4.12 patches CVE-2023-6378 by fixing the serialization vulnerability in the logback receiver component that allowed denial-of-service attacks through poisoned data.\"\n}\n```"
+}
