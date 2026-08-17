@@ -18,15 +18,22 @@ PIPELINE_REPORT_PATH = os.path.join(EVAL_DIR, "pipeline_report.json")
 
 def count_vulnerabilities(json_path):
     # tallies up a dependency-check JSON report into simple counts:
-    # how many dependencies are vulnerable, total CVEs, and a breakdown
-    # by severity - returns None if the file doesn't exist yet
+    # how many dependencies are vulnerable, total unique CVEs, and a
+    # breakdown by severity - returns None if the file doesn't exist yet.
+    #
+    # dependency-check sometimes lists the same CVE against more than one
+    # dependency entry (e.g. a vulnerability that applies to a whole group
+    # of related jars), so we count each CVE ID once overall rather than
+    # once per dependency it happens to be attached to - otherwise the
+    # same vulnerability gets counted multiple times and inflates the
+    # "total CVEs" number.
     if not os.path.exists(json_path):
         return None
     with open(json_path, "r", encoding="utf-8") as f:
         data = json.load(f)
 
     vulnerable_deps = 0
-    total_cves = 0
+    seen_cves = {}  # cve name -> severity, so each CVE only counts once
     by_severity = {"CRITICAL": 0, "HIGH": 0, "MEDIUM": 0, "LOW": 0}
 
     for dep in data.get("dependencies", []):
@@ -34,14 +41,17 @@ def count_vulnerabilities(json_path):
         if vulns:
             vulnerable_deps += 1
         for v in vulns:
-            total_cves += 1
-            sev = v.get("severity", "").upper()
-            if sev in by_severity:
-                by_severity[sev] += 1
+            name = v.get("name")
+            if name and name not in seen_cves:
+                seen_cves[name] = v.get("severity", "").upper()
+
+    for sev in seen_cves.values():
+        if sev in by_severity:
+            by_severity[sev] += 1
 
     return {
         "vulnerable_dependencies": vulnerable_deps,
-        "total_cves": total_cves,
+        "total_cves": len(seen_cves),
         "by_severity": by_severity,
     }
 
