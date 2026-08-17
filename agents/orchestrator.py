@@ -32,7 +32,7 @@ else:
 _eval_subdir = "reference-run" if _is_default_target else (os.path.basename(LEGACY_APP_DIR.rstrip(os.sep)) or "target-run")
 EVAL_DIR = os.path.join(SCRIPT_DIR, "..", "evaluation", _eval_subdir)
 
-MVN_CMD = r"C:\Users\amiri\apache-maven-3.9.16-bin\apache-maven-3.9.16\bin\mvn.cmd"
+MVN_CMD = os.getenv("MVN_CMD", r"C:\Users\amiri\apache-maven-3.9.16-bin\apache-maven-3.9.16\bin\mvn.cmd")
 JAVA17_HOME = r"C:\Program Files\Eclipse Adoptium\jdk-17.0.17.10-hotspot"
 
 REPORT = {"stages": []}
@@ -58,7 +58,8 @@ def log_stage(name, success, details=""):
 
 
 def save_report():
-    with open(os.path.join(SCRIPT_DIR, "pipeline_report.json"), "w", encoding="utf-8") as f:
+    os.makedirs(os.path.join(SCRIPT_DIR, "reports"), exist_ok=True)
+    with open(os.path.join(SCRIPT_DIR, "reports", "pipeline_report.json"), "w", encoding="utf-8") as f:
         json.dump(REPORT, f, indent=2)
 
 
@@ -481,13 +482,19 @@ Message: {error['message']}
 Source context:
 {source_snippet}
 """
-    response = client.chat.completions.create(
-        model="anthropic/claude-sonnet-4.5",
-        messages=[{"role": "user", "content": prompt}]
-    )
-    raw = response.choices[0].message.content.strip()
+    from llm_cache import cached_chat_completion
+    raw = cached_chat_completion(
+        client, "anthropic/claude-sonnet-4.5", [{"role": "user", "content": prompt}]
+    ).strip()
     raw = re.sub(r"^```(json)?|```$", "", raw, flags=re.MULTILINE).strip()
-    return json.loads(raw)
+    try:
+        return json.loads(raw)
+    except json.JSONDecodeError as e:
+        # Make the failure easy to diagnose in pipeline_report.json instead
+        # of a bare "Expecting value" error with no context.
+        raise ValueError(
+            f"LLM did not return valid JSON ({e}). Raw response:\n{raw[:500]}"
+        ) from e
 
 
 def apply_search_replace_fix(legacy_app_dir, fix):

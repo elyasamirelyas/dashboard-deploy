@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Modernization Control Panel</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230B1E33'/%3E%3Crect x='1' y='1' width='30' height='30' rx='6' fill='none' stroke='%232C4A63' stroke-width='1.5'/%3E%3Cpath d='M8 17l5 5 11-12' fill='none' stroke='%237FE0B4' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -16,6 +17,7 @@
     --paper: #EAF2F5;
     --slate: #2C4A63;
     --slate-dim: #1B3552;
+    --muted: #7FA0B8;
   }
 
   * { box-sizing: border-box; }
@@ -31,6 +33,7 @@
     font-family: 'Inter', sans-serif;
     min-height: 100vh;
     padding: 32px 24px 80px;
+    font-variant-numeric: tabular-nums;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -49,6 +52,13 @@
     padding: 20px 24px;
     margin-bottom: 40px;
     background: linear-gradient(180deg, rgba(95,211,232,0.04), transparent);
+    position: relative;
+    overflow: hidden;
+  }
+  .titleblock::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--cyan), var(--mint) 55%, var(--amber));
+    opacity: 0.7;
   }
   .titleblock h1 {
     font-family: 'Space Grotesk', sans-serif;
@@ -57,6 +67,9 @@
     margin: 0;
     letter-spacing: 0.01em;
   }
+  html {
+  overflow-y: scroll;
+}
   .titleblock p {
     margin: 6px 0 0;
     color: #9FC0D4;
@@ -67,50 +80,60 @@
   .titleblock .meta {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 0.72rem;
-    color: #6E92AC;
+    color: var(--muted);
     text-align: right;
     align-self: start;
     line-height: 1.8;
     text-transform: uppercase;
     letter-spacing: 0.06em;
+    white-space: nowrap;
   }
 
-  .engage-row { display: flex; align-items: center; gap: 16px; margin-bottom: 48px; }
+  @media (max-width: 640px) {
+    .titleblock { grid-template-columns: 1fr; }
+    .titleblock .meta { text-align: left; margin-top: 8px; white-space: normal; }
+  }
 
-  button#runBtn {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 700;
-    font-size: 0.95rem;
-    letter-spacing: 0.03em;
-    color: var(--ink);
-    background: var(--cyan);
-    border: none;
-    padding: 14px 28px;
+  .engage-row { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 48px; min-height: 20px; }
+
+  .app-select-wrap { display: flex; align-items: center; gap: 10px; }
+  .app-select-label {
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  select#appSelect {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--paper);
+    background: var(--slate-dim);
+    border: 1px solid var(--slate);
     border-radius: 4px;
+    padding: 8px 12px;
     cursor: pointer;
-    text-transform: uppercase;
-    box-shadow: 0 0 0 0 rgba(95,211,232,0.5);
-    transition: box-shadow 0.2s, transform 0.1s, background 0.2s;
   }
-  button#runBtn:hover:not(:disabled) { box-shadow: 0 0 24px 0 rgba(95,211,232,0.45); }
-  button#runBtn:active:not(:disabled) { transform: scale(0.98); }
-  button#runBtn:focus-visible { outline: 3px solid var(--paper); outline-offset: 2px; }
-  button#runBtn:disabled { background: var(--slate); color: #6E92AC; cursor: not-allowed; }
+  select#appSelect:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+  select#appSelect:disabled { opacity: 0.5; cursor: not-allowed; }
 
   .engage-status {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 0.8rem;
-    color: #6E92AC;
+    color: var(--muted);
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    transition: color 0.3s;
   }
   .engage-status.live { color: var(--cyan); }
+  .engage-status.done { color: var(--mint); }
   .dot {
     display: inline-block; width: 8px; height: 8px; border-radius: 50%;
     background: currentColor; margin-right: 8px; vertical-align: middle;
   }
   .live .dot { animation: pulse 1.4s ease-in-out infinite; }
   @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.25; } }
+  @keyframes riseIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 
   /* Schematic pipeline */
   .schematic { margin-bottom: 48px; }
@@ -139,20 +162,32 @@
     padding: 10px 14px;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 0.78rem;
-    color: #6E92AC;
+    color: var(--muted);
     display: flex;
     align-items: center;
     gap: 8px;
-    transition: border-color 0.3s, color 0.3s, background 0.3s;
+    opacity: 0.75;
+    transition: border-color 0.3s, color 0.3s, background 0.3s, opacity 0.3s;
   }
-  .node .mark { width: 8px; height: 8px; border-radius: 50%; background: #3E5A72; flex-shrink: 0; transition: background 0.3s, box-shadow 0.3s; }
+  .node .mark {
+    width: 8px; height: 8px; border-radius: 50%; background: #3E5A72; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.3s, box-shadow 0.3s;
+  }
+  .node .mark svg { display: none; width: 10px; height: 10px; }
 
-  .node.running { border-color: var(--cyan); color: var(--cyan); background: rgba(95,211,232,0.08); }
+  .node.running { opacity: 1; border-color: var(--cyan); color: var(--cyan); background: rgba(95,211,232,0.08); }
   .node.running .mark { background: var(--cyan); box-shadow: 0 0 8px var(--cyan); animation: pulse 1.2s ease-in-out infinite; }
-  .node.ok { border-color: var(--mint); color: var(--mint); background: rgba(127,224,180,0.08); }
-  .node.ok .mark { background: var(--mint); }
-  .node.failed { border-color: var(--amber); color: var(--amber); background: rgba(242,166,90,0.1); }
-  .node.failed .mark { background: var(--amber); }
+
+  .node.ok { opacity: 1; border-color: var(--mint); color: var(--mint); background: rgba(127,224,180,0.08); }
+  .node.ok .mark { background: transparent; box-shadow: none; }
+  .node.ok .mark svg { display: block; }
+  .node.ok .mark svg path { stroke: var(--mint); }
+
+  .node.failed { opacity: 1; border-color: var(--amber); color: var(--amber); background: rgba(242,166,90,0.1); }
+  .node.failed .mark { background: transparent; box-shadow: none; }
+  .node.failed .mark svg { display: block; }
+  .node.failed .mark svg path { stroke: var(--amber); }
 
   /* Results */
   .results { display: none; }
@@ -170,13 +205,34 @@
     border-radius: 6px;
     padding: 18px 20px;
     background: var(--slate-dim);
+    box-shadow: 0 6px 16px -4px rgba(0,0,0,0.35), 0 1px 0 0 rgba(255,255,255,0.02) inset;
+    opacity: 0;
+    animation: riseIn 0.45s ease forwards;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   }
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: #3E5A72;
+    box-shadow: 0 12px 24px -6px rgba(0,0,0,0.45), 0 1px 0 0 rgba(255,255,255,0.03) inset;
+  }
+  /* Applied once the entrance animation finishes (see the "add" helper in
+     fetchReport) — releases `animation` so :hover can control `transform`
+     without the entrance's fill-mode:forwards blocking it, while keeping
+     the card visible (its base rule starts at opacity: 0). */
+  .card.settled {
+    opacity: 1;
+    animation: none;
+  }
+  .card.stat-card {
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .card.stat-card .readout { font-size: 1.6rem; }
   .card .label {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 0.68rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: #6E92AC;
+    color: var(--muted);
     margin-bottom: 10px;
   }
   .card .readout {
@@ -186,14 +242,43 @@
     display: flex;
     align-items: baseline;
     gap: 10px;
+    flex-wrap: wrap;
   }
-  .card .readout .before { color: #6E92AC; font-size: 1.1rem; }
-  .card .readout .arrow { color: #6E92AC; font-size: 1.1rem; }
+  .card .readout .before { color: var(--muted); font-size: 1.1rem; }
+  .card .readout .arrow { color: var(--muted); font-size: 1.1rem; }
   .card .readout .after.improved { color: var(--mint); }
   .card .readout .after.same { color: var(--paper); }
-  .card .bar-track { height: 6px; background: var(--slate); border-radius: 3px; margin-top: 12px; overflow: hidden; position: relative; }
-  .card .bar-fill { height: 100%; background: var(--amber); border-radius: 3px; transition: width 0.6s ease; }
+  .card .readout .after.worse { color: var(--amber); }
+
+  .card .bar-track {
+    height: 6px; background: var(--slate); border-radius: 3px; margin-top: 14px;
+    position: relative; overflow: visible;
+  }
+  .card .bar-fill {
+    height: 100%; background: var(--amber); border-radius: 3px;
+    width: 0%; transition: width 0.7s cubic-bezier(.4,0,.2,1);
+  }
   .card .bar-fill.mint { background: var(--mint); }
+  .card .bar-tick {
+    position: absolute; top: -3px; width: 2px; height: 12px;
+    background: var(--paper); opacity: 0.55; border-radius: 1px;
+    transition: left 0.7s cubic-bezier(.4,0,.2,1);
+  }
+
+  /* Radial gauge variant — used for Line Coverage. See USE_RADIAL_COVERAGE. */
+  .card.radial-card { display: flex; align-items: center; gap: 18px; }
+  .card.radial-card .label { margin-bottom: 6px; }
+  .radial-gauge { flex-shrink: 0; }
+  .radial-gauge .track { fill: none; stroke: var(--slate); stroke-width: 7; }
+  .radial-gauge .fill {
+    fill: none; stroke: var(--mint); stroke-width: 7; stroke-linecap: round;
+    transform: rotate(-90deg); transform-origin: 50% 50%;
+    transition: stroke-dashoffset 0.9s cubic-bezier(.4,0,.2,1);
+  }
+  .radial-gauge-value {
+    font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 1.1rem; fill: var(--paper);
+  }
+  .radial-before { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--muted); margin-top: 4px; }
 
   footer {
     max-width: 920px; margin: 60px auto 0; font-family: 'IBM Plex Mono', monospace;
@@ -207,18 +292,22 @@
   <div class="titleblock">
     <div>
       <h1>Modernization Control Panel</h1>
-      <p>Multi-agent framework for secure modernization of legacy Java applications — migration, vulnerability remediation, and coverage-driven test generation, coordinated end to end. <em>This view replays a verified reference run.</em></p>
+      <p>Multi-agent framework for secure modernization of legacy Java applications — migration, vulnerability remediation, and coverage-driven test generation, coordinated end to end. <em>This view replays verified reference runs across independent target applications.</em></p>
     </div>
     <div class="meta">
-      Target: spring-petclinic-rest v2.6.2<br>
-      Java 8 / Spring Boot 2.6.2<br>
+      Target: <span id="metaTarget">—</span><br>
+      Java 8&ndash;11 / Spring Boot 2.x<br>
       &darr;<br>
       Java 17 / Spring Boot 3.x
     </div>
   </div>
 
   <div class="engage-row">
-    <span id="engageStatus" class="engage-status">Idle — ready to run on a fresh checkout</span>
+    <label class="app-select-wrap">
+      <span class="app-select-label">Target application</span>
+      <select id="appSelect"></select>
+    </label>
+    <span id="engageStatus" class="engage-status">Loading applications...</span>
   </div>
 
   <div class="schematic" id="schematic"></div>
@@ -233,35 +322,88 @@
 <footer>MSc Software Development — Dissertation Evaluation Instrument</footer>
 
 <script>
-const PHASES = [
-  { label: "Baseline", stages: ["Baseline vulnerability scan", "Baseline test run", "Baseline test count"] },
-  { label: "Migration", stages: ["Migration (OpenRewrite)", "Known migration fixes applied", "Build verification after migration"] },
-  { label: "Vulnerability Remediation", stages: ["Vulnerability scan", "Remediation batch complete", "Build verification after remediation batch"] },
-  { label: "Test Generation", stages: ["Final test count", "Test generation", "New test verification"] },
-  { label: "Verify", stages: ["Final full test suite + coverage"] },
-];
+// Set to false to fall back to the plain linear bar for Line Coverage.
+const USE_RADIAL_COVERAGE = true;
 
-function renderSchematic(stageMap) {
+// Counts the numeric parts of a string up/down from `fromText`'s numbers (or
+// 0 if there's nothing to start from) to `toText`'s numbers, in place, on
+// whatever element it's given — used for every card readout.
+function animateText(el, fromText, toText, duration) {
+  duration = duration || 700;
+  toText = String(toText);
+  const numRe = /\d+(\.\d+)?/g;
+  const toMatches = [...toText.matchAll(numRe)];
+  if (!toMatches.length) { el.textContent = toText; return; }
+  const fromMatches = [...String(fromText || "").matchAll(numRe)];
+  const startVals = toMatches.map((m, i) => fromMatches[i] ? parseFloat(fromMatches[i][0]) : 0);
+  const endVals = toMatches.map(m => parseFloat(m[0]));
+  const decimals = toMatches.map(m => (m[0].split(".")[1] || "").length);
+  const t0 = performance.now();
+  function frame(now) {
+    const p = Math.min(1, (now - t0) / duration);
+    const eased = 1 - Math.pow(1 - p, 3);
+    let cursor = 0, out = "";
+    toMatches.forEach((m, i) => {
+      out += toText.slice(cursor, m.index);
+      out += (startVals[i] + (endVals[i] - startVals[i]) * eased).toFixed(decimals[i]);
+      cursor = m.index + m[0].length;
+    });
+    out += toText.slice(cursor);
+    el.textContent = out;
+    if (p < 1) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+
+const CHECK_ICON = `<svg viewBox="0 0 10 10" fill="none"><path d="M1.5 5.2 4 7.7 8.5 2.3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const CROSS_ICON = `<svg viewBox="0 0 10 10" fill="none"><path d="M2 2l6 6M8 2l-6 6" stroke-width="1.6" stroke-linecap="round"/></svg>`;
+
+// Stages are grouped by keyword, not by an exact per-app name list — different
+// pipeline runs phrase the same stage differently (e.g. "Known migration
+// fixes applied" vs "Generic migration fixes applied (pre-OpenRewrite)"),
+// and this must still bucket them correctly instead of dropping them.
+const PHASE_ORDER = ["Baseline", "Migration", "Vulnerability Remediation", "Test Generation", "Verify", "Other"];
+
+function categorizeStage(name) {
+  const n = name.toLowerCase();
+  if (n.startsWith("baseline")) return "Baseline";
+  if (n.includes("migration") || n.includes("openrewrite")) return "Migration";
+  if (n.includes("remediation") || n.includes("vulnerability")) return "Vulnerability Remediation";
+  if (n.includes("test count") || n.includes("test generation") || n.includes("test verification")) return "Test Generation";
+  if (n.includes("final full test suite") || (n.includes("final") && n.includes("coverage"))) return "Verify";
+  return "Other";
+}
+
+function renderSchematic(stageNames, stageMap) {
   const container = document.getElementById("schematic");
   container.innerHTML = "";
-  PHASES.forEach(phase => {
+
+  const groups = {};
+  stageNames.forEach(name => (groups[categorizeStage(name)] = groups[categorizeStage(name)] || []).push(name));
+
+  PHASE_ORDER.forEach(label => {
+    const names = groups[label];
+    if (!names || !names.length) return;
+
     const phaseDiv = document.createElement("div");
     phaseDiv.className = "phase";
-    const label = document.createElement("div");
-    label.className = "phase-label";
-    label.textContent = phase.label;
-    phaseDiv.appendChild(label);
+    const labelEl = document.createElement("div");
+    labelEl.className = "phase-label";
+    labelEl.textContent = label;
+    phaseDiv.appendChild(labelEl);
 
     const nodes = document.createElement("div");
     nodes.className = "nodes";
-    phase.stages.forEach(stageName => {
+    names.forEach(stageName => {
       const node = document.createElement("div");
       const state = stageMap[stageName];
       let cls = "node";
-      if (state === true) cls += " ok";
-      else if (state === false) cls += " failed";
+      let icon = "";
+      if (state === true) { cls += " ok"; icon = CHECK_ICON; }
+      else if (state === false) { cls += " failed"; icon = CROSS_ICON; }
+      else if (state === "running") { cls += " running"; }
       node.className = cls;
-      node.innerHTML = `<span class="mark"></span>${stageName}`;
+      node.innerHTML = `<span class="mark">${icon}</span>${stageName}`;
       nodes.appendChild(node);
     });
     phaseDiv.appendChild(nodes);
@@ -269,83 +411,207 @@ function renderSchematic(stageMap) {
   });
 }
 
-renderSchematic({});
-pollStatus();
+renderSchematic([], {});
+initApps();
 
+async function initApps() {
+  const statusEl = document.getElementById("engageStatus");
+  const select = document.getElementById("appSelect");
 
-
-
-async function pollStatus() {
-  const res = await fetch("/status");
-  const data = await res.json();
-
-  document.getElementById("engageStatus").textContent = "Replaying verified pipeline run...";
-  document.getElementById("engageStatus").classList.add("live");
-
-  const stageMap = {};
-  renderSchematic(stageMap);
-
-  for (const s of data.stages) {
-    stageMap[s.stage] = "pending";
-    renderSchematic(stageMap);
-    await new Promise(r => setTimeout(r, 400));
-    stageMap[s.stage] = s.success;
-    renderSchematic(stageMap);
-    await new Promise(r => setTimeout(r, 200));
+  let data;
+  try {
+    const res = await fetch("/apps");
+    data = await res.json();
+  } catch (e) {
+    statusEl.textContent = "Could not reach the pipeline server.";
+    return;
   }
 
-  document.getElementById("engageStatus").classList.remove("live");
-  document.getElementById("engageStatus").textContent = "Verified run complete — all stages passed.";
-  fetchReport();
+  if (!data.apps || !data.apps.length) {
+    statusEl.textContent = "No clean verified runs available yet.";
+    return;
+  }
+
+  select.innerHTML = "";
+  data.apps.forEach(a => {
+    const opt = document.createElement("option");
+    opt.value = a.id;
+    opt.textContent = a.label;
+    select.appendChild(opt);
+  });
+
+  select.addEventListener("change", () => runApp(select.value));
+  runApp(select.value);
 }
 
-function fetchReport() {
-  fetch("/report").then(r => r.json()).then(data => {
+async function runApp(appId) {
+  const statusEl = document.getElementById("engageStatus");
+  const select = document.getElementById("appSelect");
+  const metaTarget = document.getElementById("metaTarget");
+
+  select.disabled = true;
+  statusEl.classList.remove("done");
+  document.getElementById("results").classList.remove("visible");
+  metaTarget.textContent = select.options[select.selectedIndex].textContent;
+
+  const res = await fetch(`/status/${appId}`);
+  const data = await res.json();
+
+  statusEl.textContent = "Replaying verified pipeline run...";
+  statusEl.classList.add("live");
+
+  const stageNames = data.stages.map(s => s.stage);
+  const stageMap = {};
+  renderSchematic(stageNames, stageMap);
+
+  for (const s of data.stages) {
+    stageMap[s.stage] = "running";
+    renderSchematic(stageNames, stageMap);
+    await new Promise(r => setTimeout(r, 380));
+    stageMap[s.stage] = s.success;
+    renderSchematic(stageNames, stageMap);
+    await new Promise(r => setTimeout(r, 180));
+  }
+
+  statusEl.classList.remove("live");
+  statusEl.classList.add("done");
+  statusEl.textContent = "Verified run complete — all stages passed.";
+  select.disabled = false;
+  fetchReport(appId);
+}
+
+function fetchReport(appId) {
+  fetch(`/report/${appId}`).then(r => r.json()).then(data => {
     if (!data.available) return;
     const grid = document.getElementById("cardGrid");
     grid.innerHTML = "";
+    let i = 0;
+    const add = (card) => {
+      card.style.animationDelay = `${i * 70}ms`;
+      i++;
+      // The entrance animation pins `transform` at fill-mode forwards, which
+      // otherwise outranks the :hover rule's transform and silently blocks
+      // the hover-lift. Release it once the entrance finishes.
+      card.addEventListener("animationend", () => { card.classList.add("settled"); }, { once: true });
+      grid.appendChild(card);
+    };
 
     if (data.vulns_before && data.vulns_after) {
-      grid.appendChild(makeCard(
-        "Total CVEs", data.vulns_before.total_cves, data.vulns_after.total_cves, true
-      ));
-      grid.appendChild(makeCard(
-        "Vulnerable Dependencies", data.vulns_before.vulnerable_dependencies, data.vulns_after.vulnerable_dependencies, true
-      ));
-      grid.appendChild(makeCard(
-        "Critical Severity CVEs", data.vulns_before.by_severity.CRITICAL, data.vulns_after.by_severity.CRITICAL, true
-      ));
+      add(makeCard("Total CVEs", data.vulns_before.total_cves, data.vulns_after.total_cves,
+        { lowerIsBetter: true, max: data.vulns_before.total_cves }));
+      add(makeCard("Vulnerable Dependencies", data.vulns_before.vulnerable_dependencies, data.vulns_after.vulnerable_dependencies,
+        { lowerIsBetter: true, max: data.vulns_before.vulnerable_dependencies }));
+      add(makeCard("Critical Severity CVEs", data.vulns_before.by_severity.CRITICAL, data.vulns_after.by_severity.CRITICAL,
+        { lowerIsBetter: true, max: data.vulns_before.by_severity.CRITICAL }));
     }
     if (data.tests_before !== null) {
-      grid.appendChild(makeCard(
-        "Tests Passing", `${data.tests_before - (data.fail_before||0)}/${data.tests_before}`,
-        `${data.tests_after - (data.fail_after||0)}/${data.tests_after}`, false, true
-      ));
+      const passBefore = data.tests_before - (data.fail_before || 0);
+      const passAfter = data.tests_after - (data.fail_after || 0);
+      add(makeCard("Tests Passing", `${passBefore}/${data.tests_before}`, `${passAfter}/${data.tests_after}`, {
+        beforePct: data.tests_before ? (passBefore / data.tests_before) * 100 : 0,
+        afterPct: data.tests_after ? (passAfter / data.tests_after) * 100 : 0,
+        rawBefore: passBefore, rawAfter: passAfter, lowerIsBetter: false,
+      }));
     }
     if (data.coverage_before && data.coverage_after) {
-      grid.appendChild(makeCard(
-        "Line Coverage", data.coverage_before.ratio.toFixed(1) + "%", data.coverage_after.ratio.toFixed(1) + "%",
-        false, false, data.coverage_before.ratio, data.coverage_after.ratio
-      ));
+      // Flip USE_RADIAL_COVERAGE (declared near the top of this script) to
+      // switch back to the plain bar card — one line, no other changes needed.
+      if (USE_RADIAL_COVERAGE) {
+        add(makeRadialCard("Line Coverage", data.coverage_before.ratio, data.coverage_after.ratio));
+      } else {
+        add(makeCard("Line Coverage", data.coverage_before.ratio.toFixed(1) + "%", data.coverage_after.ratio.toFixed(1) + "%", {
+          beforePct: data.coverage_before.ratio, afterPct: data.coverage_after.ratio,
+          rawBefore: data.coverage_before.ratio, rawAfter: data.coverage_after.ratio, lowerIsBetter: false,
+        }));
+      }
+    }
+    if (data.time_saved) {
+      add(makeStatCard("Estimated Manual Effort Saved", data.time_saved));
     }
 
     document.getElementById("results").classList.add("visible");
   });
 }
 
-function makeCard(label, before, after, lowerIsBetter, isFraction, beforePct, afterPct) {
+function makeStatCard(label, value) {
+  const card = document.createElement("div");
+  card.className = "card stat-card";
+  card.innerHTML = `
+    <div class="label">${label}</div>
+    <div class="readout"><span class="after improved"></span></div>
+  `;
+  animateText(card.querySelector(".after"), "", value);
+  return card;
+}
+
+function makeCard(label, before, after, opts) {
+  const { lowerIsBetter, max, beforePct, afterPct, rawBefore, rawAfter } = opts;
   const card = document.createElement("div");
   card.className = "card";
-  const improved = isFraction ? true : (lowerIsBetter ? after < before : after > before);
+
+  let beforeBarPct, afterBarPct;
+  if (max !== undefined) {
+    beforeBarPct = max > 0 ? (before / max) * 100 : 0;
+    afterBarPct = max > 0 ? (after / max) * 100 : 0;
+  } else {
+    beforeBarPct = beforePct;
+    afterBarPct = afterPct;
+  }
+
+  let trend = "same";
+  if (rawBefore !== undefined && rawAfter !== undefined) {
+    if (rawAfter > rawBefore) trend = "improved";
+    else if (rawAfter < rawBefore) trend = "worse";
+  } else if (lowerIsBetter) {
+    trend = after < before ? "improved" : (after > before ? "worse" : "same");
+  }
+
   card.innerHTML = `
     <div class="label">${label}</div>
     <div class="readout">
       <span class="before">${before}</span>
       <span class="arrow">&rarr;</span>
-      <span class="after ${improved ? 'improved' : 'same'}">${after}</span>
+      <span class="after ${trend}"></span>
     </div>
-    ${beforePct !== undefined ? `<div class="bar-track"><div class="bar-fill mint" style="width:${afterPct}%"></div></div>` : ""}
+    <div class="bar-track">
+      <div class="bar-fill mint" style="width:${afterBarPct}%"></div>
+      <div class="bar-tick" style="left:calc(${beforeBarPct}% - 1px)" title="Before: ${before}"></div>
+    </div>
   `;
+  animateText(card.querySelector(".after"), before, after);
+  return card;
+}
+
+function makeRadialCard(label, beforeRatio, afterRatio) {
+  const card = document.createElement("div");
+  card.className = "card radial-card";
+
+  const r = 40, circ = 2 * Math.PI * r;
+  const offset = circ * (1 - afterRatio / 100);
+
+  card.innerHTML = `
+    <svg class="radial-gauge" width="100" height="100" viewBox="0 0 100 100">
+      <circle class="track" cx="50" cy="50" r="${r}"></circle>
+      <circle class="fill" cx="50" cy="50" r="${r}"
+        stroke-dasharray="${circ}" stroke-dashoffset="${circ}"></circle>
+      <text class="radial-gauge-value" x="50" y="55" text-anchor="middle"></text>
+    </svg>
+    <div>
+      <div class="label">${label}</div>
+      <div class="radial-before">Before: ${beforeRatio.toFixed(1)}%</div>
+    </div>
+  `;
+
+  const valueEl = card.querySelector(".radial-gauge-value");
+  animateText(valueEl, "0", afterRatio.toFixed(1) + "%");
+
+  // Animate the ring after layout so the transition (declared in CSS) fires
+  // from the full-circle start state instead of jumping straight to target.
+  const fillCircle = card.querySelector(".fill");
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    fillCircle.style.strokeDashoffset = offset;
+  }));
+
   return card;
 }
 </script>

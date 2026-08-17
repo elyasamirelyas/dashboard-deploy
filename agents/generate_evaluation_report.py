@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 EVAL_DIR = os.path.join(SCRIPT_DIR, "..", "evaluation", "reference-run")
-PIPELINE_REPORT_PATH = os.path.join(SCRIPT_DIR, "pipeline_report.json")
+PIPELINE_REPORT_PATH = os.path.join(EVAL_DIR, "pipeline_report.json")
 
 
 def count_vulnerabilities(json_path):

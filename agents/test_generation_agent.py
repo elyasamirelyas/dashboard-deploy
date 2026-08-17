@@ -121,10 +121,9 @@ Class to test:
 ```
 {dep_block}
 """
-    response = client.chat.completions.create(
-        model="anthropic/claude-sonnet-4.5",
-        messages=[{"role": "user", "content": prompt}]
-    )
-    raw = response.choices[0].message.content.strip()
+    from llm_cache import cached_chat_completion
+    raw = cached_chat_completion(
+        client, "anthropic/claude-sonnet-4.5", [{"role": "user", "content": prompt}]
+    ).strip()
     raw = re.sub(r"^```(java)?|```$", "", raw, flags=re.MULTILINE).strip()
     return raw

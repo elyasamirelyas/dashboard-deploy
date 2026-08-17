@@ -110,13 +110,17 @@ Severity: {vuln['severity']}
 Confidence: {vuln['confidence']}
 Description: {vuln['description']}
 """
-    response = client.chat.completions.create(
-        model="anthropic/claude-sonnet-4.5",
-        messages=[{"role": "user", "content": prompt}]
-    )
-    raw = response.choices[0].message.content.strip()
+    from llm_cache import cached_chat_completion
+    raw = cached_chat_completion(
+        client, "anthropic/claude-sonnet-4.5", [{"role": "user", "content": prompt}]
+    ).strip()
     raw = re.sub(r"^```(json)?|```$", "", raw, flags=re.MULTILINE).strip()
-    return json.loads(raw)
+    try:
+        return json.loads(raw)
+    except json.JSONDecodeError as e:
+        raise ValueError(
+            f"LLM did not return valid JSON ({e}). Raw response:\n{raw[:500]}"
+        ) from e
 
 
 def apply_version_override(pom_path, group_id, artifact_id, new_version):
