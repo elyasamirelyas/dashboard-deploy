@@ -1,3 +1,16 @@
+# fix9.py - archived one-off patch script, meant to run from inside
+# agents/ (relative path). Inert against the current orchestrator.py: its
+# anchor line (schema_sql_path, from the old schema.sql cleanup fix) was
+# removed a while back, along with the rest of the dead-code block this
+# patch was inserting into. This particular fix - stripping a stale
+# javax thymeleaf-spring5 dependency that conflicts with jakarta
+# thymeleaf-spring6 after the Boot 3 migration - also ended up part of
+# that same dead code, never actually reachable. Its job is handled a
+# different way today: MATCHED_VERSION_SETS + _align_matched_siblings()
+# in the current orchestrator.py keep thymeleaf's sibling jars in sync
+# during the vulnerability-remediation stage instead, rather than
+# deleting the older jar outright during migration.
+
 with open("orchestrator.py", "r", encoding="utf-8") as f:
     src = f.read()
 

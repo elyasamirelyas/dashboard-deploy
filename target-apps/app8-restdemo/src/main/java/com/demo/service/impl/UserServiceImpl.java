@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User updateUser(User user) {
 		Assert.notNull(user, "User must not be null");
-		User oldUser = userRepository.findOne(user.getId());
+		User oldUser = userRepository.findById(user.getId()).orElse(null);
 		Assert.notNull(oldUser, "Old User must not be null");
 		oldUser.setName(user.getName());
 		oldUser.setAddress(user.getAddress());
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteUser(Long userId) {
 		Assert.notNull(userId, "userId must not be null");
-		userRepository.delete(userId);
+		userRepository.deleteById(userId);
 		log.debug("User with userId {} deleted successfully", userId);
 	}
 

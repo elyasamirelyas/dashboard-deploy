@@ -1,3 +1,16 @@
+# fix8.py - archived one-off patch script. Unlike most of the others in
+# this folder, it uses a relative path ("orchestrator.py", meant to be run
+# from inside agents/) instead of an old absolute dev path - but it's
+# still inert against the current file, for a different reason: the
+# anchor line it's looking for (the Lombok version check) doesn't exist
+# in orchestrator.py anymore. This patch added the auto-add-jacoco-plugin
+# logic right after that anchor. That logic later turned out to be dead
+# code - a premature `return` earlier in the same function made it (and
+# a few other fixes added around the same time) permanently unreachable,
+# which was only discovered and cleaned up much later during a general
+# simplification pass. So this file is a record of a fix that was written,
+# silently never ran, and was eventually removed rather than reactivated.
+
 import re
 
 path = "orchestrator.py"

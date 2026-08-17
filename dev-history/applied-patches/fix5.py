@@ -1,3 +1,14 @@
+# fix5.py - archived one-off patch script, inert now (old dev path,
+# C:\dev\..., no longer exists). Notable one: this is an experiment that
+# REMOVED the post-migration build-verification step and just returned
+# True unconditionally, because of an intermittent failure that only
+# showed up when the pipeline was triggered from the web dashboard, never
+# from the command line - and the root cause was never pinned down.
+# This particular change did not stick: the current orchestrator.py still
+# has the verification step (added back in a later revision), so this
+# file is really a record of a dead end that was tried and abandoned,
+# not a description of how the pipeline behaves today.
+
 path = r"C:\dev\modernization-of-legacy-java-applications\agents\orchestrator.py"
 with open(path, encoding="utf-8") as f:
     content = f.read()

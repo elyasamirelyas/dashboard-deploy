@@ -5,19 +5,155 @@
         "dataSource": [
 {
                 "name": "NVD API Last Checked",
-                "timestamp": "2026-08-14T16:15:37+01"
+                "timestamp": "2026-08-17T15:14:26+01"
             }
 ,{
                 "name": "NVD API Last Modified",
-                "timestamp": "2026-08-14T15:14:10Z"
+                "timestamp": "2026-08-17T14:11:42Z"
             }
         ]
 
+            ,"analysisExceptions":[
+{            
+            
+            
+            "exception":{"message":"org.owasp.dependencycheck.data.update.exception.UpdateException: Failed to initialize the RetireJS repo"
+                ,"stackTrace":[
+"org.owasp.dependencycheck.data.update.RetireJSDataSource.initializeRetireJsRepo(RetireJSDataSource.java:138)"
+,"org.owasp.dependencycheck.data.update.RetireJSDataSource.update(RetireJSDataSource.java:82)"
+,"org.owasp.dependencycheck.Engine.doUpdates(Engine.java:873)"
+,"org.owasp.dependencycheck.Engine.initializeAndUpdateDatabase(Engine.java:678)"
+,"org.owasp.dependencycheck.Engine.analyzeDependencies(Engine.java:605)"
+,"org.owasp.dependencycheck.maven.BaseDependencyCheckMojo.runCheck(BaseDependencyCheckMojo.java:2072)"
+,"org.owasp.dependencycheck.maven.BaseDependencyCheckMojo.execute(BaseDependencyCheckMojo.java:1272)"
+,"org.apache.maven.plugin.DefaultBuildPluginManager.executeMojo(DefaultBuildPluginManager.java:126)"
+,"org.apache.maven.lifecycle.internal.MojoExecutor.doExecute2(MojoExecutor.java:328)"
+,"org.apache.maven.lifecycle.internal.MojoExecutor.doExecute(MojoExecutor.java:316)"
+,"org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:212)"
+,"org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:174)"
+,"org.apache.maven.lifecycle.internal.MojoExecutor.access$000(MojoExecutor.java:75)"
+,"org.apache.maven.lifecycle.internal.MojoExecutor$1.run(MojoExecutor.java:162)"
+,"org.apache.maven.plugin.DefaultMojosExecutionStrategy.execute(DefaultMojosExecutionStrategy.java:39)"
+,"org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:159)"
+,"org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(LifecycleModuleBuilder.java:105)"
+,"org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(LifecycleModuleBuilder.java:73)"
+,"org.apache.maven.lifecycle.internal.builder.singlethreaded.SingleThreadedBuilder.build(SingleThreadedBuilder.java:53)"
+,"org.apache.maven.lifecycle.internal.LifecycleStarter.execute(LifecycleStarter.java:118)"
+,"org.apache.maven.DefaultMaven.doExecute(DefaultMaven.java:261)"
+,"org.apache.maven.DefaultMaven.doExecute(DefaultMaven.java:173)"
+,"org.apache.maven.DefaultMaven.execute(DefaultMaven.java:101)"
+,"org.apache.maven.cli.MavenCli.execute(MavenCli.java:919)"
+,"org.apache.maven.cli.MavenCli.doMain(MavenCli.java:285)"
+,"org.apache.maven.cli.MavenCli.main(MavenCli.java:207)"
+,"java.base\/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)"
+,"java.base\/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)"
+,"java.base\/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)"
+,"java.base\/java.lang.reflect.Method.invoke(Method.java:569)"
+,"org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced(Launcher.java:255)"
+,"org.codehaus.plexus.classworlds.launcher.Launcher.launch(Launcher.java:201)"
+,"org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode(Launcher.java:362)"
+,"org.codehaus.plexus.classworlds.launcher.Launcher.main(Launcher.java:314)"
+                ]
+                ,            
+            
+            
+            "cause":{"message":"org.owasp.dependencycheck.utils.TooManyRequestsException: https:\/\/raw.githubusercontent.com\/Retirejs\/retire.js\/master\/repository\/jsrepository.json - Server status: 429 - Server reason: Too Many Requests"
+                ,"stackTrace":[
+"org.owasp.dependencycheck.utils.Downloader.wrapAndThrowHttpResponseException(Downloader.java:436)"
+,"org.owasp.dependencycheck.utils.Downloader.fetchFile(Downloader.java:414)"
+,"org.owasp.dependencycheck.utils.Downloader.fetchFile(Downloader.java:384)"
+,"org.owasp.dependencycheck.data.update.RetireJSDataSource.initializeRetireJsRepo(RetireJSDataSource.java:136)"
+,"org.owasp.dependencycheck.data.update.RetireJSDataSource.update(RetireJSDataSource.java:82)"
+,"org.owasp.dependencycheck.Engine.doUpdates(Engine.java:873)"
+,"org.owasp.dependencycheck.Engine.initializeAndUpdateDatabase(Engine.java:678)"
+,"org.owasp.dependencycheck.Engine.analyzeDependencies(Engine.java:605)"
+,"org.owasp.dependencycheck.maven.BaseDependencyCheckMojo.runCheck(BaseDependencyCheckMojo.java:2072)"
+,"org.owasp.dependencycheck.maven.BaseDependencyCheckMojo.execute(BaseDependencyCheckMojo.java:1272)"
+,"org.apache.maven.plugin.DefaultBuildPluginManager.executeMojo(DefaultBuildPluginManager.java:126)"
+,"org.apache.maven.lifecycle.internal.MojoExecutor.doExecute2(MojoExecutor.java:328)"
+,"org.apache.maven.lifecycle.internal.MojoExecutor.doExecute(MojoExecutor.java:316)"
+,"org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:212)"
+,"org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:174)"
+,"org.apache.maven.lifecycle.internal.MojoExecutor.access$000(MojoExecutor.java:75)"
+,"org.apache.maven.lifecycle.internal.MojoExecutor$1.run(MojoExecutor.java:162)"
+,"org.apache.maven.plugin.DefaultMojosExecutionStrategy.execute(DefaultMojosExecutionStrategy.java:39)"
+,"org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:159)"
+,"org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(LifecycleModuleBuilder.java:105)"
+,"org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(LifecycleModuleBuilder.java:73)"
+,"org.apache.maven.lifecycle.internal.builder.singlethreaded.SingleThreadedBuilder.build(SingleThreadedBuilder.java:53)"
+,"org.apache.maven.lifecycle.internal.LifecycleStarter.execute(LifecycleStarter.java:118)"
+,"org.apache.maven.DefaultMaven.doExecute(DefaultMaven.java:261)"
+,"org.apache.maven.DefaultMaven.doExecute(DefaultMaven.java:173)"
+,"org.apache.maven.DefaultMaven.execute(DefaultMaven.java:101)"
+,"org.apache.maven.cli.MavenCli.execute(MavenCli.java:919)"
+,"org.apache.maven.cli.MavenCli.doMain(MavenCli.java:285)"
+,"org.apache.maven.cli.MavenCli.main(MavenCli.java:207)"
+,"java.base\/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)"
+,"java.base\/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)"
+,"java.base\/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)"
+,"java.base\/java.lang.reflect.Method.invoke(Method.java:569)"
+,"org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced(Launcher.java:255)"
+,"org.codehaus.plexus.classworlds.launcher.Launcher.launch(Launcher.java:201)"
+,"org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode(Launcher.java:362)"
+,"org.codehaus.plexus.classworlds.launcher.Launcher.main(Launcher.java:314)"
+                ]
+                ,            
+            
+            
+            "cause":{"message":"org.apache.hc.client5.http.HttpResponseException: status code: 429, reason phrase: Too Many Requests"
+                ,"stackTrace":[
+"org.apache.hc.client5.http.impl.classic.AbstractHttpClientResponseHandler.handleResponse(AbstractHttpClientResponseHandler.java:69)"
+,"org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:247)"
+,"org.apache.hc.client5.http.impl.classic.CloseableHttpClient.execute(CloseableHttpClient.java:188)"
+,"org.owasp.dependencycheck.utils.Downloader.fetchFile(Downloader.java:410)"
+,"org.owasp.dependencycheck.utils.Downloader.fetchFile(Downloader.java:384)"
+,"org.owasp.dependencycheck.data.update.RetireJSDataSource.initializeRetireJsRepo(RetireJSDataSource.java:136)"
+,"org.owasp.dependencycheck.data.update.RetireJSDataSource.update(RetireJSDataSource.java:82)"
+,"org.owasp.dependencycheck.Engine.doUpdates(Engine.java:873)"
+,"org.owasp.dependencycheck.Engine.initializeAndUpdateDatabase(Engine.java:678)"
+,"org.owasp.dependencycheck.Engine.analyzeDependencies(Engine.java:605)"
+,"org.owasp.dependencycheck.maven.BaseDependencyCheckMojo.runCheck(BaseDependencyCheckMojo.java:2072)"
+,"org.owasp.dependencycheck.maven.BaseDependencyCheckMojo.execute(BaseDependencyCheckMojo.java:1272)"
+,"org.apache.maven.plugin.DefaultBuildPluginManager.executeMojo(DefaultBuildPluginManager.java:126)"
+,"org.apache.maven.lifecycle.internal.MojoExecutor.doExecute2(MojoExecutor.java:328)"
+,"org.apache.maven.lifecycle.internal.MojoExecutor.doExecute(MojoExecutor.java:316)"
+,"org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:212)"
+,"org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:174)"
+,"org.apache.maven.lifecycle.internal.MojoExecutor.access$000(MojoExecutor.java:75)"
+,"org.apache.maven.lifecycle.internal.MojoExecutor$1.run(MojoExecutor.java:162)"
+,"org.apache.maven.plugin.DefaultMojosExecutionStrategy.execute(DefaultMojosExecutionStrategy.java:39)"
+,"org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:159)"
+,"org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(LifecycleModuleBuilder.java:105)"
+,"org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(LifecycleModuleBuilder.java:73)"
+,"org.apache.maven.lifecycle.internal.builder.singlethreaded.SingleThreadedBuilder.build(SingleThreadedBuilder.java:53)"
+,"org.apache.maven.lifecycle.internal.LifecycleStarter.execute(LifecycleStarter.java:118)"
+,"org.apache.maven.DefaultMaven.doExecute(DefaultMaven.java:261)"
+,"org.apache.maven.DefaultMaven.doExecute(DefaultMaven.java:173)"
+,"org.apache.maven.DefaultMaven.execute(DefaultMaven.java:101)"
+,"org.apache.maven.cli.MavenCli.execute(MavenCli.java:919)"
+,"org.apache.maven.cli.MavenCli.doMain(MavenCli.java:285)"
+,"org.apache.maven.cli.MavenCli.main(MavenCli.java:207)"
+,"java.base\/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)"
+,"java.base\/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)"
+,"java.base\/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)"
+,"java.base\/java.lang.reflect.Method.invoke(Method.java:569)"
+,"org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced(Launcher.java:255)"
+,"org.codehaus.plexus.classworlds.launcher.Launcher.launch(Launcher.java:201)"
+,"org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode(Launcher.java:362)"
+,"org.codehaus.plexus.classworlds.launcher.Launcher.main(Launcher.java:314)"
+                ]
+            }
+
+            }
+
+            }
+}
+            ]
 
     },
     "projectInfo": {
         "name": "BootDemo",
-"groupID":"org.test","artifactID":"SpringBootRestDemo","version":"0.0.1-SNAPSHOT",        "reportDate": "2026-08-14T17:50:38.777204300Z",
+"groupID":"org.test","artifactID":"SpringBootRestDemo","version":"0.0.1-SNAPSHOT",        "reportDate": "2026-08-17T14:28:21.747869500Z",
         "credits": {
             "NVD": "This product uses the NVD API but is not endorsed or certified by the NVD. This report contains data retrieved from the National Vulnerability Database: https://nvd.nist.gov",
             "CISA": "This report may contain data retrieved from the CISA Known Exploited Vulnerability Catalog: https://www.cisa.gov/known-exploited-vulnerabilities-catalog",

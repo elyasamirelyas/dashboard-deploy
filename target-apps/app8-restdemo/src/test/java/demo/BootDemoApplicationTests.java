@@ -7,10 +7,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.demo.BootDemoApplication;
 
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 
-@ExtendWith(SpringExtension.class)
-@SpringApplicationConfiguration(classes = BootDemoApplication.class)
+@SpringBootTest(classes = BootDemoApplication.class)
 @WebAppConfiguration
 public class BootDemoApplicationTests {
 

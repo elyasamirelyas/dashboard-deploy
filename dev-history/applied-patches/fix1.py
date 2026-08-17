@@ -1,3 +1,11 @@
+# fix1.py - archived one-off patch script from an earlier stage of the
+# project. It rewrites a hardcoded absolute path on an old dev machine
+# (C:\dev\...), which doesn't exist anymore, and it targets a function
+# called "def stage_migration" - back before it was renamed to "migration"
+# and rewritten. Running this today would just fail on the very first
+# line (the file it points at is gone). Kept only as a record of a patch
+# that was applied by hand once, a while ago.
+
 path = r"C:\dev\modernization-of-legacy-java-applications\agents\orchestrator.py"
 with open(path, "rb") as f:
     raw = f.read()
@@ -5,16 +13,17 @@ with open(path, "rb") as f:
 content = raw.decode("utf-8")
 lines = content.splitlines(keepends=True)
 
-# Find the "def stage_migration" line
+# find where the old stage_migration function starts...
 start = next(i for i, l in enumerate(lines) if l.lstrip().startswith("def stage_migration"))
-# Find the next "def " after it (end of this function)
+# ...and where it ends, which is just the next "def " line
 end = next(i for i in range(start + 1, len(lines)) if lines[i].startswith("def "))
 
 print("--- Current function ---")
 for l in lines[start:end]:
     print(repr(l))
 
-# Rebuild the function with the verification restored
+# the replacement version of the function, with the build verification
+# step restored after applying the known migration fixes
 new_function = (
     'def stage_migration():\n'
     '    print("\\n=== STAGE 1: Migration (OpenRewrite) ===")\n'
@@ -37,6 +46,7 @@ new_function = (
     '\n'
 )
 
+# swap the old function out for the new one and write the file back
 new_lines = lines[:start] + [new_function] + lines[end:]
 new_content = "".join(new_lines)
 

@@ -1,3 +1,11 @@
+# generate_evaluation_report.py - turns the raw before/after files from
+# a pipeline run (vulnerability scans, coverage XML, the stage report)
+# into one readable markdown summary: EVALUATION_SUMMARY.md.
+#
+# count_vulnerabilities, get_jacoco_totals and parse_test_count are also
+# reused by app.py to build the dashboard's numbers - this file is the
+# standalone/manual version that also writes them out as a report.
+
 import os
 import re
 import json
@@ -9,6 +17,9 @@ PIPELINE_REPORT_PATH = os.path.join(EVAL_DIR, "pipeline_report.json")
 
 
 def count_vulnerabilities(json_path):
+    # tallies up a dependency-check JSON report into simple counts:
+    # how many dependencies are vulnerable, total CVEs, and a breakdown
+    # by severity - returns None if the file doesn't exist yet
     if not os.path.exists(json_path):
         return None
     with open(json_path, "r", encoding="utf-8") as f:
@@ -36,12 +47,14 @@ def count_vulnerabilities(json_path):
 
 
 def get_jacoco_totals(xml_path):
+    # reads a JaCoCo coverage XML report and returns the overall totals
+    # (line, branch, instruction, etc.) - the top-level <counter> tags,
+    # right under <report>, already give whole-project totals
     if not os.path.exists(xml_path):
         return None
     tree = ET.parse(xml_path)
     root = tree.getroot()
 
-    # Top-level <counter> elements (direct children of <report>) give overall totals
     totals = {}
     for counter in root.findall("counter"):
         ctype = counter.get("type")
@@ -55,6 +68,8 @@ def get_jacoco_totals(xml_path):
 
 
 def get_stage_detail(stage_name):
+    # looks up one stage's logged detail text from the pipeline report,
+    # by its exact stage name
     if not os.path.exists(PIPELINE_REPORT_PATH):
         return None
     with open(PIPELINE_REPORT_PATH, "r", encoding="utf-8") as f:
@@ -66,6 +81,8 @@ def get_stage_detail(stage_name):
 
 
 def parse_test_count(detail_str):
+    # pulls the test/failure counts out of a stage detail string like
+    # "Tests: 42, Failures: 3"
     if not detail_str:
         return None, None
     m = re.search(r"Tests:\s*(\d+),\s*Failures:\s*(\d+)", detail_str)
@@ -75,6 +92,8 @@ def parse_test_count(detail_str):
 
 
 def main():
+    # pulls together all the before/after numbers and writes them out
+    # as one markdown report, with a table per section
     vulns_before = count_vulnerabilities(os.path.join(EVAL_DIR, "vulnerabilities_before.json"))
     vulns_after = count_vulnerabilities(os.path.join(EVAL_DIR, "vulnerabilities_after.json"))
     cov_before = get_jacoco_totals(os.path.join(EVAL_DIR, "coverage_before.xml"))

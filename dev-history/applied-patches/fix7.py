@@ -1,7 +1,22 @@
+# fix7.py - archived one-off patch script, inert now (old dev path,
+# C:\dev\..., no longer exists). This is a big one historically: it's
+# the patch that split the old single "apply_known_migration_fixes"
+# function into the generic/project-specific split orchestrator.py still
+# uses today - apply_generic_migration_fixes() for fixes that should work
+# on any Spring Boot 2 -> 3 app, and apply_project_specific_fixes() for
+# the handful of fixes that only make sense for spring-petclinic-rest's
+# exact file layout. Back when this patch was written, a temporary
+# apply_known_migration_fixes() wrapper was kept around too, just calling
+# both in sequence, so nothing else had to change right away - that
+# wrapper doesn't exist in the current orchestrator.py anymore, since the
+# call sites were later updated to call the two functions directly.
+
 path = r"C:\dev\modernization-of-legacy-java-applications\agents\orchestrator.py"
 with open(path, encoding="utf-8") as f:
     lines = f.readlines()
 
+# find the old combined function and replace it, all the way up to
+# whatever the next top-level definition (EVAL_DIR) happens to be
 start = next(i for i, l in enumerate(lines) if l.lstrip().startswith("def apply_known_migration_fixes"))
 end = next(i for i in range(start + 1, len(lines)) if lines[i].startswith("EVAL_DIR"))
 
