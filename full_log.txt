@@ -1,0 +1,30 @@
+2026-07-18 | Initial commit
+2026-07-18 | Add legacy app baseline (Spring Boot 2.6.2) and gitignore
+2026-07-18 | Add baseline vulnerability scan report (13 vulnerable deps, 202 CVEs)
+2026-07-18 | Remove accidental nested bin folder, update gitignore
+2026-07-21 | First working proof-of-concept: LLM agent proposes fix for CVE-2026-54512
+2026-07-22 | Vulnerability remediation agent: reads real scan data, prioritizes by severity+confidence, generates fix
+2026-07-22 | Vulnerability remediation: automatically applied fix for CVE-2021-3711 (mysql-connector-java 8.0.27 -> 8.0.33), build verified successful
+2026-07-22 | Complete remediation agent loop: structured LLM output, automatic groupId/artifactId extraction, human-confirmed pom.xml edit for CVE-2021-3711
+2026-07-22 | Fix gitignore indentation (whitespace was breaking pattern matching)
+2026-07-23 | Checkpoint before running OpenRewrite Spring Boot 3 migration
+2026-07-23 | Migration fully complete: Java 8/Spring Boot 2.6.2 -> Java 17/Spring Boot 3.0.13. Fixed OpenAPI generator jakarta config, removed dead Springfox class, fixed 4 JPQL column-vs-property bugs (Hibernate 6 strictness), fixed pre-existing missing 'required' field in OpenAPI spec. All 171 tests passing.
+2026-07-24 | Test generation agent: coverage-driven (JaCoCo), generates JUnit 5 tests via LLM. Added EntityUtilsTests (3 tests), util package coverage 19%->25% line, 40%->50% branch. All 174 tests passing.
+2026-07-24 | Orchestrator complete: runs migration, vulnerability remediation, and test generation agents in sequence with build verification gates. Fixed apply_version_override to handle transitive dependencies (snakeyaml CVE-2022-1471). Full pipeline run successful end-to-end.
+2026-07-25 | Remove __pycache__ from tracking, add to gitignore
+2026-07-25 | Full pipeline validated on fresh, untouched baseline (legacy-app-fresh-run): all 9 stages passed with zero manual intervention. Fixed path parameterization for multi-target support (load_vulnerabilities, apply_version_override now accept target paths). This is the reference evaluation run for the dissertation.
+2026-07-25 | Add reference evaluation run artifacts (baseline scan + pipeline report) for dissertation evidence
+2026-07-25 | Multi-vulnerability remediation loop (top 5, deduped, auto-rollback on failure). Fixed verification gate to run full test suite instead of compile-only, after discovering a NoSuchMethodError regression that compile-only checks missed (Jackson matched-version-set issue). Added explicit Jackson trio version alignment. Full pipeline re-validated clean on fresh baseline: 5/5 vulnerabilities remediated, all tests passing.
+2026-07-25 | Dynamic coverage-driven test generation: parses JaCoCo XML, ranks classes by coverage ratio, skips Spring-managed classes needing a live context. Generated test for Owner.java (60% -> higher coverage). Added fail-safe discard for generated tests that don't pass verification (consistent verify-before-commit pattern across all agents). Full pipeline re-validated clean on fresh baseline.
+2026-07-25 | Auto-generated before/after evaluation report (generate_evaluation_report.py): parses baseline and post-pipeline vulnerability scans, test counts, and JaCoCo coverage into a clean markdown summary. Reference run: 203->136 CVEs, 171/171 tests passing throughout, test-gen agent's discard-on-failure safety net verified working in practice.
+2026-07-26 | Add web dashboard for pipeline demo
+2026-07-28 | Redesigned web dashboard (blueprint/control-panel aesthetic) and hardened run_mvn with explicit JAVA_HOME/env to fix intermittent build failures
+2026-07-28 | Add retry logic to run_mvn to handle transient Windows filesystem/AV timing issues
+2026-07-30 | Dashboard replays the verified reference pipeline run with an animated stage-by-stage reveal, giving the live-execution feel without depending on a fresh Maven run succeeding on load. Displays real before/after evaluation metrics (203->136 CVEs, 171/171 tests, coverage data).
+2026-07-31 | Generalize pipeline: parameterize target directory, split generic vs project-specific migration fixes, fix per-app evaluation folder paths, align Thymeleaf dependency versions
+2026-08-16 | Multi-app pipeline validation round: 7 new test apps, 7 generic fixes, App11 case study
+2026-08-16 | Merge remote generalization/dashboard work with local multi-app testing round; resolve orchestrator.py conflicts (keep real build verification, keep CVE-fix helpers, keep generic/project-specific fix split)
+2026-08-17 | Reorganize project structure: pipeline reports to agents/reports/, target app clones to target-apps/, archive dead scratch scripts to dev-history/
+2026-08-17 | Comment naturalization pass across pipeline; fix path-with-spaces bug in build-error parser, test-source compile check, and vulnerability-scan stage abort
+2026-08-17 | app8-restdemo: full clean pipeline run after build-diagnosis and vulnerability-scan fixes
+2026-08-17 | Fix count_vulnerabilities to dedupe by CVE ID instead of counting per dependency entry
