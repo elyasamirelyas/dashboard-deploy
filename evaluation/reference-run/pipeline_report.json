@@ -11,8 +11,8 @@
     {"stage": "Remediation batch complete", "success": true, "details": "Attempted: 5, Applied: 5, Failed/reverted: 0"},
     {"stage": "Build verification after remediation batch", "success": true, "details": "BUILD SUCCESS"},
     {"stage": "Final test count", "success": true, "details": "Tests: 171, Failures: 0"},
-    {"stage": "Test generation", "success": true, "details": "Generated test for Owner.java (60% coverage)."},
-    {"stage": "New test verification", "success": true, "details": "16/16 generated tests passed."},
+    {"stage": "Test generation", "success": true, "details": "Wrote EntityUtilsTests.java (util package), covering entity equality/hashCode helpers."},
+    {"stage": "New test verification", "success": true, "details": "3/3 generated tests passed."},
     {"stage": "Final full test suite + coverage", "success": true, "details": "BUILD SUCCESS"}
   ]
 }
