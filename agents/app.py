@@ -185,6 +185,23 @@ def _get_stage_detail_from(stages, stage_name):
     return None
 
 
+def _get_stage_detail_from(stages, stage_name):
+    # Find a stage by its exact name and return its detail text.
+    # Returns None if that stage wasn't reached in this run.
+    for s in stages or []:
+        if s.get("stage") == stage_name:
+            return s.get("details")
+    return None
+
+
+def _validate_app_id(app_id):
+    """Reject any app_id not in the known set, closing off path traversal
+    via crafted URLs like /status/../../../../etc."""
+    if app_id != "reference-run" and app_id not in _discover_app_ids():
+        return False
+    return True
+
+
 # ------------------------------------------------------------------
 # Flask routes - the actual web endpoints
 # ------------------------------------------------------------------
@@ -221,6 +238,8 @@ def status(app_id):
    # Return the stage-by-stage log for one app. The UI uses this to
     # animate the pipeline schematic. If no report exists, return a 404
     # with empty stages so the UI can show a friendly "no data" state.
+    if not _validate_app_id(app_id):
+        return jsonify({"status": "unavailable", "stages": []}), 404
     stages = _load_stages(app_id)
     if stages is None:
         return jsonify({"status": "unavailable", "stages": []}), 404
@@ -233,6 +252,8 @@ def report(app_id):
     # test counts, and coverage. This pulls from several separate files,
     # so if one of them is missing or broken we still return whatever
     # we have rather than crashing the whole response.
+    if not _validate_app_id(app_id):
+        return jsonify({"available": False, "error": "unknown app_id"}), 404
     eval_dir = os.path.join(EVAL_ROOT, app_id)
     try:
         stages = _load_stages(app_id) or []
