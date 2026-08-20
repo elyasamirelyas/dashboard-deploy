@@ -1,93 +1,175 @@
 # Modernization of Legacy Java Applications
 
+MSc Project — Information Technology, IT Project 3154658A, University of Glasgow (2025).
 
+A multi-agent LLM pipeline that automates the modernization of legacy Java/Spring Boot applications: framework migration, vulnerability remediation, and test generation, with build-verification gates between every stage and automatic rollback on failure.
 
-## Getting started
+## What the pipeline does
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+Given a target Spring Boot application, the pipeline runs through the following stages end-to-end:
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+1. **Baseline capture** — runs a dependency-check vulnerability scan and the existing test suite to record the "before" state.
+2. **Migration** — upgrades the app via [OpenRewrite](https://docs.openrewrite.org/) (Spring Boot 2 → 3 / Java 8 → 17), followed by a small set of generic and project-specific fixes for issues OpenRewrite doesn't catch, then a build-verification gate.
+3. **Vulnerability remediation** — an LLM agent reads the dependency-check scan, prioritizes vulnerable dependencies by severity and fix confidence, proposes and applies version overrides, and verifies the build (and full test suite) still passes before keeping each fix. Failed fixes are automatically rolled back.
+4. **Test generation** — a coverage-driven agent parses JaCoCo XML reports, ranks under-covered classes, and generates new JUnit 5 tests via an LLM. Generated tests are discarded if they don't pass verification (the same verify-before-commit pattern used across all agents).
+5. **Final verification** — full test suite + coverage run, results written out for evaluation.
 
-## Add your files
+Results for each run go into `evaluation/<app_id>/` (vulnerability scans, coverage XML) and a stage-by-stage JSON report is written to `agents/reports/pipeline_report_<app_id>.json`.
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+## Repository structure
 
 ```
-cd existing_repo
-git remote add origin https://stgit.dcs.gla.ac.uk/msc-project-for-information-technology/2025/it-project-3154658a/modernization-of-legacy-java-applications.git
-git branch -M main
-git push -uf origin main
+agents/                  Pipeline source (Python)
+  orchestrator.py         Runs the full pipeline end-to-end against one target app
+  remediation_agent.py    Vulnerability remediation agent
+  test_generation_agent.py  Coverage-driven test generation agent
+  run_batch.py             Clones and runs the pipeline across a batch of target apps
+  verify_apps.py           Checks each app's pipeline report for dissertation-evidence-clean status
+  generate_evaluation_report.py  Builds a markdown before/after summary from scan + report data
+  app.py                   Flask backend for the web dashboard
+  reports/                 Per-app pipeline_report_<id>.json snapshots
+  templates/                Dashboard HTML
+
+target-apps/              Cloned target applications used for the multi-app validation round
+legacy-app/                Reference target application: spring-petclinic-rest
+legacy-app-baseline/       Untouched baseline copy of legacy-app, kept for comparison
+legacy-app-fresh-run/      Clean re-run of the pipeline against an untouched baseline clone
+legacy-app-demo-run/       Run used for the dashboard demo
+
+evaluation/                Before/after vulnerability scans, coverage reports, and evaluation summaries per app
+  reference-run/            The reference evaluation run (legacy-app) used as dissertation evidence
+
+dev-history/               Archived scratch scripts / notes from development
+docs/                       (reserved for project documentation)
 ```
 
-## Integrate with your tools
+## Setup
 
-- [ ] [Set up project integrations](https://stgit.dcs.gla.ac.uk/msc-project-for-information-technology/2025/it-project-3154658a/modernization-of-legacy-java-applications/-/settings/integrations)
+Requires Java (Maven-based target apps), Python 3.11+, and an OpenAI/LLM API key.
 
-## Collaborate with your team
+```
+cd agents
+python -m venv venv          # if not already created
+venv\Scripts\activate         # Windows
+pip install -r requirements.txt   # see note below
+```
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+> Note: this repo doesn't yet have a pinned `requirements.txt` — dependencies were installed directly into `agents/venv`. Worth generating one (`pip freeze > requirements.txt` from inside the activated venv) before submission so the environment is reproducible.
 
-## Test and Deploy
+Create a `.env` file inside `agents/` with:
 
-Use the built-in continuous integration in GitLab.
+```
+NVD_API_KEY=<your NVD API key>
+```
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+(An `OPENAI_API_KEY` or equivalent LLM credential is also required by the agents — check `orchestrator.py` / `remediation_agent.py` for the exact variable name expected.)
 
 ## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+Run the full pipeline against the default reference app (`legacy-app`):
+
+```
+python orchestrator.py
+```
+
+Run against a specific target app:
+
+```
+python orchestrator.py ../target-apps/app7-h2crud
+```
+
+or via environment variable:
+
+```
+set TARGET_APP_DIR=../target-apps/app7-h2crud
+python orchestrator.py
+```
+
+Run the pipeline across the full batch of target apps (app7–app13):
+
+```
+python run_batch.py
+```
+
+Check which apps have a clean, dissertation-evidence-ready pipeline run:
+
+```
+python verify_apps.py
+```
+
+Generate a markdown before/after evaluation summary:
+
+```
+python generate_evaluation_report.py
+```
+
+Launch the results dashboard:
+
+```
+python app.py
+```
+
+## Evaluation results
+
+### Reference run — `legacy-app` (spring-petclinic-rest)
+
+**Vulnerability remediation**
+
+| Metric | Before | After |
+|---|---|---|
+| Vulnerable dependencies | 13 | 12 |
+| Total CVEs | 203 | 136 |
+| Critical severity | 30 | 27 |
+| High severity | 63 | 45 |
+| Medium severity | 93 | 52 |
+| Low severity | 17 | 12 |
+
+**Test suite**
+
+| Metric | Before | After |
+|---|---|---|
+| Total tests | 171 | 171 |
+| Failing tests | 0 | 0 |
+
+**Code coverage (JaCoCo)**
+
+| Metric | Before | After |
+|---|---|---|
+| Line coverage | 88.4% (1273/1440) | 88.4% (1253/1417) |
+| Branch coverage | 71.1% (270/380) | 70.9% (265/374) |
+| Instruction coverage | 88.9% (5308/5969) | 89.0% (5117/5751) |
+
+### Multi-app validation round
+
+The pipeline was additionally run against seven public GitHub tutorial Spring Boot apps (`app7`–`app13`) to test generalization beyond the reference app, with per-app before/after vulnerability scans and coverage reports in `evaluation/`. Baseline-only scans are also recorded for `app2` (spring-petclinic), `app3` (bank application backend), and `app4` (Contrast Security's intentionally vulnerable Spring Boot app).
 
 ## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+
+Known gaps and next steps, based on the current state of the repo:
+
+- Pin dependencies with a `requirements.txt` (currently installed ad hoc into `agents/venv`).
+- Run `app2` (spring-petclinic), `app3` (bank application backend), and `app4` (Contrast Security vulnerable app) through the full pipeline — currently only baseline vulnerability scans exist for these; no migration/remediation/test-generation pass has been recorded yet.
+- Populate `docs/` with project documentation (currently empty).
+- Write up final dissertation evidence from the multi-app validation round.
+
+## Status
+
+Actively developed as part of an ongoing MSc dissertation. See `dev-history` in the git log for the full development timeline from initial baseline scan (2026-07-18) through the multi-app generalization round (2026-08-16/17).
+
+## Support
+
+This is a solo MSc dissertation project. For questions about the project, contact the author directly at `3154658a@student.gla.ac.uk`, or open an issue on the [GitLab repo](https://stgit.dcs.gla.ac.uk/msc-project-for-information-technology/2025/it-project-3154658a/modernization-of-legacy-java-applications/-/issues).
 
 ## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+This repository is submitted coursework for an individual MSc dissertation and is not open for external contributions. If you're the module supervisor or a marker reviewing this work, see the `dev-history` git log for the full development timeline, and `evaluation/` for the underlying before/after data behind the results reported above.
 
 ## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+
+**Elyas Amiri** — `3154658a@student.gla.ac.uk`
+MSc Information Technology, University of Glasgow — IT Project 3154658A (2025)
 
 ## License
-For open source projects, say how it is licensed.
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+This is an academic dissertation project submitted to the University of Glasgow; no open-source license has been applied. Usage and distribution are subject to the University's academic policies on student work. If you'd like the code released under an open-source license (e.g. MIT, Apache 2.0), add a `LICENSE` file and note it here — check with your supervisor first, since IP terms for dissertation code can be governed by university policy.
+
