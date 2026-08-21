@@ -176,14 +176,6 @@ def _label_for(app_id):
     return APP_LABELS.get(app_id, app_id.replace("-", " ").replace("_", " ").title())
 
 
-def _get_stage_detail_from(stages, stage_name):
-    # Find a stage by its exact name and return its detail text.
-    # Returns None if that stage wasn't reached in this run.
-    for s in stages or []:
-        if s.get("stage") == stage_name:
-            return s.get("details")
-    return None
-
 
 def _get_stage_detail_from(stages, stage_name):
     # Find a stage by its exact name and return its detail text.
@@ -264,7 +256,7 @@ def report(app_id):
         cov_after = get_jacoco_totals(os.path.join(eval_dir, "coverage_after.xml"))
 
         tests_before, fail_before = parse_test_count(_get_stage_detail_from(stages, "Baseline test count"))
-        tests_after, fail_after = parse_test_count(_get_stage_detail_from(stages, "Final test count"))
+        tests_after, fail_after = parse_test_count(_get_stage_detail_from(stages, "Final full test suite + coverage"))
         time_saved = _extract_time_saved(stages)
 
         return jsonify({
