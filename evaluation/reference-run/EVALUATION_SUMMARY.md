@@ -5,26 +5,26 @@
 | Metric | Before | After |
 |---|---|---|
 | Vulnerable dependencies | 13 | 12 |
-| Total CVEs | 203 | 136 |
-| Critical severity CVEs | 30 | 27 |
-| High severity CVEs | 63 | 45 |
-| Medium severity CVEs | 93 | 52 |
-| Low severity CVEs | 17 | 12 |
+| Total CVEs | 170 | 78 |
+| Critical severity CVEs | 28 | 15 |
+| High severity CVEs | 55 | 26 |
+| Medium severity CVEs | 74 | 31 |
+| Low severity CVEs | 13 | 6 |
 
 ## Test Suite
 
 | Metric | Before | After |
 |---|---|---|
-| Total tests | 171 | 171 |
+| Total tests | 171 | 196 |
 | Failing tests | 0 | 0 |
 
 ## Code Coverage (JaCoCo)
 
 | Metric | Before | After |
 |---|---|---|
-| Line coverage | 88.4% (1273/1440) | 88.4% (1253/1417) |
-| Branch coverage | 71.1% (270/380) | 70.9% (265/374) |
-| Instruction coverage | 88.9% (5308/5969) | 89.0% (5117/5751) |
+| Line coverage | 88.4% (1273/1440) | 91.0% (1290/1417) |
+| Branch coverage | 71.1% (270/380) | 73.5% (275/374) |
+| Instruction coverage | 88.9% (5308/5969) | 91.2% (5244/5751) |
 
 ## Pipeline Execution
 

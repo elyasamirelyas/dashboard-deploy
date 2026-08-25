@@ -1,18 +1,70 @@
 {
   "status": "done",
   "stages": [
-    {"stage": "Baseline vulnerability scan", "success": true, "details": "93 high/critical vulnerabilities found across 13 dependencies."},
-    {"stage": "Baseline test run", "success": true, "details": "Tests: 171, Failures: 0"},
-    {"stage": "Baseline test count", "success": true, "details": "Tests: 171, Failures: 0"},
-    {"stage": "Migration (OpenRewrite)", "success": true, "details": "Java 8/Spring Boot 2.6.2 -> Java 17/Spring Boot 3.0.13. Estimated time saved: 7h 49m."},
-    {"stage": "Known migration fixes applied", "success": true, "details": "OpenAPI generator config, dead code removal, JPQL fixes, OpenAPI spec fix, dependency pinning."},
-    {"stage": "Build verification after migration", "success": true, "details": "BUILD SUCCESS"},
-    {"stage": "Vulnerability scan", "success": true, "details": "Post-migration scan completed."},
-    {"stage": "Remediation batch complete", "success": true, "details": "Attempted: 5, Applied: 5, Failed/reverted: 0"},
-    {"stage": "Build verification after remediation batch", "success": true, "details": "BUILD SUCCESS"},
-    {"stage": "Final test count", "success": true, "details": "Tests: 171, Failures: 0"},
-    {"stage": "Test generation", "success": true, "details": "Wrote EntityUtilsTests.java (util package), covering entity equality/hashCode helpers."},
-    {"stage": "New test verification", "success": true, "details": "3/3 generated tests passed."},
-    {"stage": "Final full test suite + coverage", "success": true, "details": "BUILD SUCCESS"}
+    {
+      "stage": "Baseline vulnerability scan",
+      "success": true,
+      "details": "93 high/critical vulnerabilities found across 13 dependencies."
+    },
+    {
+      "stage": "Baseline test run",
+      "success": true,
+      "details": "Tests: 171, Failures: 0"
+    },
+    {
+      "stage": "Baseline test count",
+      "success": true,
+      "details": "Tests: 171, Failures: 0"
+    },
+    {
+      "stage": "Migration (OpenRewrite)",
+      "success": true,
+      "details": "Java 8/Spring Boot 2.6.2 -> Java 17/Spring Boot 3.0.13. Estimated time saved: 7h 49m."
+    },
+    {
+      "stage": "Known migration fixes applied",
+      "success": true,
+      "details": "OpenAPI generator config, dead code removal, JPQL fixes, OpenAPI spec fix, dependency pinning."
+    },
+    {
+      "stage": "Build verification after migration",
+      "success": true,
+      "details": "BUILD SUCCESS"
+    },
+    {
+      "stage": "Vulnerability scan",
+      "success": true,
+      "details": "Post-migration scan completed."
+    },
+    {
+      "stage": "Remediation batch complete",
+      "success": true,
+      "details": "Attempted: 5, Applied: 5, Failed/reverted: 0"
+    },
+    {
+      "stage": "Build verification after remediation batch",
+      "success": true,
+      "details": "BUILD SUCCESS"
+    },
+    {
+      "stage": "Final test count",
+      "success": true,
+      "details": "Tests: 171, Failures: 0"
+    },
+    {
+      "stage": "Test generation",
+      "success": true,
+      "details": "Wrote EntityUtilsTests.java (util package), covering entity equality/hashCode helpers."
+    },
+    {
+      "stage": "New test verification",
+      "success": true,
+      "details": "3/3 generated tests passed."
+    },
+    {
+      "stage": "Final full test suite + coverage",
+      "success": true,
+      "details": "Tests: 196, Failures: 0"
+    }
   ]
 }

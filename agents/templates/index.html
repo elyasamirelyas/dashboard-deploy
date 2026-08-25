@@ -190,6 +190,24 @@
   .node.failed .mark svg { display: block; }
   .node.failed .mark svg path { stroke: var(--amber); }
 
+
+    /* small readout line under the schematic showing the remediation
+     batch's attempted/applied/reverted counts, once a completed run
+     includes that stage - hidden otherwise */
+  .batch-note {
+    display: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--mint);
+    border: 1px solid var(--slate);
+    border-radius: 4px;
+    padding: 10px 14px;
+    margin: -18px 0 32px;
+    background: rgba(127,224,180,0.05);
+  }
+  .batch-note.visible { display: block; }
+
+    
   /* the results section - stat cards showing before/after numbers,
      hidden until a run finishes */
   .results { display: none; }
@@ -318,6 +336,8 @@
 
   <div class="schematic" id="schematic"></div>
 
+  <div class="batch-note" id="batchNote"></div>
+
   <div class="results" id="results">
     <h2 class="results-title">Evaluation Readout</h2>
     <div class="card-grid" id="cardGrid"></div>
@@ -421,6 +441,21 @@ function renderSchematic(stageNames, stageMap) {
   });
 }
 
+// pulls the "Attempted / Applied / Failed-reverted" summary line out of the
+// Remediation batch complete stage's details text, if that stage ran, and
+// shows it as a small readout line under the schematic
+function updateBatchNote(stages) {
+  const el = document.getElementById("batchNote");
+  const batchStage = (stages || []).find(s => s.stage.toLowerCase().includes("remediation batch complete"));
+  const match = batchStage && (batchStage.details || "").match(/Attempted:\s*\d+,\s*Applied:\s*\d+,\s*Failed\/reverted:\s*\d+/i);
+  if (match) {
+    el.textContent = `Remediation batch — ${match[0]}`;
+    el.classList.add("visible");
+  } else {
+    el.textContent = "";
+    el.classList.remove("visible");
+  }
+}
 // draw an empty schematic immediately so the page isn't blank while the
 // app list is still loading, then go fetch the real app list
 renderSchematic([], {});
@@ -492,9 +527,11 @@ async function runApp(appId) {
   statusEl.classList.remove("live");
   statusEl.classList.add("done");
   statusEl.textContent = "Verified run complete — all stages passed.";
+  updateBatchNote(data.stages);
   select.disabled = false;
   fetchReport(appId);
-}
+  }
+
 
 // fetches the before/after numbers for one app and builds the result cards
 function fetchReport(appId) {

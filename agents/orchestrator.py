@@ -675,7 +675,8 @@ def final_report():
     """Stage 4: Run final full test suite and coverage after all modifications."""
     print("\n=== STAGE 4: Final Full Test Run + Coverage ===")
     success, output = run_mvn(["test", "jacoco:report"])
-    log_stage("Final full test suite + coverage", success, output)
+    test_count, failures = count_tests(SUREFIRE_DIR)
+    log_stage("Final full test suite + coverage", success, f"Tests: {test_count}, Failures: {failures}\n{output}")
     return success
 
 

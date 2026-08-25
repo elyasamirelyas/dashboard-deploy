@@ -110,7 +110,7 @@ def main():
     cov_after = get_jacoco_totals(os.path.join(EVAL_DIR, "coverage_after.xml"))
 
     tests_before, fail_before = parse_test_count(get_stage_detail("Baseline test count"))
-    tests_after, fail_after = parse_test_count(get_stage_detail("Final test count"))
+    tests_after, fail_after = parse_test_count(get_stage_detail("Final full test suite + coverage"))
 
     lines = []
     lines.append("# Evaluation Summary: Multi-Agent Modernization Pipeline\n")

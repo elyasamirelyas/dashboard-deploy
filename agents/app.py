@@ -59,7 +59,7 @@ from generate_evaluation_report import count_vulnerabilities, get_jacoco_totals,
 # in the code, but we display friendlier names in the UI. If an app isn't
 # in this dictionary, we just title-case its ID and use that instead.
 APP_LABELS = {
-    "reference-run": "App5 — crud-h2 (reference)",
+    "reference-run": "Reference — spring-petclinic-rest",
     "app7-h2crud": "App7 — h2crud",
     "app9-crudh2": "App9 — crudh2",
     "app10-example": "App10 — example",
@@ -257,6 +257,12 @@ def report(app_id):
 
         tests_before, fail_before = parse_test_count(_get_stage_detail_from(stages, "Baseline test count"))
         tests_after, fail_after = parse_test_count(_get_stage_detail_from(stages, "Final full test suite + coverage"))
+        if tests_after is None:
+            # some runs' full-suite stage logs don't carry the normalized
+            # "Tests: N, Failures: N" summary line (it's buried in raw
+            # Maven output instead) - fall back to the Final test count
+            # stage, which always carries it
+            tests_after, fail_after = parse_test_count(_get_stage_detail_from(stages, "Final test count"))
         time_saved = _extract_time_saved(stages)
 
         return jsonify({
