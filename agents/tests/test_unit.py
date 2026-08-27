@@ -26,7 +26,7 @@ from generate_evaluation_report import count_vulnerabilities, parse_test_count
 from remediation_agent import get_prioritized_targets
 import app as dashboard_app
 
-
+# checks that a CVE is only counted once even if it appears across several dependencies
 class TestCountVulnerabilities(unittest.TestCase):
     """count_vulnerabilities() must count each CVE once overall, even when
     the same CVE is listed against more than one dependency entry."""
@@ -55,7 +55,7 @@ class TestCountVulnerabilities(unittest.TestCase):
     def test_missing_file_returns_none(self):
         self.assertIsNone(count_vulnerabilities("does_not_exist.json"))
 
-
+# reads a test result and pulls out how many tests and how many failures as numbers
 class TestParseTestCount(unittest.TestCase):
     """parse_test_count() pulls counts out of a stage's free-text detail
     string; it must handle the expected format and fail safely on others."""

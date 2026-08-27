@@ -1,4 +1,4 @@
-# fix_app7_versions_v2.py - corrected version. The first attempt used
+# fix_app7_versions_v2.py - The first attempt used
 # spring-core/spring-tx/spring-aop -> 6.0.25 and tomcat-embed-* -> 10.1.58,
 # but neither version was ever actually published to Maven Central (verified
 # against the real repo1.maven.org listings). This version uses the real

@@ -125,7 +125,7 @@ def run_mvn(args, cwd=None, retries=2, delay=3):
 
 def apply_generic_migration_fixes(legacy_app_dir):
     """
-    Apply pom.xml fixes that are generally needed after OpenRewrite migration.
+    Apply pom.xml fixes that are generally needed before OpenRewrite migration.
     These are not tied to a specific app.
     """
     fixes_applied = []

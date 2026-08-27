@@ -5,11 +5,11 @@
         "dataSource": [
 {
                 "name": "NVD API Last Checked",
-                "timestamp": "2026-08-14T16:15:37+01"
+                "timestamp": "2026-08-26T17:57:30+01"
             }
 ,{
                 "name": "NVD API Last Modified",
-                "timestamp": "2026-08-14T15:14:10Z"
+                "timestamp": "2026-08-26T16:56:50Z"
             }
         ]
 
@@ -17,7 +17,7 @@
     },
     "projectInfo": {
         "name": "cake-service",
-"groupID":"io.cip","artifactID":"cake-service","version":"0.0.1-SNAPSHOT",        "reportDate": "2026-08-14T18:13:11.127143100Z",
+"groupID":"io.cip","artifactID":"cake-service","version":"0.0.1-SNAPSHOT",        "reportDate": "2026-08-26T16:57:53.615317100Z",
         "credits": {
             "NVD": "This product uses the NVD API but is not endorsed or certified by the NVD. This report contains data retrieved from the National Vulnerability Database: https://nvd.nist.gov",
             "CISA": "This report may contain data retrieved from the CISA Known Exploited Vulnerability Catalog: https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
@@ -12349,6 +12349,34 @@
             ,"includedBy": [
                 { "reference":"pkg:maven\/org.springframework.boot\/spring-boot-starter-webflux@3.4.4" }
             ]
+            ,"relatedDependencies": [
+  {
+                    "isVirtual": false,
+                    "fileName": "netty-transport-classes-epoll-4.1.136.Final.jar",
+                    "filePath": "C:\\Users\\amiri\\.m2\\repository\\io\\netty\\netty-transport-classes-epoll\\4.1.136.Final\\netty-transport-classes-epoll-4.1.136.Final.jar"
+,"sha256": "f6a0b631b98667f131daf4ca07a9cae1072d58e259dcbc0f8c6a053d843449c6",
+                    "sha1": "bf7e09fc712f4c3fef6563fe121d4b424fede6f3",
+                    "md5": "544fc46a9f54b83567ffdff8700f0405",
+                    "packageIds": [
+                            {
+                                "id": "pkg:maven/io.netty/netty-transport-classes-epoll@4.1.136.Final"
+                            }
+                    ]
+                }
+ , {
+                    "isVirtual": false,
+                    "fileName": "netty-transport-native-unix-common-4.1.136.Final.jar",
+                    "filePath": "C:\\Users\\amiri\\.m2\\repository\\io\\netty\\netty-transport-native-unix-common\\4.1.136.Final\\netty-transport-native-unix-common-4.1.136.Final.jar"
+,"sha256": "7e014c9b13defd9d254d4e5a5edd8ab6dde17533e1152f99699a6b28b2967a8a",
+                    "sha1": "550e2091240ce07f9c1f114aecd89294df92fcb7",
+                    "md5": "4de177266bbf4335c7168ddeef5de796",
+                    "packageIds": [
+                            {
+                                "id": "pkg:maven/io.netty/netty-transport-native-unix-common@4.1.136.Final"
+                            }
+                    ]
+                }
+            ]
             ,"evidenceCollected": {
                 "vendorEvidence": [
 {
@@ -12606,1285 +12634,11 @@
             ]
         },{
             "isVirtual": false,
-            "fileName": "netty-transport-classes-epoll-4.1.135.Final.jar",
-            "filePath": "C:\\Users\\amiri\\.m2\\repository\\io\\netty\\netty-transport-classes-epoll\\4.1.135.Final\\netty-transport-classes-epoll-4.1.135.Final.jar"
-,"md5": "5494b16595a173bc4353eb1fbc4b8033",
-            "sha1": "4f2bd9bcd7c91768c1f9aca8e62870ece18527bd",
-            "sha256": "9d9537ab9e15164c9f0dc0748884c148814a18d78ac6dfa65cf4b3d06068ce01","description": "Netty is an asynchronous event-driven network application framework for    rapid development of maintainable high performance protocol servers and    clients.","license": "https:\/\/www.apache.org\/licenses\/LICENSE-2.0"            ,"projectReferences": [
-                "cake-service:compile"
-            ]
-            ,"includedBy": [
-                { "reference":"pkg:maven\/org.springframework.boot\/spring-boot-starter-webflux@3.4.4" }
-            ]
-            ,"evidenceCollected": {
-                "vendorEvidence": [
-{
-                            "type": "vendor",
-                            "confidence": "HIGH",
-                            "source": "file",
-                            "name": "name",
-                            "value": "netty-transport-classes-epoll"
-                        }
-,{
-                            "type": "vendor",
-                            "confidence": "HIGHEST",
-                            "source": "jar",
-                            "name": "package name",
-                            "value": "epoll"
-                        }
-,{
-                            "type": "vendor",
-                            "confidence": "HIGHEST",
-                            "source": "jar",
-                            "name": "package name",
-                            "value": "io"
-                        }
-,{
-                            "type": "vendor",
-                            "confidence": "HIGHEST",
-                            "source": "jar",
-                            "name": "package name",
-                            "value": "netty"
-                        }
-,{
-                            "type": "vendor",
-                            "confidence": "MEDIUM",
-                            "source": "Manifest",
-                            "name": "automatic-module-name",
-                            "value": "io.netty.transport.classes.epoll"
-                        }
-,{
-                            "type": "vendor",
-                            "confidence": "LOW",
-                            "source": "Manifest",
-                            "name": "build-jdk-spec",
-                            "value": "1.8"
-                        }
-,{
-                            "type": "vendor",
-                            "confidence": "LOW",
-                            "source": "Manifest",
-                            "name": "bundle-docurl",
-                            "value": "https:\/\/netty.io\/"
-                        }
-,{
-                            "type": "vendor",
-                            "confidence": "MEDIUM",
-                            "source": "Manifest",
-                            "name": "bundle-symbolicname",
-                            "value": "io.netty.transport-classes-epoll"
-                        }
-,{
-                            "type": "vendor",
-                            "confidence": "LOW",
-                            "source": "Manifest",
-                            "name": "implementation-url",
-                            "value": "https:\/\/netty.io\/netty-transport-classes-epoll\/"
-                        }
-,{
-                            "type": "vendor",
-                            "confidence": "HIGH",
-                            "source": "Manifest",
-                            "name": "Implementation-Vendor",
-                            "value": "The Netty Project"
-                        }
-,{
-                            "type": "vendor",
-                            "confidence": "MEDIUM",
-                            "source": "Manifest",
-                            "name": "Implementation-Vendor-Id",
-                            "value": "io.netty"
-                        }
-,{
-                            "type": "vendor",
-                            "confidence": "LOW",
-                            "source": "Manifest",
-                            "name": "specification-vendor",
-                            "value": "The Netty Project"
-                        }
-,{
-                            "type": "vendor",
-                            "confidence": "HIGHEST",
-                            "source": "pom",
-                            "name": "artifactid",
-                            "value": "netty-transport-classes-epoll"
-                        }
-,{
-                            "type": "vendor",
-                            "confidence": "LOW",
-                            "source": "pom",
-                            "name": "artifactid",
-                            "value": "netty-transport-classes-epoll"
-                        }
-,{
-                            "type": "vendor",
-                            "confidence": "HIGHEST",
-                            "source": "pom",
-                            "name": "groupid",
-                            "value": "io.netty"
-                        }
-,{
-                            "type": "vendor",
-                            "confidence": "HIGH",
-                            "source": "pom",
-                            "name": "name",
-                            "value": "Netty\/Transport\/Classes\/Epoll"
-                        }
-,{
-                            "type": "vendor",
-                            "confidence": "LOW",
-                            "source": "pom",
-                            "name": "parent-artifactid",
-                            "value": "netty-parent"
-                        }
-                ],
-                "productEvidence": [
-{
-                            "type": "product",
-                            "confidence": "HIGH",
-                            "source": "file",
-                            "name": "name",
-                            "value": "netty-transport-classes-epoll"
-                    }
-,{
-                            "type": "product",
-                            "confidence": "HIGHEST",
-                            "source": "jar",
-                            "name": "package name",
-                            "value": "epoll"
-                    }
-,{
-                            "type": "product",
-                            "confidence": "HIGHEST",
-                            "source": "jar",
-                            "name": "package name",
-                            "value": "io"
-                    }
-,{
-                            "type": "product",
-                            "confidence": "HIGHEST",
-                            "source": "jar",
-                            "name": "package name",
-                            "value": "netty"
-                    }
-,{
-                            "type": "product",
-                            "confidence": "MEDIUM",
-                            "source": "Manifest",
-                            "name": "automatic-module-name",
-                            "value": "io.netty.transport.classes.epoll"
-                    }
-,{
-                            "type": "product",
-                            "confidence": "LOW",
-                            "source": "Manifest",
-                            "name": "build-jdk-spec",
-                            "value": "1.8"
-                    }
-,{
-                            "type": "product",
-                            "confidence": "LOW",
-                            "source": "Manifest",
-                            "name": "bundle-docurl",
-                            "value": "https:\/\/netty.io\/"
-                    }
-,{
-                            "type": "product",
-                            "confidence": "MEDIUM",
-                            "source": "Manifest",
-                            "name": "Bundle-Name",
-                            "value": "Netty\/Transport\/Classes\/Epoll"
-                    }
-,{
-                            "type": "product",
-                            "confidence": "MEDIUM",
-                            "source": "Manifest",
-                            "name": "bundle-symbolicname",
-                            "value": "io.netty.transport-classes-epoll"
-                    }
-,{
-                            "type": "product",
-                            "confidence": "HIGH",
-                            "source": "Manifest",
-                            "name": "Implementation-Title",
-                            "value": "Netty\/Transport\/Classes\/Epoll"
-                    }
-,{
-                            "type": "product",
-                            "confidence": "LOW",
-                            "source": "Manifest",
-                            "name": "implementation-url",
-                            "value": "https:\/\/netty.io\/netty-transport-classes-epoll\/"
-                    }
-,{
-                            "type": "product",
-                            "confidence": "MEDIUM",
-                            "source": "Manifest",
-                            "name": "specification-title",
-                            "value": "Netty\/Transport\/Classes\/Epoll"
-                    }
-,{
-                            "type": "product",
-                            "confidence": "HIGHEST",
-                            "source": "pom",
-                            "name": "artifactid",
-                            "value": "netty-transport-classes-epoll"
-                    }
-,{
-                            "type": "product",
-                            "confidence": "HIGHEST",
-                            "source": "pom",
-                            "name": "groupid",
-                            "value": "io.netty"
-                    }
-,{
-                            "type": "product",
-                            "confidence": "HIGH",
-                            "source": "pom",
-                            "name": "name",
-                            "value": "Netty\/Transport\/Classes\/Epoll"
-                    }
-,{
-                            "type": "product",
-                            "confidence": "MEDIUM",
-                            "source": "pom",
-                            "name": "parent-artifactid",
-                            "value": "netty-parent"
-                    }
-                ],
-                "versionEvidence": [
-                    {
-                        "type": "version",
-                        "confidence": "HIGH",
-                        "source": "Manifest",
-                        "name": "Bundle-Version",
-                        "value": "4.1.135.Final"
-                    }
-,                    {
-                        "type": "version",
-                        "confidence": "HIGH",
-                        "source": "Manifest",
-                        "name": "Implementation-Version",
-                        "value": "4.1.135.Final"
-                    }
-,                    {
-                        "type": "version",
-                        "confidence": "HIGHEST",
-                        "source": "pom",
-                        "name": "version",
-                        "value": "4.1.135.Final"
-                    }
-                ]
-            }
-                ,"packages": [
-                    {
-                        "id": "pkg:maven\/io.netty\/netty-transport-classes-epoll@4.1.135.Final"
-,"confidence": "HIGH"                    }
-            ]                ,"vulnerabilityIds": [
-                {
-                    "id": "cpe:2.3:a:netty:netty:4.1.135:*:*:*:*:*:*:*"
-,"confidence": "HIGHEST","url": "https:\/\/nvd.nist.gov\/vuln\/search#\/nvd\/home?sortOrder=3&sortDirection=2&cpeFilterMode=applicability&resultType=records&cpeName=cpe%3A2.3%3Aa%3Anetty%3Anetty%3A4.1.135%3A%2A%3A%2A%3A%2A%3A%2A%3A%2A%3A%2A%3A%2A"                }
-            ]
-            ,"vulnerabilities": [
- {
-                "source": "NVD",
-                "name": "CVE-2026-56820",
-                    "severity" : "CRITICAL",
-                    "cvssv3": {
-                        "baseScore": 9.1
-                        ,"attackVector": "NETWORK"
-                        ,"attackComplexity": "LOW"
-                        ,"privilegesRequired": "NONE"
-                        ,"userInteraction": "NONE"
-                        ,"scope": "UNCHANGED"
-                        ,"confidentialityImpact": "HIGH"
-                        ,"integrityImpact": "HIGH"
-                        ,"availabilityImpact": "NONE"
-                        ,"baseSeverity": "CRITICAL"
-,"exploitabilityScore": "3.9","impactScore": "5.2","version": "3.1"                    },
-                    "cwes": [
-                        "CWE-295"                    ],
-                "description": "Netty is a network application framework for development of protocol servers and clients. In versions 4.2.0.Final through 4.2.15.Final and prior to 4.1.135.Final, `OcspClient` does not validate that the `CertificateID` in an OCSP response matches the requested `CertificateID`, which can lead to replay attack. `OcspClient.validateResponse` accepts a legitimately signed `GOOD` status response for an unrelated certificate issued by the same CA, allowing bypass of revocation checks for another certificate. This issue is fixed in versions 4.1.136.Final and 4.2.16.Final.",
-                "notes": "",
-                "references": [
- {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/commit\/bb2ff68a1fb71cb4b0eb9a9e17b66c52aff680c6","name": "PATCH"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/releases\/tag\/netty-4.2.16.Final","name": "RELEASE_NOTES"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/commit\/5b68c61f37aa4a3045cba624cbea239655c9003b","name": "PATCH"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/security\/advisories\/GHSA-272m-gcwp-mpwg","name": "EXPLOIT,VENDOR_ADVISORY"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/releases\/tag\/netty-4.1.136.Final","name": "RELEASE_NOTES"                    }                ],
-                "vulnerableSoftware": [
- {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"vulnerabilityIdMatched":"true","versionEndExcluding":"4.1.136"                        }
-                    }, {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"versionStartIncluding":"4.2.0","versionEndExcluding":"4.2.16"                        }
-                    }                ]
-                }, {
-                "source": "NVD",
-                "name": "CVE-2026-55851",
-                    "severity" : "HIGH",
-                    "cvssv3": {
-                        "baseScore": 7.5
-                        ,"attackVector": "NETWORK"
-                        ,"attackComplexity": "LOW"
-                        ,"privilegesRequired": "NONE"
-                        ,"userInteraction": "NONE"
-                        ,"scope": "UNCHANGED"
-                        ,"confidentialityImpact": "NONE"
-                        ,"integrityImpact": "NONE"
-                        ,"availabilityImpact": "HIGH"
-                        ,"baseSeverity": "HIGH"
-,"exploitabilityScore": "3.9","impactScore": "3.6","version": "3.1"                    },
-                    "cvssv4": {
-                        "vectorString": "CVSS:4.0\/AV:N\/AC:L\/AT:N\/PR:N\/UI:N\/VC:N\/VI:N\/VA:H\/SC:N\/SI:N\/SA:N\/E:X\/CR:X\/IR:X\/AR:X\/MAV:X\/MAC:X\/MAT:X\/MPR:X\/MUI:X\/MVC:X\/MVI:X\/MVA:X\/MSC:X\/MSI:X\/MSA:X\/S:X\/AU:X\/R:X\/V:X\/RE:X\/U:X"
-                        ,"source": "security-advisories@github.com"
-                        ,"type": "Secondary"
-                        ,"version": "4.0"
-                        ,"attackVector": "NETWORK"
-                        ,"attackComplexity": "LOW"
-                        ,"attackRequirements": "NONE"
-                        ,"privilegesRequired": "NONE"
-                        ,"userInteraction": "NONE"
-                        ,"vulnerableSystemConfidentiality": "NONE"
-                        ,"vulnerableSystemIntegrity": "NONE"
-                        ,"vulnerableSystemAvailability": "HIGH"
-                        ,"subsequentSystemConfidentiality": "NONE"
-                        ,"subsequentSystemIntegrity": "NONE"
-                        ,"subsequentSystemAvailability": "NONE"
-                        ,"exploitMaturity": "NOT_DEFINED"
-                        ,"confidentialityRequirements": "NOT_DEFINED"
-                        ,"integrityRequirements": "NOT_DEFINED"
-                        ,"availabilityRequirements": "NOT_DEFINED"
-                        ,"modifiedAttackVector": "NOT_DEFINED"
-                        ,"modifiedAttackComplexity": "NOT_DEFINED"
-                        ,"modifiedAttackRequirements": "NOT_DEFINED"
-                        ,"modifiedPrivilegesRequired": "NOT_DEFINED"
-                        ,"modifiedUserInteraction": "NOT_DEFINED"
-                        ,"modifiedVulnerableSystemConfidentiality": "NOT_DEFINED"
-                        ,"modifiedVulnerableSystemIntegrity": "NOT_DEFINED"
-                        ,"modifiedVulnerableSystemAvailability": "NOT_DEFINED"
-                        ,"modifiedSubsequentSystemConfidentiality": "NOT_DEFINED"
-                        ,"modifiedSubsequentSystemIntegrity": "NOT_DEFINED"
-                        ,"modifiedSubsequentSystemAvailability": "NOT_DEFINED"
-                        ,"safety": "NOT_DEFINED"
-                        ,"automatable": "NOT_DEFINED"
-                        ,"recovery": "NOT_DEFINED"
-                        ,"valueDensity": "NOT_DEFINED"
-                        ,"vulnerabilityResponseEffort": "NOT_DEFINED"
-                        ,"providerUrgency": "NOT_DEFINED"
-                        ,"baseScore": 8.7
-                        ,"baseSeverity": "HIGH"
-                    },
-                    "cwes": [
-                        "CWE-400"                    ],
-                "description": "Netty is a network application framework for development of protocol servers and clients. In versions 4.2.0.Final up to (but not including) 4.2.16.Final, and 4.1.0.Final up to (but not including) 4.1.135, the `HAProxyMessageDecoder` in Netty's `codec-haproxy` module performs protocol version detection by reading the 13th byte as a signed Java `byte` and widening it to `int` without masking; a PROXY protocol v2 binary prefix followed by version byte `0xFF` sign-extends to `-1`, collides with the decoder's need-more-data sentinel, and causes `ByteToMessageDecoder` to accumulate inbound bytes in an unbounded `cumulation` buffer until direct memory is exhausted. This issue is fixed in versions 4.1.136.Final and 4.2.16.Final.",
-                "notes": "",
-                "references": [
- {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/commit\/bb2ff68a1fb71cb4b0eb9a9e17b66c52aff680c6","name": "PATCH"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/releases\/tag\/netty-4.2.16.Final","name": "RELEASE_NOTES"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/commit\/5b68c61f37aa4a3045cba624cbea239655c9003b","name": "PATCH"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/releases\/tag\/netty-4.1.136.Final","name": "RELEASE_NOTES"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/security\/advisories\/GHSA-q6cq-mhr2-jmr5","name": "VENDOR_ADVISORY"                    }                ],
-                "vulnerableSoftware": [
- {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"vulnerabilityIdMatched":"true","versionStartIncluding":"4.1.0","versionEndExcluding":"4.1.136"                        }
-                    }, {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"versionStartIncluding":"4.2.0","versionEndExcluding":"4.2.16"                        }
-                    }                ]
-                }, {
-                "source": "NVD",
-                "name": "CVE-2026-56745",
-                    "severity" : "HIGH",
-                    "cvssv3": {
-                        "baseScore": 7.5
-                        ,"attackVector": "NETWORK"
-                        ,"attackComplexity": "LOW"
-                        ,"privilegesRequired": "NONE"
-                        ,"userInteraction": "NONE"
-                        ,"scope": "UNCHANGED"
-                        ,"confidentialityImpact": "NONE"
-                        ,"integrityImpact": "NONE"
-                        ,"availabilityImpact": "HIGH"
-                        ,"baseSeverity": "HIGH"
-,"exploitabilityScore": "3.9","impactScore": "3.6","version": "3.1"                    },
-                    "cvssv4": {
-                        "vectorString": "CVSS:4.0\/AV:N\/AC:L\/AT:N\/PR:N\/UI:N\/VC:N\/VI:N\/VA:H\/SC:N\/SI:N\/SA:N\/E:X\/CR:X\/IR:X\/AR:X\/MAV:X\/MAC:X\/MAT:X\/MPR:X\/MUI:X\/MVC:X\/MVI:X\/MVA:X\/MSC:X\/MSI:X\/MSA:X\/S:X\/AU:X\/R:X\/V:X\/RE:X\/U:X"
-                        ,"source": "security-advisories@github.com"
-                        ,"type": "Secondary"
-                        ,"version": "4.0"
-                        ,"attackVector": "NETWORK"
-                        ,"attackComplexity": "LOW"
-                        ,"attackRequirements": "NONE"
-                        ,"privilegesRequired": "NONE"
-                        ,"userInteraction": "NONE"
-                        ,"vulnerableSystemConfidentiality": "NONE"
-                        ,"vulnerableSystemIntegrity": "NONE"
-                        ,"vulnerableSystemAvailability": "HIGH"
-                        ,"subsequentSystemConfidentiality": "NONE"
-                        ,"subsequentSystemIntegrity": "NONE"
-                        ,"subsequentSystemAvailability": "NONE"
-                        ,"exploitMaturity": "NOT_DEFINED"
-                        ,"confidentialityRequirements": "NOT_DEFINED"
-                        ,"integrityRequirements": "NOT_DEFINED"
-                        ,"availabilityRequirements": "NOT_DEFINED"
-                        ,"modifiedAttackVector": "NOT_DEFINED"
-                        ,"modifiedAttackComplexity": "NOT_DEFINED"
-                        ,"modifiedAttackRequirements": "NOT_DEFINED"
-                        ,"modifiedPrivilegesRequired": "NOT_DEFINED"
-                        ,"modifiedUserInteraction": "NOT_DEFINED"
-                        ,"modifiedVulnerableSystemConfidentiality": "NOT_DEFINED"
-                        ,"modifiedVulnerableSystemIntegrity": "NOT_DEFINED"
-                        ,"modifiedVulnerableSystemAvailability": "NOT_DEFINED"
-                        ,"modifiedSubsequentSystemConfidentiality": "NOT_DEFINED"
-                        ,"modifiedSubsequentSystemIntegrity": "NOT_DEFINED"
-                        ,"modifiedSubsequentSystemAvailability": "NOT_DEFINED"
-                        ,"safety": "NOT_DEFINED"
-                        ,"automatable": "NOT_DEFINED"
-                        ,"recovery": "NOT_DEFINED"
-                        ,"valueDensity": "NOT_DEFINED"
-                        ,"vulnerabilityResponseEffort": "NOT_DEFINED"
-                        ,"providerUrgency": "NOT_DEFINED"
-                        ,"baseScore": 8.7
-                        ,"baseSeverity": "HIGH"
-                    },
-                    "cwes": [
-                        "CWE-400"                    ],
-                "description": "Netty is a network application framework for development of protocol servers and clients. In versions 4.2.0.Final through 4.2.15.Final and 4.1.0.Final through 4.1.135.Final, the `SpdyHttpDecoder` handler in Netty's SPDY-to-HTTP codec allocates a pooled `ByteBuf` when processing a client-initiated `SYN_STREAM` frame with `FLAG_FIN=0` and stores the partially constructed `FullHttpRequest` in `messageMap`; when the remote peer sends `RST_STREAM` for that stream or the accumulated content exceeds `maxContentLength`, the decoder removes the entry but does not release the pooled `ByteBuf`, causing native memory exhaustion. This issue is fixed in versions 4.1.136.Final and 4.2.16.Final.",
-                "notes": "",
-                "references": [
- {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/commit\/bb2ff68a1fb71cb4b0eb9a9e17b66c52aff680c6","name": "PATCH"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/releases\/tag\/netty-4.2.16.Final","name": "RELEASE_NOTES"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/commit\/5b68c61f37aa4a3045cba624cbea239655c9003b","name": "PATCH"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/releases\/tag\/netty-4.1.136.Final","name": "RELEASE_NOTES"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/security\/advisories\/GHSA-jppx-w49h-x2qq","name": "VENDOR_ADVISORY"                    }                ],
-                "vulnerableSoftware": [
- {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"vulnerabilityIdMatched":"true","versionStartIncluding":"4.1.0","versionEndExcluding":"4.1.136"                        }
-                    }, {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"versionStartIncluding":"4.2.0","versionEndExcluding":"4.2.16"                        }
-                    }                ]
-                }, {
-                "source": "NVD",
-                "name": "CVE-2026-59901",
-                    "severity" : "HIGH",
-                    "cvssv3": {
-                        "baseScore": 7.5
-                        ,"attackVector": "NETWORK"
-                        ,"attackComplexity": "LOW"
-                        ,"privilegesRequired": "NONE"
-                        ,"userInteraction": "NONE"
-                        ,"scope": "UNCHANGED"
-                        ,"confidentialityImpact": "NONE"
-                        ,"integrityImpact": "NONE"
-                        ,"availabilityImpact": "HIGH"
-                        ,"baseSeverity": "HIGH"
-,"exploitabilityScore": "3.9","impactScore": "3.6","version": "3.1"                    },
-                    "cvssv4": {
-                        "vectorString": "CVSS:4.0\/AV:N\/AC:L\/AT:N\/PR:N\/UI:N\/VC:N\/VI:N\/VA:H\/SC:N\/SI:N\/SA:N\/E:X\/CR:X\/IR:X\/AR:X\/MAV:X\/MAC:X\/MAT:X\/MPR:X\/MUI:X\/MVC:X\/MVI:X\/MVA:X\/MSC:X\/MSI:X\/MSA:X\/S:X\/AU:X\/R:X\/V:X\/RE:X\/U:X"
-                        ,"source": "security-advisories@github.com"
-                        ,"type": "Secondary"
-                        ,"version": "4.0"
-                        ,"attackVector": "NETWORK"
-                        ,"attackComplexity": "LOW"
-                        ,"attackRequirements": "NONE"
-                        ,"privilegesRequired": "NONE"
-                        ,"userInteraction": "NONE"
-                        ,"vulnerableSystemConfidentiality": "NONE"
-                        ,"vulnerableSystemIntegrity": "NONE"
-                        ,"vulnerableSystemAvailability": "HIGH"
-                        ,"subsequentSystemConfidentiality": "NONE"
-                        ,"subsequentSystemIntegrity": "NONE"
-                        ,"subsequentSystemAvailability": "NONE"
-                        ,"exploitMaturity": "NOT_DEFINED"
-                        ,"confidentialityRequirements": "NOT_DEFINED"
-                        ,"integrityRequirements": "NOT_DEFINED"
-                        ,"availabilityRequirements": "NOT_DEFINED"
-                        ,"modifiedAttackVector": "NOT_DEFINED"
-                        ,"modifiedAttackComplexity": "NOT_DEFINED"
-                        ,"modifiedAttackRequirements": "NOT_DEFINED"
-                        ,"modifiedPrivilegesRequired": "NOT_DEFINED"
-                        ,"modifiedUserInteraction": "NOT_DEFINED"
-                        ,"modifiedVulnerableSystemConfidentiality": "NOT_DEFINED"
-                        ,"modifiedVulnerableSystemIntegrity": "NOT_DEFINED"
-                        ,"modifiedVulnerableSystemAvailability": "NOT_DEFINED"
-                        ,"modifiedSubsequentSystemConfidentiality": "NOT_DEFINED"
-                        ,"modifiedSubsequentSystemIntegrity": "NOT_DEFINED"
-                        ,"modifiedSubsequentSystemAvailability": "NOT_DEFINED"
-                        ,"safety": "NOT_DEFINED"
-                        ,"automatable": "NOT_DEFINED"
-                        ,"recovery": "NOT_DEFINED"
-                        ,"valueDensity": "NOT_DEFINED"
-                        ,"vulnerabilityResponseEffort": "NOT_DEFINED"
-                        ,"providerUrgency": "NOT_DEFINED"
-                        ,"baseScore": 8.7
-                        ,"baseSeverity": "HIGH"
-                    },
-                    "cwes": [
-                        "CWE-835"                    ],
-                "description": "Netty is an asynchronous, event-driven network application framework. Prior to versions 4.1.136.Final and 4.2.16.Final, the `Bzip2Decoder` handler in Netty's compression codec pipeline is vulnerable to a denial-of-service attack through a malformed bzip2 stream that permanently captures the event-loop thread in an infinite loop. The vulnerability exists in the run-length encoding (RLE) state machine within [`Bzip2BlockDecompressor.read()`]. This issue has been fixed in versions 4.1.136.Final and 4.2.16.Final.",
-                "notes": "",
-                "references": [
- {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/security\/advisories\/GHSA-558v-64gr-wgg4","name": "VENDOR_ADVISORY"                    }                ],
-                "vulnerableSoftware": [
- {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"vulnerabilityIdMatched":"true","versionEndExcluding":"4.1.136"                        }
-                    }, {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"versionStartIncluding":"4.2.0","versionEndExcluding":"4.2.16"                        }
-                    }                ]
-                }, {
-                "source": "NVD",
-                "name": "CVE-2026-56817",
-                    "severity" : "HIGH",
-                    "cvssv3": {
-                        "baseScore": 9.8
-                        ,"attackVector": "NETWORK"
-                        ,"attackComplexity": "LOW"
-                        ,"privilegesRequired": "NONE"
-                        ,"userInteraction": "NONE"
-                        ,"scope": "UNCHANGED"
-                        ,"confidentialityImpact": "HIGH"
-                        ,"integrityImpact": "HIGH"
-                        ,"availabilityImpact": "HIGH"
-                        ,"baseSeverity": "CRITICAL"
-,"exploitabilityScore": "3.9","impactScore": "5.9","version": "3.1"                    },
-                    "cvssv4": {
-                        "vectorString": "CVSS:4.0\/AV:N\/AC:L\/AT:P\/PR:N\/UI:N\/VC:H\/VI:N\/VA:L\/SC:N\/SI:N\/SA:N\/E:X\/CR:X\/IR:X\/AR:X\/MAV:X\/MAC:X\/MAT:X\/MPR:X\/MUI:X\/MVC:X\/MVI:X\/MVA:X\/MSC:X\/MSI:X\/MSA:X\/S:X\/AU:X\/R:X\/V:X\/RE:X\/U:X"
-                        ,"source": "security-advisories@github.com"
-                        ,"type": "Secondary"
-                        ,"version": "4.0"
-                        ,"attackVector": "NETWORK"
-                        ,"attackComplexity": "LOW"
-                        ,"attackRequirements": "PRESENT"
-                        ,"privilegesRequired": "NONE"
-                        ,"userInteraction": "NONE"
-                        ,"vulnerableSystemConfidentiality": "HIGH"
-                        ,"vulnerableSystemIntegrity": "NONE"
-                        ,"vulnerableSystemAvailability": "LOW"
-                        ,"subsequentSystemConfidentiality": "NONE"
-                        ,"subsequentSystemIntegrity": "NONE"
-                        ,"subsequentSystemAvailability": "NONE"
-                        ,"exploitMaturity": "NOT_DEFINED"
-                        ,"confidentialityRequirements": "NOT_DEFINED"
-                        ,"integrityRequirements": "NOT_DEFINED"
-                        ,"availabilityRequirements": "NOT_DEFINED"
-                        ,"modifiedAttackVector": "NOT_DEFINED"
-                        ,"modifiedAttackComplexity": "NOT_DEFINED"
-                        ,"modifiedAttackRequirements": "NOT_DEFINED"
-                        ,"modifiedPrivilegesRequired": "NOT_DEFINED"
-                        ,"modifiedUserInteraction": "NOT_DEFINED"
-                        ,"modifiedVulnerableSystemConfidentiality": "NOT_DEFINED"
-                        ,"modifiedVulnerableSystemIntegrity": "NOT_DEFINED"
-                        ,"modifiedVulnerableSystemAvailability": "NOT_DEFINED"
-                        ,"modifiedSubsequentSystemConfidentiality": "NOT_DEFINED"
-                        ,"modifiedSubsequentSystemIntegrity": "NOT_DEFINED"
-                        ,"modifiedSubsequentSystemAvailability": "NOT_DEFINED"
-                        ,"safety": "NOT_DEFINED"
-                        ,"automatable": "NOT_DEFINED"
-                        ,"recovery": "NOT_DEFINED"
-                        ,"valueDensity": "NOT_DEFINED"
-                        ,"vulnerabilityResponseEffort": "NOT_DEFINED"
-                        ,"providerUrgency": "NOT_DEFINED"
-                        ,"baseScore": 8.3
-                        ,"baseSeverity": "HIGH"
-                    },
-                    "cwes": [
-                        "CWE-611"                    ],
-                "description": "Netty is a network application framework for development of protocol servers and clients. In versions 4.2.0.Final through 4.2.15.Final and 4.1.0.Final through 4.1.135.Final, any caller that can deliver bytes to a Netty channel pipeline containing `XmlDecoder` can send XML with a `DOCTYPE` declaration to an `AsyncXMLInputFactory` instantiated with no security configuration, leaving DTD and entity handling active depending on Aalto XML async parser behavior and creating conditional XML external entity risk. This issue is fixed in versions 4.1.136.Final and 4.2.16.Final.",
-                "notes": "",
-                "references": [
- {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/commit\/bb2ff68a1fb71cb4b0eb9a9e17b66c52aff680c6","name": "PATCH"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/releases\/tag\/netty-4.2.16.Final","name": "RELEASE_NOTES"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/commit\/5b68c61f37aa4a3045cba624cbea239655c9003b","name": "PATCH"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/security\/advisories\/GHSA-4qhr-g3c6-fcfx","name": "VENDOR_ADVISORY"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/releases\/tag\/netty-4.1.136.Final","name": "RELEASE_NOTES"                    }                ],
-                "vulnerableSoftware": [
- {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"vulnerabilityIdMatched":"true","versionStartIncluding":"4.1.0","versionEndExcluding":"4.1.136"                        }
-                    }, {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"versionStartIncluding":"4.2.0","versionEndExcluding":"4.2.16"                        }
-                    }                ]
-                }, {
-                "source": "NVD",
-                "name": "CVE-2026-44891",
-                    "severity" : "HIGH",
-                    "cvssv3": {
-                        "baseScore": 7.5
-                        ,"attackVector": "NETWORK"
-                        ,"attackComplexity": "LOW"
-                        ,"privilegesRequired": "NONE"
-                        ,"userInteraction": "NONE"
-                        ,"scope": "UNCHANGED"
-                        ,"confidentialityImpact": "NONE"
-                        ,"integrityImpact": "NONE"
-                        ,"availabilityImpact": "HIGH"
-                        ,"baseSeverity": "HIGH"
-,"exploitabilityScore": "3.9","impactScore": "3.6","version": "3.1"                    },
-                    "cwes": [
-                        "CWE-400",                        "CWE-770"                    ],
-                "description": "Netty is a network application framework for development of protocol servers and clients. Prior to 4.1.136.Final and 4.2.16.Final, io.netty.handler.codec.stomp.StompSubframeDecoder fails to limit the total number of headers or their cumulative size per frame, and the maxLineLength parameter only restricts individual header lines. An attacker can send a large number of short headers that are accumulated in memory inside DefaultStompHeadersSubframe until the JVM throws an OutOfMemoryError, causing denial of service for servers exposing a STOMP endpoint based on StompSubframeDecoder. This issue is fixed in versions 4.1.136.Final and 4.2.16.Final.",
-                "notes": "",
-                "references": [
- {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/commit\/bb2ff68a1fb71cb4b0eb9a9e17b66c52aff680c6","name": "PATCH"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/releases\/tag\/netty-4.2.16.Final","name": "RELEASE_NOTES"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/commit\/5b68c61f37aa4a3045cba624cbea239655c9003b","name": "PATCH"                    }, {
-                        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
-,"url": "https:\/\/github.com\/netty\/netty\/security\/advisories\/GHSA-vhch-2wf3-m8rp","name": "EXPLOIT,VENDOR_ADVISORY"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/pull\/17065","name": "ISSUE_TRACKING,PATCH"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/pull\/17063","name": "ISSUE_TRACKING,PATCH"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/releases\/tag\/netty-4.1.136.Final","name": "RELEASE_NOTES"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/security\/advisories\/GHSA-vhch-2wf3-m8rp","name": "EXPLOIT,VENDOR_ADVISORY"                    }                ],
-                "vulnerableSoftware": [
- {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"vulnerabilityIdMatched":"true","versionEndExcluding":"4.1.136"                        }
-                    }, {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"versionStartIncluding":"4.2.0","versionEndExcluding":"4.2.16"                        }
-                    }                ]
-                }, {
-                "source": "NVD",
-                "name": "CVE-2026-55831",
-                    "severity" : "HIGH",
-                    "cvssv3": {
-                        "baseScore": 7.5
-                        ,"attackVector": "NETWORK"
-                        ,"attackComplexity": "LOW"
-                        ,"privilegesRequired": "NONE"
-                        ,"userInteraction": "NONE"
-                        ,"scope": "UNCHANGED"
-                        ,"confidentialityImpact": "NONE"
-                        ,"integrityImpact": "NONE"
-                        ,"availabilityImpact": "HIGH"
-                        ,"baseSeverity": "HIGH"
-,"exploitabilityScore": "3.9","impactScore": "3.6","version": "3.1"                    },
-                    "cwes": [
-                        "CWE-400",                        "CWE-770"                    ],
-                "description": "Netty is a network application framework for development of protocol servers and clients. Prior to 4.1.136.Final and 4.2.16.Final, Netty's SPDY SETTINGS decoder accepts a peer-declared SETTINGS entry count up to the 24-bit frame-length limit and materializes every unique setting ID in `DefaultSpdySettingsFrame`, allowing a remote SPDY\/3.1 peer to send a syntactically valid roughly 2 MiB SETTINGS frame that creates 262144 map entries and amplifies network input into heap growth and ordered-map insertion work. This issue is fixed in versions 4.1.136.Final and 4.2.16.Final.",
-                "notes": "",
-                "references": [
- {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/commit\/bb2ff68a1fb71cb4b0eb9a9e17b66c52aff680c6","name": "PATCH"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/releases\/tag\/netty-4.2.16.Final","name": "RELEASE_NOTES"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/commit\/5b68c61f37aa4a3045cba624cbea239655c9003b","name": "PATCH"                    }, {
-                        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
-,"url": "https:\/\/github.com\/netty\/netty\/security\/advisories\/GHSA-6jqx-86gh-f27w","name": "EXPLOIT,VENDOR_ADVISORY"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/releases\/tag\/netty-4.1.136.Final","name": "RELEASE_NOTES"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/security\/advisories\/GHSA-6jqx-86gh-f27w","name": "EXPLOIT,VENDOR_ADVISORY"                    }                ],
-                "vulnerableSoftware": [
- {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"vulnerabilityIdMatched":"true","versionStartIncluding":"4.1.0","versionEndExcluding":"4.1.136"                        }
-                    }, {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"versionStartIncluding":"4.2.0","versionEndExcluding":"4.2.16"                        }
-                    }                ]
-                }, {
-                "source": "NVD",
-                "name": "CVE-2026-55833",
-                    "severity" : "HIGH",
-                    "cvssv3": {
-                        "baseScore": 7.5
-                        ,"attackVector": "NETWORK"
-                        ,"attackComplexity": "LOW"
-                        ,"privilegesRequired": "NONE"
-                        ,"userInteraction": "NONE"
-                        ,"scope": "UNCHANGED"
-                        ,"confidentialityImpact": "NONE"
-                        ,"integrityImpact": "NONE"
-                        ,"availabilityImpact": "HIGH"
-                        ,"baseSeverity": "HIGH"
-,"exploitabilityScore": "3.9","impactScore": "3.6","version": "3.1"                    },
-                    "cwes": [
-                        "CWE-400"                    ],
-                "description": "Netty is a network application framework for development of protocol servers and clients. Prior to 4.1.136.Final and 4.2.16.Final, Netty SPDY header decoding continues inflating zlib-compressed header blocks after the raw header parser has exceeded `maxHeaderSize` and marked the frame truncated in `SpdyFrameCodec`, allowing a remote peer to send a small compressed `HEADERS` block that expands into much larger raw header data and causes compression-amplified CPU and allocation churn. This issue is fixed in versions 4.1.136.Final and 4.2.16.Final.",
-                "notes": "",
-                "references": [
- {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/commit\/bb2ff68a1fb71cb4b0eb9a9e17b66c52aff680c6","name": "PATCH"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/releases\/tag\/netty-4.2.16.Final","name": "RELEASE_NOTES"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/commit\/5b68c61f37aa4a3045cba624cbea239655c9003b","name": "PATCH"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/security\/advisories\/GHSA-mvh2-crg5-v77c","name": "EXPLOIT,VENDOR_ADVISORY"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/releases\/tag\/netty-4.1.136.Final","name": "RELEASE_NOTES"                    }                ],
-                "vulnerableSoftware": [
- {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"vulnerabilityIdMatched":"true","versionStartIncluding":"4.1.0","versionEndExcluding":"4.1.136"                        }
-                    }, {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"versionStartIncluding":"4.2.0","versionEndExcluding":"4.2.16"                        }
-                    }                ]
-                }, {
-                "source": "NVD",
-                "name": "CVE-2026-56819",
-                    "severity" : "HIGH",
-                    "cvssv3": {
-                        "baseScore": 7.5
-                        ,"attackVector": "NETWORK"
-                        ,"attackComplexity": "LOW"
-                        ,"privilegesRequired": "NONE"
-                        ,"userInteraction": "NONE"
-                        ,"scope": "UNCHANGED"
-                        ,"confidentialityImpact": "NONE"
-                        ,"integrityImpact": "NONE"
-                        ,"availabilityImpact": "HIGH"
-                        ,"baseSeverity": "HIGH"
-,"exploitabilityScore": "3.9","impactScore": "3.6","version": "3.1"                    },
-                    "cwes": [
-                        "CWE-400",                        "CWE-401"                    ],
-                "description": "Netty is a network application framework for development of protocol servers and clients. In versions 4.2.0.Final through 4.2.15.Final and 4.1.0.Final through 4.1.135.Final, a remote unauthenticated peer can leak one direct `ByteBuf` per HTTP\/2 `DATA` frame in applications that enable HTTP\/2 content decompression via `DelegatingDecompressorFrameListener`. When a `DATA` frame is processed for a stream whose decompressor has already been closed, `Http2Decompressor.decompress(...)` calls `decompressor.writeInbound(data.retain())` and does not release the retained buffer on the error path, eventually exhausting direct memory and crashing the JVM. This issue is fixed in versions 4.1.136.Final and 4.2.16.Final.",
-                "notes": "",
-                "references": [
- {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/commit\/bb2ff68a1fb71cb4b0eb9a9e17b66c52aff680c6","name": "PATCH"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/releases\/tag\/netty-4.2.16.Final","name": "RELEASE_NOTES"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/commit\/5b68c61f37aa4a3045cba624cbea239655c9003b","name": "PATCH"                    }, {
-                        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
-,"url": "https:\/\/github.com\/netty\/netty\/security\/advisories\/GHSA-93wv-jw9v-4972","name": "EXPLOIT,VENDOR_ADVISORY"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/releases\/tag\/netty-4.1.136.Final","name": "RELEASE_NOTES"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/security\/advisories\/GHSA-93wv-jw9v-4972","name": "EXPLOIT,VENDOR_ADVISORY"                    }                ],
-                "vulnerableSoftware": [
- {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"vulnerabilityIdMatched":"true","versionStartIncluding":"4.1.0","versionEndExcluding":"4.1.136"                        }
-                    }, {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"versionStartIncluding":"4.2.0","versionEndExcluding":"4.2.16"                        }
-                    }                ]
-                }, {
-                "source": "NVD",
-                "name": "CVE-2026-56821",
-                    "severity" : "HIGH",
-                    "cvssv3": {
-                        "baseScore": 7.4
-                        ,"attackVector": "NETWORK"
-                        ,"attackComplexity": "HIGH"
-                        ,"privilegesRequired": "NONE"
-                        ,"userInteraction": "NONE"
-                        ,"scope": "UNCHANGED"
-                        ,"confidentialityImpact": "HIGH"
-                        ,"integrityImpact": "HIGH"
-                        ,"availabilityImpact": "NONE"
-                        ,"baseSeverity": "HIGH"
-,"exploitabilityScore": "2.2","impactScore": "5.2","version": "3.1"                    },
-                    "cwes": [
-                        "CWE-299"                    ],
-                "description": "Netty is an asynchronous, event-driven network application framework. Prior to versions 4.1.136.Final and 4.2.16.Final, the OcspServerCertificateValidator flags an out-of-date OCSP response but does not stop processing it, so an expired GOOD response is still reported as VALID, letting an on-path attacker replay a stale GOOD response to bypass revocation of a since-revoked certificate. Exploitation can lead to certificate revocation bypass via replay of an expired OCSP response. Any application using OcspServerCertificateValidator is affected; a revoked certificate can be accepted. This issue has been fixed in versions 4.1.136.Final and 4.2.16.Final.",
-                "notes": "",
-                "references": [
- {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/security\/advisories\/GHSA-g7hg-vrcf-mvmr","name": "EXPLOIT,VENDOR_ADVISORY"                    }, {
-                        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
-,"url": "https:\/\/github.com\/netty\/netty\/security\/advisories\/GHSA-g7hg-vrcf-mvmr","name": "EXPLOIT,VENDOR_ADVISORY"                    }                ],
-                "vulnerableSoftware": [
- {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"vulnerabilityIdMatched":"true","versionEndExcluding":"4.1.136"                        }
-                    }, {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"versionStartIncluding":"4.2.0","versionEndExcluding":"4.2.16"                        }
-                    }                ]
-                }, {
-                "source": "NVD",
-                "name": "CVE-2026-56822",
-                    "severity" : "HIGH",
-                    "cvssv3": {
-                        "baseScore": 7.4
-                        ,"attackVector": "NETWORK"
-                        ,"attackComplexity": "HIGH"
-                        ,"privilegesRequired": "NONE"
-                        ,"userInteraction": "NONE"
-                        ,"scope": "UNCHANGED"
-                        ,"confidentialityImpact": "HIGH"
-                        ,"integrityImpact": "HIGH"
-                        ,"availabilityImpact": "NONE"
-                        ,"baseSeverity": "HIGH"
-,"exploitabilityScore": "2.2","impactScore": "5.2","version": "3.1"                    },
-                    "cwes": [
-                        "CWE-367"                    ],
-                "description": "Netty is an asynchronous, event-driven network application framework. Prior to versions 4.1.136.Final and 4.2.16.Final, the OcspServerCertificateValidator forwards the SslHandshakeCompletionEvent before the asynchronous OCSP validation completes. This allows the client's downstream handlers to send sensitive application data (e.g., HTTP requests) to a revoked server before the channel is closed by the OCSP check. n io.netty.handler.ssl.ocsp.OcspServerCertificateValidator#userEventTriggered, when an SslHandshakeCompletionEvent is received, the validator immediately calls ctx.fireUserEventTriggered(evt). It then initiates an asynchronous OCSP query using OcspClient.query. Because the handshake completion event is forwarded immediately, downstream handlers in the client's pipeline are notified that the TLS handshake is successful. They may then begin reading and processing incoming application data or sending outgoing data. If the OCSP response later indicates the server's certificate is REVOKED, the validator closes the channel, but by this time, the client may have already leaked sensitive data to a revoked server or processed malicious responses from it. This issue has been fixed in versions 4.1.136.Final and 4.2.16.Final.",
-                "notes": "",
-                "references": [
- {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/security\/advisories\/GHSA-wc96-39fc-566f","name": "VENDOR_ADVISORY"                    }, {
-                        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
-,"url": "https:\/\/github.com\/netty\/netty\/security\/advisories\/GHSA-wc96-39fc-566f","name": "VENDOR_ADVISORY"                    }                ],
-                "vulnerableSoftware": [
- {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"vulnerabilityIdMatched":"true","versionEndExcluding":"4.1.136"                        }
-                    }, {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"versionStartIncluding":"4.2.0","versionEndExcluding":"4.2.16"                        }
-                    }                ]
-                }, {
-                "source": "NVD",
-                "name": "CVE-2026-59899",
-                    "severity" : "MEDIUM",
-                    "cvssv3": {
-                        "baseScore": 7.5
-                        ,"attackVector": "NETWORK"
-                        ,"attackComplexity": "LOW"
-                        ,"privilegesRequired": "NONE"
-                        ,"userInteraction": "NONE"
-                        ,"scope": "UNCHANGED"
-                        ,"confidentialityImpact": "NONE"
-                        ,"integrityImpact": "NONE"
-                        ,"availabilityImpact": "HIGH"
-                        ,"baseSeverity": "HIGH"
-,"exploitabilityScore": "3.9","impactScore": "3.6","version": "3.1"                    },
-                    "cvssv4": {
-                        "vectorString": "CVSS:4.0\/AV:N\/AC:L\/AT:N\/PR:N\/UI:N\/VC:N\/VI:N\/VA:L\/SC:N\/SI:N\/SA:N\/E:X\/CR:X\/IR:X\/AR:X\/MAV:X\/MAC:X\/MAT:X\/MPR:X\/MUI:X\/MVC:X\/MVI:X\/MVA:X\/MSC:X\/MSI:X\/MSA:X\/S:X\/AU:X\/R:X\/V:X\/RE:X\/U:X"
-                        ,"source": "security-advisories@github.com"
-                        ,"type": "Secondary"
-                        ,"version": "4.0"
-                        ,"attackVector": "NETWORK"
-                        ,"attackComplexity": "LOW"
-                        ,"attackRequirements": "NONE"
-                        ,"privilegesRequired": "NONE"
-                        ,"userInteraction": "NONE"
-                        ,"vulnerableSystemConfidentiality": "NONE"
-                        ,"vulnerableSystemIntegrity": "NONE"
-                        ,"vulnerableSystemAvailability": "LOW"
-                        ,"subsequentSystemConfidentiality": "NONE"
-                        ,"subsequentSystemIntegrity": "NONE"
-                        ,"subsequentSystemAvailability": "NONE"
-                        ,"exploitMaturity": "NOT_DEFINED"
-                        ,"confidentialityRequirements": "NOT_DEFINED"
-                        ,"integrityRequirements": "NOT_DEFINED"
-                        ,"availabilityRequirements": "NOT_DEFINED"
-                        ,"modifiedAttackVector": "NOT_DEFINED"
-                        ,"modifiedAttackComplexity": "NOT_DEFINED"
-                        ,"modifiedAttackRequirements": "NOT_DEFINED"
-                        ,"modifiedPrivilegesRequired": "NOT_DEFINED"
-                        ,"modifiedUserInteraction": "NOT_DEFINED"
-                        ,"modifiedVulnerableSystemConfidentiality": "NOT_DEFINED"
-                        ,"modifiedVulnerableSystemIntegrity": "NOT_DEFINED"
-                        ,"modifiedVulnerableSystemAvailability": "NOT_DEFINED"
-                        ,"modifiedSubsequentSystemConfidentiality": "NOT_DEFINED"
-                        ,"modifiedSubsequentSystemIntegrity": "NOT_DEFINED"
-                        ,"modifiedSubsequentSystemAvailability": "NOT_DEFINED"
-                        ,"safety": "NOT_DEFINED"
-                        ,"automatable": "NOT_DEFINED"
-                        ,"recovery": "NOT_DEFINED"
-                        ,"valueDensity": "NOT_DEFINED"
-                        ,"vulnerabilityResponseEffort": "NOT_DEFINED"
-                        ,"providerUrgency": "NOT_DEFINED"
-                        ,"baseScore": 6.9
-                        ,"baseSeverity": "MEDIUM"
-                    },
-                    "cwes": [
-                        "CWE-770"                    ],
-                "description": "Netty is an asynchronous, event-driven network application framework. Prior to versions 4.1.136.Final and 4.2.16.Final, `HttpContentEncoder` (the superclass of the production handler `HttpContentCompressor`) maintains a per-channel `ArrayDeque<CharSequence>` named `acceptEncodingQueue` that accumulates attacker-controlled data without any size limit. The queue is filled on the I\/O thread for every inbound HTTP request and drained only when the application later writes a non-1xx response. This creates a resource exhaustion vulnerability when an attacker exploits HTTP\/1.1 pipelining to flood the connection with requests faster than the application produces responses. This issue has been fixed in versions 4.1.136.Final and 4.2.16.Final.",
-                "notes": "",
-                "references": [
- {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/releases\/tag\/netty-4.2.16.Final","name": "RELEASE_NOTES"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/releases\/tag\/netty-4.1.136.Final","name": "RELEASE_NOTES"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/security\/advisories\/GHSA-q4f6-jm68-57ww","name": "VENDOR_ADVISORY"                    }                ],
-                "vulnerableSoftware": [
- {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"vulnerabilityIdMatched":"true","versionEndExcluding":"4.1.136"                        }
-                    }, {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"versionStartIncluding":"4.2.0","versionEndExcluding":"4.2.16"                        }
-                    }                ]
-                }, {
-                "source": "NVD",
-                "name": "CVE-2026-59900",
-                    "severity" : "MEDIUM",
-                    "cvssv3": {
-                        "baseScore": 5.3
-                        ,"attackVector": "NETWORK"
-                        ,"attackComplexity": "LOW"
-                        ,"privilegesRequired": "NONE"
-                        ,"userInteraction": "NONE"
-                        ,"scope": "UNCHANGED"
-                        ,"confidentialityImpact": "NONE"
-                        ,"integrityImpact": "LOW"
-                        ,"availabilityImpact": "NONE"
-                        ,"baseSeverity": "MEDIUM"
-,"exploitabilityScore": "3.9","impactScore": "1.4","version": "3.1"                    },
-                    "cvssv4": {
-                        "vectorString": "CVSS:4.0\/AV:N\/AC:L\/AT:N\/PR:N\/UI:N\/VC:N\/VI:N\/VA:N\/SC:L\/SI:L\/SA:N\/E:X\/CR:X\/IR:X\/AR:X\/MAV:X\/MAC:X\/MAT:X\/MPR:X\/MUI:X\/MVC:X\/MVI:X\/MVA:X\/MSC:X\/MSI:X\/MSA:X\/S:X\/AU:X\/R:X\/V:X\/RE:X\/U:X"
-                        ,"source": "security-advisories@github.com"
-                        ,"type": "Secondary"
-                        ,"version": "4.0"
-                        ,"attackVector": "NETWORK"
-                        ,"attackComplexity": "LOW"
-                        ,"attackRequirements": "NONE"
-                        ,"privilegesRequired": "NONE"
-                        ,"userInteraction": "NONE"
-                        ,"vulnerableSystemConfidentiality": "NONE"
-                        ,"vulnerableSystemIntegrity": "NONE"
-                        ,"vulnerableSystemAvailability": "NONE"
-                        ,"subsequentSystemConfidentiality": "LOW"
-                        ,"subsequentSystemIntegrity": "LOW"
-                        ,"subsequentSystemAvailability": "NONE"
-                        ,"exploitMaturity": "NOT_DEFINED"
-                        ,"confidentialityRequirements": "NOT_DEFINED"
-                        ,"integrityRequirements": "NOT_DEFINED"
-                        ,"availabilityRequirements": "NOT_DEFINED"
-                        ,"modifiedAttackVector": "NOT_DEFINED"
-                        ,"modifiedAttackComplexity": "NOT_DEFINED"
-                        ,"modifiedAttackRequirements": "NOT_DEFINED"
-                        ,"modifiedPrivilegesRequired": "NOT_DEFINED"
-                        ,"modifiedUserInteraction": "NOT_DEFINED"
-                        ,"modifiedVulnerableSystemConfidentiality": "NOT_DEFINED"
-                        ,"modifiedVulnerableSystemIntegrity": "NOT_DEFINED"
-                        ,"modifiedVulnerableSystemAvailability": "NOT_DEFINED"
-                        ,"modifiedSubsequentSystemConfidentiality": "NOT_DEFINED"
-                        ,"modifiedSubsequentSystemIntegrity": "NOT_DEFINED"
-                        ,"modifiedSubsequentSystemAvailability": "NOT_DEFINED"
-                        ,"safety": "NOT_DEFINED"
-                        ,"automatable": "NOT_DEFINED"
-                        ,"recovery": "NOT_DEFINED"
-                        ,"valueDensity": "NOT_DEFINED"
-                        ,"vulnerabilityResponseEffort": "NOT_DEFINED"
-                        ,"providerUrgency": "NOT_DEFINED"
-                        ,"baseScore": 6.9
-                        ,"baseSeverity": "MEDIUM"
-                    },
-                    "cwes": [
-                        "CWE-444"                    ],
-                "description": "Netty is an asynchronous, event-driven network application framework. Prior to versions 4.1.136.Final and 4.2.16.Final, Netty's HTTP\/2-to-HTTP\/1.x translation layer (`Http2StreamFrameToHttpObjectCodec` and `InboundHttp2ToHttpAdapter`) fails to deduplicate or validate `Host` headers when an HTTP\/2 client supplies both the `:authority` pseudo-header and a literal `host` header in a single HEADERS frame. The translator maps `:authority` to `Host` and separately copies the literal `host` header, producing an `HttpRequest` object containing two `Host` headers with attacker-controlled differing values. This issue has been fixed in versions 4.1.136.Final and 4.2.16.Final.",
-                "notes": "",
-                "references": [
- {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/releases\/tag\/netty-4.2.16.Final","name": "RELEASE_NOTES"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/security\/advisories\/GHSA-c69g-56f8-xwqj","name": "VENDOR_ADVISORY"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/releases\/tag\/netty-4.1.136.Final","name": "RELEASE_NOTES"                    }                ],
-                "vulnerableSoftware": [
- {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"vulnerabilityIdMatched":"true","versionEndExcluding":"4.1.136"                        }
-                    }, {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"versionStartIncluding":"4.2.0","versionEndExcluding":"4.2.16"                        }
-                    }                ]
-                }, {
-                "source": "NVD",
-                "name": "CVE-2026-56746",
-                    "severity" : "MEDIUM",
-                    "cvssv3": {
-                        "baseScore": 6.5
-                        ,"attackVector": "NETWORK"
-                        ,"attackComplexity": "LOW"
-                        ,"privilegesRequired": "NONE"
-                        ,"userInteraction": "REQUIRED"
-                        ,"scope": "UNCHANGED"
-                        ,"confidentialityImpact": "NONE"
-                        ,"integrityImpact": "HIGH"
-                        ,"availabilityImpact": "NONE"
-                        ,"baseSeverity": "MEDIUM"
-,"exploitabilityScore": "2.8","impactScore": "3.6","version": "3.1"                    },
-                    "cwes": [
-                        "CWE-284"                    ],
-                "description": "Netty is a network application framework for development of protocol servers and clients. Versions 4.2.0.Final through 4.2.15.Final and 4.1.0.Final through 4.1.135.Final, are vulnerable to security control bypass during the origin evaluation process. CorsHandler provides a shortCircuit() configuration designed to reject unauthorized cross-origin requests immediately, acting as a security control before requests reach the application. However, due to a logical operator error in the origin evaluation process, this protection can be entirely bypassed. An attacker can bypass the short-circuit mechanism by sending a request with an Origin: null header. This failure forwards unauthorized requests to the backend application, bypassing intended access controls. This issue is fixed in versions 4.1.136.Final and 4.2.16.Final.",
-                "notes": "",
-                "references": [
- {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/releases\/tag\/netty-4.2.16.Final","name": "RELEASE_NOTES"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/security\/advisories\/GHSA-6cqp-g7gg-8hr5","name": "VENDOR_ADVISORY"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/releases\/tag\/netty-4.1.136.Final","name": "RELEASE_NOTES"                    }                ],
-                "vulnerableSoftware": [
- {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"vulnerabilityIdMatched":"true","versionStartIncluding":"4.1.0","versionEndExcluding":"4.1.136"                        }
-                    }, {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"versionStartIncluding":"4.2.0","versionEndExcluding":"4.2.16"                        }
-                    }                ]
-                }, {
-                "source": "NVD",
-                "name": "CVE-2026-59920",
-                    "severity" : "MEDIUM",
-                    "cvssv3": {
-                        "baseScore": 6.5
-                        ,"attackVector": "NETWORK"
-                        ,"attackComplexity": "LOW"
-                        ,"privilegesRequired": "LOW"
-                        ,"userInteraction": "NONE"
-                        ,"scope": "UNCHANGED"
-                        ,"confidentialityImpact": "NONE"
-                        ,"integrityImpact": "HIGH"
-                        ,"availabilityImpact": "NONE"
-                        ,"baseSeverity": "MEDIUM"
-,"exploitabilityScore": "2.8","impactScore": "3.6","version": "3.1"                    },
-                    "cwes": [
-                        "CWE-93"                    ],
-                "description": "Netty is an asynchronous, event-driven network application framework. In versions prior to 4.1.136.Final and 4.2.16.Final, Netty's STOMP encoder (\u00A0StompSubframeEncoder\u00A0) does not escape or validate header values in \u00A0CONNECT\u00A0 and \u00A0CONNECTED\u00A0 frames, so raw newline (\u00A0\\n\u00A0) characters in a header value are written directly to the wire, allowing an attacker who controls a header value to inject additional STOMP headers. This happens because the encoder intentionally skips escaping for CONNECT\/CONNECTED frames per the STOMP 1.2 specification but never rejects the raw newlines, and since a broker parses each line as a separate header, an attacker controlling a value such as a user-supplied login or passcode can overwrite connection parameters or add authentication\/role headers to bypass authentication or escalate privileges (the actual impact is broker-dependent). The issue is fixed in versions 4.1.136.Final and 4.2.16.Final.",
-                "notes": "",
-                "references": [
- {
-                        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
-,"url": "https:\/\/github.com\/netty\/netty\/security\/advisories\/GHSA-3g8r-4pfx-jmfh","name": "MITIGATION,VENDOR_ADVISORY"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/security\/advisories\/GHSA-3g8r-4pfx-jmfh","name": "MITIGATION,VENDOR_ADVISORY"                    }                ],
-                "vulnerableSoftware": [
- {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"vulnerabilityIdMatched":"true","versionEndExcluding":"4.1.136"                        }
-                    }, {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"versionStartIncluding":"4.2.0","versionEndExcluding":"4.2.16"                        }
-                    }                ]
-                }, {
-                "source": "NVD",
-                "name": "CVE-2026-59921",
-                    "severity" : "MEDIUM",
-                    "cvssv3": {
-                        "baseScore": 6.5
-                        ,"attackVector": "NETWORK"
-                        ,"attackComplexity": "LOW"
-                        ,"privilegesRequired": "LOW"
-                        ,"userInteraction": "NONE"
-                        ,"scope": "UNCHANGED"
-                        ,"confidentialityImpact": "NONE"
-                        ,"integrityImpact": "HIGH"
-                        ,"availabilityImpact": "NONE"
-                        ,"baseSeverity": "MEDIUM"
-,"exploitabilityScore": "2.8","impactScore": "3.6","version": "3.1"                    },
-                    "cwes": [
-                        "CWE-93"                    ],
-                "description": "Netty is an asynchronous, event-driven network application framework. Prior to versions 4.1.136.Final and 4.2.16.Final, HttpPostRequestEncoder constructs multipart HTTP request bodies by directly concatenating user-supplied filenames and field names into Content-Disposition MIME headers without validating or sanitizing CRLF characters (\\r\\n). Since MIME headers are delimited by CRLF, an attacker who controls the filename can inject arbitrary MIME headers into the multipart body part. The root cause is that neither the encoder nor the FileUpload implementations' setFilename() methods, which only check for null, neutralize CRLF characters before the filename is embedded into the header. This issue has been fixed in versions 4.1.136.Final and 4.2.16.Final.",
-                "notes": "",
-                "references": [
- {
-                        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
-,"url": "https:\/\/github.com\/netty\/netty\/security\/advisories\/GHSA-gcjf-9mgh-3p7g","name": "MITIGATION,VENDOR_ADVISORY"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/security\/advisories\/GHSA-gcjf-9mgh-3p7g","name": "MITIGATION,VENDOR_ADVISORY"                    }                ],
-                "vulnerableSoftware": [
- {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"vulnerabilityIdMatched":"true","versionEndExcluding":"4.1.136"                        }
-                    }, {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"versionStartIncluding":"4.2.0","versionEndExcluding":"4.2.16"                        }
-                    }                ]
-                }, {
-                "source": "NVD",
-                "name": "CVE-2026-59898",
-                    "severity" : "MEDIUM",
-                    "cvssv3": {
-                        "baseScore": 7.5
-                        ,"attackVector": "NETWORK"
-                        ,"attackComplexity": "LOW"
-                        ,"privilegesRequired": "NONE"
-                        ,"userInteraction": "NONE"
-                        ,"scope": "UNCHANGED"
-                        ,"confidentialityImpact": "NONE"
-                        ,"integrityImpact": "HIGH"
-                        ,"availabilityImpact": "NONE"
-                        ,"baseSeverity": "HIGH"
-,"exploitabilityScore": "3.9","impactScore": "3.6","version": "3.1"                    },
-                    "cvssv4": {
-                        "vectorString": "CVSS:4.0\/AV:N\/AC:H\/AT:N\/PR:N\/UI:N\/VC:N\/VI:N\/VA:N\/SC:L\/SI:L\/SA:N\/E:X\/CR:X\/IR:X\/AR:X\/MAV:X\/MAC:X\/MAT:X\/MPR:X\/MUI:X\/MVC:X\/MVI:X\/MVA:X\/MSC:X\/MSI:X\/MSA:X\/S:X\/AU:X\/R:X\/V:X\/RE:X\/U:X"
-                        ,"source": "security-advisories@github.com"
-                        ,"type": "Secondary"
-                        ,"version": "4.0"
-                        ,"attackVector": "NETWORK"
-                        ,"attackComplexity": "HIGH"
-                        ,"attackRequirements": "NONE"
-                        ,"privilegesRequired": "NONE"
-                        ,"userInteraction": "NONE"
-                        ,"vulnerableSystemConfidentiality": "NONE"
-                        ,"vulnerableSystemIntegrity": "NONE"
-                        ,"vulnerableSystemAvailability": "NONE"
-                        ,"subsequentSystemConfidentiality": "LOW"
-                        ,"subsequentSystemIntegrity": "LOW"
-                        ,"subsequentSystemAvailability": "NONE"
-                        ,"exploitMaturity": "NOT_DEFINED"
-                        ,"confidentialityRequirements": "NOT_DEFINED"
-                        ,"integrityRequirements": "NOT_DEFINED"
-                        ,"availabilityRequirements": "NOT_DEFINED"
-                        ,"modifiedAttackVector": "NOT_DEFINED"
-                        ,"modifiedAttackComplexity": "NOT_DEFINED"
-                        ,"modifiedAttackRequirements": "NOT_DEFINED"
-                        ,"modifiedPrivilegesRequired": "NOT_DEFINED"
-                        ,"modifiedUserInteraction": "NOT_DEFINED"
-                        ,"modifiedVulnerableSystemConfidentiality": "NOT_DEFINED"
-                        ,"modifiedVulnerableSystemIntegrity": "NOT_DEFINED"
-                        ,"modifiedVulnerableSystemAvailability": "NOT_DEFINED"
-                        ,"modifiedSubsequentSystemConfidentiality": "NOT_DEFINED"
-                        ,"modifiedSubsequentSystemIntegrity": "NOT_DEFINED"
-                        ,"modifiedSubsequentSystemAvailability": "NOT_DEFINED"
-                        ,"safety": "NOT_DEFINED"
-                        ,"automatable": "NOT_DEFINED"
-                        ,"recovery": "NOT_DEFINED"
-                        ,"valueDensity": "NOT_DEFINED"
-                        ,"vulnerabilityResponseEffort": "NOT_DEFINED"
-                        ,"providerUrgency": "NOT_DEFINED"
-                        ,"baseScore": 6.3
-                        ,"baseSeverity": "MEDIUM"
-                    },
-                    "cwes": [
-                        "CWE-444"                    ],
-                "description": "Netty is an asynchronous, event-driven network application framework.  Prior to versions 4.1.136.Final and 4.2.16.Final, ab attacker can force WebSocket upgrade via the lax V07 (or V08) handshaker by sending `Sec-WebSocket-Version: 7` and omitting `Connection: Upgrade` \/ `Upgrade: websocket` headers, completing a protocol switch that a proxy would not recognize as an Upgrade request and enabling HTTP request smuggling \/ protocol-confusion attacks. This issue has been fixed in versions 4.1.136.Final and 4.2.16.Final.",
-                "notes": "",
-                "references": [
- {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/security\/advisories\/GHSA-4mp9-239f-g9hg","name": "VENDOR_ADVISORY"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/releases\/tag\/netty-4.2.16.Final","name": "RELEASE_NOTES"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/releases\/tag\/netty-4.1.136.Final","name": "RELEASE_NOTES"                    }                ],
-                "vulnerableSoftware": [
- {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"vulnerabilityIdMatched":"true","versionEndExcluding":"4.1.136"                        }
-                    }, {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"versionStartIncluding":"4.2.0","versionEndExcluding":"4.2.16"                        }
-                    }                ]
-                }, {
-                "source": "NVD",
-                "name": "CVE-2026-59919",
-                    "severity" : "MEDIUM",
-                    "cvssv3": {
-                        "baseScore": 5.5
-                        ,"attackVector": "LOCAL"
-                        ,"attackComplexity": "LOW"
-                        ,"privilegesRequired": "LOW"
-                        ,"userInteraction": "NONE"
-                        ,"scope": "UNCHANGED"
-                        ,"confidentialityImpact": "NONE"
-                        ,"integrityImpact": "HIGH"
-                        ,"availabilityImpact": "NONE"
-                        ,"baseSeverity": "MEDIUM"
-,"exploitabilityScore": "1.8","impactScore": "3.6","version": "3.1"                    },
-                    "cwes": [
-                        "CWE-93"                    ],
-                "description": "Netty is an asynchronous, event-driven network application framework. In versions prior to 4.1.136.Final and 4.2.16.Final, Netty's HAProxy encoder (\u00A0HAProxyMessageEncoder\u00A0) writes AF_UNIX source and destination socket addresses into the HAProxy V1 text protocol without validating them for CRLF characters, so an attacker who controls an AF_UNIX address can inject \u00A0\\r\\n\u00A0 sequences and split the single PROXY header into multiple lines. This is possible because the V1 protocol uses CRLF as its line terminator and, unlike IPv4\/IPv6 addresses whose format checks implicitly reject CRLF, AF_UNIX addresses are only validated for length (up to 108 bytes), allowing a forged second PROXY header line that spoofs the client source\/destination IP to a downstream server or load balancer. The issue is fixed in versions 4.1.136.Final and 4.2.16.Final.",
-                "notes": "",
-                "references": [
- {
-                        "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0"
-,"url": "https:\/\/github.com\/netty\/netty\/security\/advisories\/GHSA-wh89-7897-x99h","name": "EXPLOIT,VENDOR_ADVISORY"                    }, {
-                        "source": "security-advisories@github.com"
-,"url": "https:\/\/github.com\/netty\/netty\/security\/advisories\/GHSA-wh89-7897-x99h","name": "EXPLOIT,VENDOR_ADVISORY"                    }                ],
-                "vulnerableSoftware": [
- {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"vulnerabilityIdMatched":"true","versionEndExcluding":"4.1.136"                        }
-                    }, {
-                        "software": { 
-                            "id":"cpe:2.3:a:netty:netty:*:*:*:*:*:*:*:*"
-,"versionStartIncluding":"4.2.0","versionEndExcluding":"4.2.16"                        }
-                    }                ]
-                }            ]        },{
-            "isVirtual": false,
-            "fileName": "netty-transport-native-unix-common-4.1.119.Final.jar",
-            "filePath": "C:\\Users\\amiri\\.m2\\repository\\io\\netty\\netty-transport-native-unix-common\\4.1.119.Final\\netty-transport-native-unix-common-4.1.119.Final.jar"
-,"md5": "ecff182ca1b66e944f1e4ac348f061ca",
-            "sha1": "55afdeb456bccf8eecb06431f3c1537269afe9af",
-            "sha256": "8ae5618f69326e6d17b77b0140f9d277118dbd23906ca07638bc01365728c650","description": "\n    Static library which contains common unix utilities.\n  ","license": "https:\/\/www.apache.org\/licenses\/LICENSE-2.0"            ,"projectReferences": [
+            "fileName": "netty-transport-native-epoll-4.1.119.Final-linux-x86_64.jar",
+            "filePath": "C:\\Users\\amiri\\.m2\\repository\\io\\netty\\netty-transport-native-epoll\\4.1.119.Final\\netty-transport-native-epoll-4.1.119.Final-linux-x86_64.jar"
+,"md5": "36d1bbab6a7634aec5b6befb55a49299",
+            "sha1": "500fdc2000a47c07ad6c0ea230127f5ac3c9ad5c",
+            "sha256": "12557923a5069e736a9305c73a87b303ba9e89b32da3ec95dea6a856f3fd6397","description": "Netty is an asynchronous event-driven network application framework for    rapid development of maintainable high performance protocol servers and    clients.","license": "https:\/\/www.apache.org\/licenses\/LICENSE-2.0"            ,"projectReferences": [
                 "cake-service:compile"
             ]
             ,"includedBy": [
@@ -14060,19 +12814,6 @@
                             }
                     ]
                 }
- , {
-                    "isVirtual": false,
-                    "fileName": "netty-transport-native-epoll-4.1.119.Final-linux-x86_64.jar",
-                    "filePath": "C:\\Users\\amiri\\.m2\\repository\\io\\netty\\netty-transport-native-epoll\\4.1.119.Final\\netty-transport-native-epoll-4.1.119.Final-linux-x86_64.jar"
-,"sha256": "12557923a5069e736a9305c73a87b303ba9e89b32da3ec95dea6a856f3fd6397",
-                    "sha1": "500fdc2000a47c07ad6c0ea230127f5ac3c9ad5c",
-                    "md5": "36d1bbab6a7634aec5b6befb55a49299",
-                    "packageIds": [
-                            {
-                                "id": "pkg:maven/io.netty/netty-transport-native-epoll@4.1.119.Final"
-                            }
-                    ]
-                }
             ]
             ,"evidenceCollected": {
                 "vendorEvidence": [
@@ -14081,35 +12822,14 @@
                             "confidence": "HIGH",
                             "source": "file",
                             "name": "name",
-                            "value": "netty-transport-native-unix-common"
-                        }
-,{
-                            "type": "vendor",
-                            "confidence": "HIGHEST",
-                            "source": "jar",
-                            "name": "package name",
-                            "value": "io"
-                        }
-,{
-                            "type": "vendor",
-                            "confidence": "HIGHEST",
-                            "source": "jar",
-                            "name": "package name",
-                            "value": "netty"
-                        }
-,{
-                            "type": "vendor",
-                            "confidence": "HIGHEST",
-                            "source": "jar",
-                            "name": "package name",
-                            "value": "unix"
+                            "value": "netty-transport-native-epoll"
                         }
 ,{
                             "type": "vendor",
                             "confidence": "MEDIUM",
                             "source": "Manifest",
                             "name": "automatic-module-name",
-                            "value": "io.netty.transport.unix.common"
+                            "value": "io.netty.transport.epoll.linux.x86_64"
                         }
 ,{
                             "type": "vendor",
@@ -14127,17 +12847,31 @@
                         }
 ,{
                             "type": "vendor",
+                            "confidence": "LOW",
+                            "source": "Manifest",
+                            "name": "bundle-nativecode",
+                            "value": "META-INF\/native\/libnetty_transport_native_epoll_x86_64.so; osname=Linux; processor=x86_64,*"
+                        }
+,{
+                            "type": "vendor",
                             "confidence": "MEDIUM",
                             "source": "Manifest",
                             "name": "bundle-symbolicname",
-                            "value": "io.netty.transport-native-unix-common"
+                            "value": "io.netty.transport-native-epoll"
+                        }
+,{
+                            "type": "vendor",
+                            "confidence": "LOW",
+                            "source": "Manifest",
+                            "name": "fragment-host",
+                            "value": "io.netty.transport-classes-epoll"
                         }
 ,{
                             "type": "vendor",
                             "confidence": "LOW",
                             "source": "Manifest",
                             "name": "implementation-url",
-                            "value": "https:\/\/netty.io\/netty-transport-native-unix-common\/"
+                            "value": "https:\/\/netty.io\/netty-transport-native-epoll\/"
                         }
 ,{
                             "type": "vendor",
@@ -14165,14 +12899,14 @@
                             "confidence": "HIGHEST",
                             "source": "pom",
                             "name": "artifactid",
-                            "value": "netty-transport-native-unix-common"
+                            "value": "netty-transport-native-epoll"
                         }
 ,{
                             "type": "vendor",
                             "confidence": "LOW",
                             "source": "pom",
                             "name": "artifactid",
-                            "value": "netty-transport-native-unix-common"
+                            "value": "netty-transport-native-epoll"
                         }
 ,{
                             "type": "vendor",
@@ -14186,7 +12920,7 @@
                             "confidence": "HIGH",
                             "source": "pom",
                             "name": "name",
-                            "value": "Netty\/Transport\/Native\/Unix\/Common"
+                            "value": "Netty\/Transport\/Native\/Epoll"
                         }
 ,{
                             "type": "vendor",
@@ -14202,35 +12936,14 @@
                             "confidence": "HIGH",
                             "source": "file",
                             "name": "name",
-                            "value": "netty-transport-native-unix-common"
-                    }
-,{
-                            "type": "product",
-                            "confidence": "HIGHEST",
-                            "source": "jar",
-                            "name": "package name",
-                            "value": "io"
-                    }
-,{
-                            "type": "product",
-                            "confidence": "HIGHEST",
-                            "source": "jar",
-                            "name": "package name",
-                            "value": "netty"
-                    }
-,{
-                            "type": "product",
-                            "confidence": "HIGHEST",
-                            "source": "jar",
-                            "name": "package name",
-                            "value": "unix"
+                            "value": "netty-transport-native-epoll"
                     }
 ,{
                             "type": "product",
                             "confidence": "MEDIUM",
                             "source": "Manifest",
                             "name": "automatic-module-name",
-                            "value": "io.netty.transport.unix.common"
+                            "value": "io.netty.transport.epoll.linux.x86_64"
                     }
 ,{
                             "type": "product",
@@ -14251,42 +12964,56 @@
                             "confidence": "MEDIUM",
                             "source": "Manifest",
                             "name": "Bundle-Name",
-                            "value": "Netty\/Transport\/Native\/Unix\/Common"
+                            "value": "Netty\/Transport\/Native\/Epoll"
+                    }
+,{
+                            "type": "product",
+                            "confidence": "LOW",
+                            "source": "Manifest",
+                            "name": "bundle-nativecode",
+                            "value": "META-INF\/native\/libnetty_transport_native_epoll_x86_64.so; osname=Linux; processor=x86_64,*"
                     }
 ,{
                             "type": "product",
                             "confidence": "MEDIUM",
                             "source": "Manifest",
                             "name": "bundle-symbolicname",
-                            "value": "io.netty.transport-native-unix-common"
+                            "value": "io.netty.transport-native-epoll"
+                    }
+,{
+                            "type": "product",
+                            "confidence": "LOW",
+                            "source": "Manifest",
+                            "name": "fragment-host",
+                            "value": "io.netty.transport-classes-epoll"
                     }
 ,{
                             "type": "product",
                             "confidence": "HIGH",
                             "source": "Manifest",
                             "name": "Implementation-Title",
-                            "value": "Netty\/Transport\/Native\/Unix\/Common"
+                            "value": "Netty\/Transport\/Native\/Epoll"
                     }
 ,{
                             "type": "product",
                             "confidence": "LOW",
                             "source": "Manifest",
                             "name": "implementation-url",
-                            "value": "https:\/\/netty.io\/netty-transport-native-unix-common\/"
+                            "value": "https:\/\/netty.io\/netty-transport-native-epoll\/"
                     }
 ,{
                             "type": "product",
                             "confidence": "MEDIUM",
                             "source": "Manifest",
                             "name": "specification-title",
-                            "value": "Netty\/Transport\/Native\/Unix\/Common"
+                            "value": "Netty\/Transport\/Native\/Epoll"
                     }
 ,{
                             "type": "product",
                             "confidence": "HIGHEST",
                             "source": "pom",
                             "name": "artifactid",
-                            "value": "netty-transport-native-unix-common"
+                            "value": "netty-transport-native-epoll"
                     }
 ,{
                             "type": "product",
@@ -14300,7 +13027,7 @@
                             "confidence": "HIGH",
                             "source": "pom",
                             "name": "name",
-                            "value": "Netty\/Transport\/Native\/Unix\/Common"
+                            "value": "Netty\/Transport\/Native\/Epoll"
                     }
 ,{
                             "type": "product",
@@ -14336,7 +13063,7 @@
             }
                 ,"packages": [
                     {
-                        "id": "pkg:maven\/io.netty\/netty-transport-native-unix-common@4.1.119.Final"
+                        "id": "pkg:maven\/io.netty\/netty-transport-native-epoll@4.1.119.Final"
 ,"confidence": "HIGH"                    }
             ]                ,"vulnerabilityIds": [
                 {
@@ -14398,6 +13125,8 @@
 ,"url": "https:\/\/github.com\/netty\/netty\/releases\/tag\/netty-4.2.15.Final","name": "RELEASE_NOTES"                    }, {
                         "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c"
 ,"url": "https:\/\/access.redhat.com\/errata\/RHSA-2026:34608"                    }, {
+                        "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c"
+,"url": "https:\/\/access.redhat.com\/errata\/RHSA-2026:50085"                    }, {
                         "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c"
 ,"url": "https:\/\/security.access.redhat.com\/data\/csaf\/v2\/vex\/2026\/cve-2026-45674.json"                    }, {
                         "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c"
@@ -14464,6 +13193,8 @@
 ,"url": "https:\/\/github.com\/netty\/netty\/security\/advisories\/GHSA-5pvg-856g-cp85","name": "VENDOR_ADVISORY"                    }, {
                         "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c"
 ,"url": "https:\/\/access.redhat.com\/errata\/RHSA-2026:34608"                    }, {
+                        "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c"
+,"url": "https:\/\/access.redhat.com\/errata\/RHSA-2026:50085"                    }, {
                         "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c"
 ,"url": "https:\/\/bugzilla.redhat.com\/show_bug.cgi?id=2488439"                    }, {
                         "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c"
@@ -15475,6 +14206,8 @@
                         "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c"
 ,"url": "https:\/\/access.redhat.com\/errata\/RHSA-2026:34608"                    }, {
                         "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c"
+,"url": "https:\/\/access.redhat.com\/errata\/RHSA-2026:50085"                    }, {
+                        "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c"
 ,"url": "https:\/\/security.access.redhat.com\/data\/csaf\/v2\/vex\/2026\/cve-2026-44249.json"                    }, {
                         "source": "security-advisories@github.com"
 ,"url": "https:\/\/github.com\/netty\/netty\/security\/advisories\/GHSA-3qp7-7mw8-wx86","name": "VENDOR_ADVISORY"                    }, {
@@ -16037,6 +14770,8 @@
                         "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c"
 ,"url": "https:\/\/access.redhat.com\/errata\/RHSA-2026:34608"                    }, {
                         "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c"
+,"url": "https:\/\/access.redhat.com\/errata\/RHSA-2026:50085"                    }, {
+                        "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c"
 ,"url": "https:\/\/access.redhat.com\/errata\/RHSA-2026:53644"                    }                ],
                 "vulnerableSoftware": [
  {
@@ -16226,6 +14961,8 @@
 ,"url": "https:\/\/access.redhat.com\/errata\/RHSA-2026:28573"                    }, {
                         "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c"
 ,"url": "https:\/\/access.redhat.com\/errata\/RHSA-2026:34608"                    }, {
+                        "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c"
+,"url": "https:\/\/access.redhat.com\/errata\/RHSA-2026:50085"                    }, {
                         "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c"
 ,"url": "https:\/\/bugzilla.redhat.com\/show_bug.cgi?id=2488429"                    }, {
                         "source": "0b0ca135-0b70-47e7-9f44-1890c2a1c46c"
@@ -25671,7 +24408,7 @@
                 ]
                 }, {
                 "source": "RETIREJS",
-                "name": "GHSA-55q2-fjhq-7xh7",
+                "name": "CVE-2026-75838",
 "unscored": "true", "severity" : "medium",
                 "description": "DOMPurify: IN_PLACE hook removal leaves a detached subtree executable, causing XSS",
                 "notes": "",
@@ -27011,7 +25748,7 @@
                 ]
                 }, {
                 "source": "RETIREJS",
-                "name": "GHSA-55q2-fjhq-7xh7",
+                "name": "CVE-2026-75838",
 "unscored": "true", "severity" : "medium",
                 "description": "DOMPurify: IN_PLACE hook removal leaves a detached subtree executable, causing XSS",
                 "notes": "",

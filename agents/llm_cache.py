@@ -10,7 +10,7 @@
 #   response for this exact (model, messages) pair and reuse it. if not,
 #   fall back to a real call and cache that new response - so the cache
 #   builds itself up over time, even if it starts out empty
-
+#it saves LLM responses to disk so no need to pay for the same API call twice while testing.
 import os
 import json
 import hashlib
