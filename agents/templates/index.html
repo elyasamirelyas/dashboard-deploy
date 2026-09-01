@@ -186,6 +186,17 @@
   .node.failed .mark svg { display: block; }
   .node.failed .mark svg path { stroke: var(--amber); }
 
+  /* Per-phase evidence caption, e.g. "Remediation batch — Attempted: 5,
+     Applied: 2, Failed/reverted: 3" — the first line of a stage's own
+     pipeline_report.json `details` field, shown under that phase's nodes. */
+  .phase-detail {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 10px;
+    padding-left: 2px;
+  }
+
   /* Results */
   .results { display: none; }
   .results.visible { display: block; }
@@ -377,7 +388,7 @@ function categorizeStage(name) {
   return "Other";
 }
 
-function renderSchematic(stageNames, stageMap) {
+function renderSchematic(stageNames, stageMap, detailMap) {
   const container = document.getElementById("schematic");
   container.innerHTML = "";
 
@@ -410,6 +421,25 @@ function renderSchematic(stageNames, stageMap) {
       nodes.appendChild(node);
     });
     phaseDiv.appendChild(nodes);
+
+    // Evidence caption: whichever stage in this phase carries a
+    // pipeline_report.json `details` string that looks like a batch summary
+    // (e.g. "Attempted: 5, Applied: 2, Failed/reverted: 3") gets its first
+    // line surfaced here, so that number isn't buried in the raw JSON.
+    if (detailMap) {
+      names.forEach(stageName => {
+        const detail = detailMap[stageName];
+        if (!detail) return;
+        const firstLine = detail.split("\n")[0].trim();
+        if (!/Attempted:\s*\d+/i.test(firstLine)) return;
+        const shortLabel = stageName.replace(/\s*complete\s*$/i, "");
+        const detailEl = document.createElement("div");
+        detailEl.className = "phase-detail";
+        detailEl.textContent = `${shortLabel} — ${firstLine}`;
+        phaseDiv.appendChild(detailEl);
+      });
+    }
+
     container.appendChild(phaseDiv);
   });
 }
@@ -467,15 +497,17 @@ async function runApp(appId) {
 
   const stageNames = data.stages.map(s => s.stage);
   const stageMap = {};
-  renderSchematic(stageNames, stageMap);
+  const detailMap = {};
+  data.stages.forEach(s => { if (s.details) detailMap[s.stage] = s.details; });
+  renderSchematic(stageNames, stageMap, detailMap);
 
   for (const s of data.stages) {
     if (requestId !== currentRequestId) return;
     stageMap[s.stage] = "running";
-    renderSchematic(stageNames, stageMap);
+    renderSchematic(stageNames, stageMap, detailMap);
     await new Promise(r => setTimeout(r, 380));
     stageMap[s.stage] = s.success;
-    renderSchematic(stageNames, stageMap);
+    renderSchematic(stageNames, stageMap, detailMap);
     await new Promise(r => setTimeout(r, 180));
   }
 
