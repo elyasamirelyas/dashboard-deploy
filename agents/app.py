@@ -80,10 +80,9 @@ APP_LABELS = {
 # logged must contain both of these strings. This ensures we only show
 # runs that actually made it through the entire pipeline, not ones that
 # crashed or were interrupted midway.
-#
 # Currently the final stage is named "Final full test suite + coverage"
 # so this matches both "final" and "coverage". If the stage name ever
-# changes, we'll need to update these hints.
+# changes, it needs to update these hints.
 TERMINAL_STAGE_HINTS = ("final", "coverage")
 
 # OpenRewrite sometimes outputs a line like "Estimated time saved: 7h 49m"
@@ -97,9 +96,9 @@ TIME_SAVED_RE = re.compile(r"stimate[d]?\s+time\s+saved:\s*((?:\d+h\s*)?\d+m)", 
 # ------------------------------------------------------------------
 
 def _extract_time_saved(stages):
-     # OpenRewrite sometimes logs how much time it estimates it saved.
+    # OpenRewrite sometimes logs how much time it estimates it saved.
     # We look for that in the migration stage details. Not every run has
-    # this, so we just return None if we can't find it rather than guessing.
+    # this, so it just returns None if it can't find it rather than guessing.
     for s in stages or []:
         m = TIME_SAVED_RE.search(s.get("details") or "")
         if m:
@@ -295,4 +294,5 @@ def report_default():
 
 
 if __name__ == "__main__":
-    app.run(debug=False, port=5001, use_reloader=False)
+    port = int(os.environ.get("PORT", 5001))
+    app.run(host="0.0.0.0", port=port, debug=False, use_reloader=False)
