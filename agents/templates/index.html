@@ -8,11 +8,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  /* the color palette used everywhere below - a dark, engineering-drawing
-     kind of look, so all the colors live here as one set of variables
-     instead of being repeated all over the place */
   :root {
     --ink: #0B1E33;
+    --ink-2: #0F2842;
     --cyan: #5FD3E8;
     --mint: #7FE0B4;
     --amber: #F2A65A;
@@ -44,7 +42,7 @@
 
   .wrap { max-width: 920px; margin: 0 auto; }
 
-  /* title block, styled like an engineering drawing's title box */
+  /* Title block, engineering-drawing style */
   .titleblock {
     border: 1px solid var(--slate);
     border-radius: 4px;
@@ -69,11 +67,6 @@
     margin: 0;
     letter-spacing: 0.01em;
   }
-  /* always show the scrollbar, so the page doesn't shift width when the
-     content grows tall enough to need one */
-  html {
-  overflow-y: scroll;
-}
   .titleblock p {
     margin: 6px 0 0;
     color: #9FC0D4;
@@ -98,7 +91,6 @@
     .titleblock .meta { text-align: left; margin-top: 8px; white-space: normal; }
   }
 
-  /* the app picker + status line above the pipeline schematic */
   .engage-row { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 48px; min-height: 20px; }
 
   .app-select-wrap { display: flex; align-items: center; gap: 10px; }
@@ -129,14 +121,18 @@
   }
   .engage-status.live { color: var(--cyan); }
   .engage-status.done { color: var(--mint); }
+  .dot {
+    display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+    background: currentColor; margin-right: 8px; vertical-align: middle;
+  }
+  .live .dot { animation: pulse 1.4s ease-in-out infinite; }
   @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.25; } }
   @keyframes riseIn {
     from { opacity: 0; transform: translateY(6px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* the pipeline schematic - stages grouped into phases, each shown as a
-     little "node" that lights up as it runs and turns green/amber when done */
+  /* Schematic pipeline */
   .schematic { margin-bottom: 48px; }
   .phase { margin-bottom: 28px; }
   .phase-label {
@@ -190,26 +186,7 @@
   .node.failed .mark svg { display: block; }
   .node.failed .mark svg path { stroke: var(--amber); }
 
-
-    /* small readout line under the schematic showing the remediation
-     batch's attempted/applied/reverted counts, once a completed run
-     includes that stage - hidden otherwise */
-  .batch-note {
-    display: none;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.78rem;
-    color: var(--mint);
-    border: 1px solid var(--slate);
-    border-radius: 4px;
-    padding: 10px 14px;
-    margin: -18px 0 32px;
-    background: rgba(127,224,180,0.05);
-  }
-  .batch-note.visible { display: block; }
-
-    
-  /* the results section - stat cards showing before/after numbers,
-     hidden until a run finishes */
+  /* Results */
   .results { display: none; }
   .results.visible { display: block; }
   .results-title {
@@ -235,13 +212,10 @@
     border-color: #3E5A72;
     box-shadow: 0 12px 24px -6px rgba(0,0,0,0.45), 0 1px 0 0 rgba(255,255,255,0.03) inset;
   }
-  /* added once the entrance animation finishes (see the "add" helper in
-     fetchReport below) - this lets go of `animation` so the :hover rule's
-     `transform` can actually take effect. while the entrance animation is
-     still active, its fill-mode:forwards keeps pinning `transform` and
-     silently blocks the hover-lift effect otherwise. the card stays
-     visible either way, since its base rule already starts at opacity: 0
-     and animates up to 1 */
+  /* Applied once the entrance animation finishes (see the "add" helper in
+     fetchReport) — releases `animation` so :hover can control `transform`
+     without the entrance's fill-mode:forwards blocking it, while keeping
+     the card visible (its base rule starts at opacity: 0). */
   .card.settled {
     opacity: 1;
     animation: none;
@@ -288,8 +262,7 @@
     transition: left 0.7s cubic-bezier(.4,0,.2,1);
   }
 
-  /* the ring-shaped gauge used for Line Coverage - see USE_RADIAL_COVERAGE
-     in the script below to switch it back to a plain bar instead */
+  /* Radial gauge variant — used for Line Coverage. See USE_RADIAL_COVERAGE. */
   .card.radial-card { display: flex; align-items: center; gap: 18px; }
   .card.radial-card .label { margin-bottom: 6px; }
   .radial-gauge { flex-shrink: 0; }
@@ -316,7 +289,7 @@
   <div class="titleblock">
     <div>
       <h1>Modernization Control Panel</h1>
-      <p>Multi-agent framework for secure modernization of legacy Java applications: migration, vulnerability remediation, and coverage-driven test generation, coordinated end to end. This view replays verified reference runs across independent target applications.</p>
+      <p>Multi-agent framework for secure modernization of legacy Java applications — migration, vulnerability remediation, and coverage-driven test generation, coordinated end to end. <em>This view replays verified reference runs across independent target applications.</em></p>
     </div>
     <div class="meta">
       Target: <span id="metaTarget">—</span><br>
@@ -336,8 +309,6 @@
 
   <div class="schematic" id="schematic"></div>
 
-  <div class="batch-note" id="batchNote"></div>
-
   <div class="results" id="results">
     <h2 class="results-title">Evaluation Readout</h2>
     <div class="card-grid" id="cardGrid"></div>
@@ -348,13 +319,18 @@
 <footer>MSc Software Development — Dissertation Evaluation Instrument</footer>
 
 <script>
-// flip to false to fall back to the plain linear bar for Line Coverage
-// instead of the ring gauge
+// Set to false to fall back to the plain linear bar for Line Coverage.
 const USE_RADIAL_COVERAGE = true;
 
-// animates the numbers inside a piece of text from whatever they currently
-// are up (or down) to the target text's numbers, counting up smoothly
-// instead of just snapping to the new value. used for every card readout
+// Bumped every time a new app is selected. runApp/fetchReport check this
+// before acting on their own results, so a fast app-switch (or a switch
+// that happens mid-animation) can't have its stale, late-arriving response
+// overwrite what the user is actually looking at now.
+let currentRequestId = 0;
+
+// Counts the numeric parts of a string up/down from `fromText`'s numbers (or
+// 0 if there's nothing to start from) to `toText`'s numbers, in place, on
+// whatever element it's given — used for every card readout.
 function animateText(el, fromText, toText, duration) {
   duration = duration || 700;
   toText = String(toText);
@@ -385,11 +361,10 @@ function animateText(el, fromText, toText, duration) {
 const CHECK_ICON = `<svg viewBox="0 0 10 10" fill="none"><path d="M1.5 5.2 4 7.7 8.5 2.3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 const CROSS_ICON = `<svg viewBox="0 0 10 10" fill="none"><path d="M2 2l6 6M8 2l-6 6" stroke-width="1.6" stroke-linecap="round"/></svg>`;
 
-// stages get grouped into phases by keyword, not by an exact list of stage
-// names - different pipeline runs word the same stage a bit differently
-// (e.g. "Known migration fixes applied" vs "Generic migration fixes applied
-// (pre-OpenRewrite)"), and this still needs to bucket them correctly
-// instead of losing track of them
+// Stages are grouped by keyword, not by an exact per-app name list — different
+// pipeline runs phrase the same stage differently (e.g. "Known migration
+// fixes applied" vs "Generic migration fixes applied (pre-OpenRewrite)"),
+// and this must still bucket them correctly instead of dropping them.
 const PHASE_ORDER = ["Baseline", "Migration", "Vulnerability Remediation", "Test Generation", "Verify", "Other"];
 
 function categorizeStage(name) {
@@ -402,8 +377,6 @@ function categorizeStage(name) {
   return "Other";
 }
 
-// redraws the whole pipeline schematic from scratch, grouped by phase, with
-// each stage's node showing its current state (not started / running / ok / failed)
 function renderSchematic(stageNames, stageMap) {
   const container = document.getElementById("schematic");
   container.innerHTML = "";
@@ -441,28 +414,9 @@ function renderSchematic(stageNames, stageMap) {
   });
 }
 
-// pulls the "Attempted / Applied / Failed-reverted" summary line out of the
-// Remediation batch complete stage's details text, if that stage ran, and
-// shows it as a small readout line under the schematic
-function updateBatchNote(stages) {
-  const el = document.getElementById("batchNote");
-  const batchStage = (stages || []).find(s => s.stage.toLowerCase().includes("remediation batch complete"));
-  const match = batchStage && (batchStage.details || "").match(/Attempted:\s*\d+,\s*Applied:\s*\d+,\s*Failed\/reverted:\s*\d+/i);
-  if (match) {
-    el.textContent = `Remediation batch — ${match[0]}`;
-    el.classList.add("visible");
-  } else {
-    el.textContent = "";
-    el.classList.remove("visible");
-  }
-}
-// draw an empty schematic immediately so the page isn't blank while the
-// app list is still loading, then go fetch the real app list
 renderSchematic([], {});
 initApps();
 
-// loads the dropdown of apps with a clean verified run, then kicks off
-// the first one automatically
 async function initApps() {
   const statusEl = document.getElementById("engageStatus");
   const select = document.getElementById("appSelect");
@@ -493,9 +447,8 @@ async function initApps() {
   runApp(select.value);
 }
 
-// replays one app's pipeline run stage by stage, animating each node
-// through running -> ok/failed before moving to the results cards
 async function runApp(appId) {
+  const requestId = ++currentRequestId;
   const statusEl = document.getElementById("engageStatus");
   const select = document.getElementById("appSelect");
   const metaTarget = document.getElementById("metaTarget");
@@ -507,6 +460,7 @@ async function runApp(appId) {
 
   const res = await fetch(`/status/${appId}`);
   const data = await res.json();
+  if (requestId !== currentRequestId) return;
 
   statusEl.textContent = "Replaying verified pipeline run...";
   statusEl.classList.add("live");
@@ -516,6 +470,7 @@ async function runApp(appId) {
   renderSchematic(stageNames, stageMap);
 
   for (const s of data.stages) {
+    if (requestId !== currentRequestId) return;
     stageMap[s.stage] = "running";
     renderSchematic(stageNames, stageMap);
     await new Promise(r => setTimeout(r, 380));
@@ -524,18 +479,17 @@ async function runApp(appId) {
     await new Promise(r => setTimeout(r, 180));
   }
 
+  if (requestId !== currentRequestId) return;
   statusEl.classList.remove("live");
   statusEl.classList.add("done");
   statusEl.textContent = "Verified run complete — all stages passed.";
-  updateBatchNote(data.stages);
   select.disabled = false;
-  fetchReport(appId);
-  }
+  fetchReport(appId, requestId);
+}
 
-
-// fetches the before/after numbers for one app and builds the result cards
-function fetchReport(appId) {
+function fetchReport(appId, requestId) {
   fetch(`/report/${appId}`).then(r => r.json()).then(data => {
+    if (requestId !== currentRequestId) return;
     if (!data.available) return;
     const grid = document.getElementById("cardGrid");
     grid.innerHTML = "";
@@ -543,8 +497,9 @@ function fetchReport(appId) {
     const add = (card) => {
       card.style.animationDelay = `${i * 70}ms`;
       i++;
-      // release the entrance animation once it's done so :hover's transform
-      // can take over - see the .card.settled comment in the CSS above
+      // The entrance animation pins `transform` at fill-mode forwards, which
+      // otherwise outranks the :hover rule's transform and silently blocks
+      // the hover-lift. Release it once the entrance finishes.
       card.addEventListener("animationend", () => { card.classList.add("settled"); }, { once: true });
       grid.appendChild(card);
     };
@@ -567,8 +522,8 @@ function fetchReport(appId) {
       }));
     }
     if (data.coverage_before && data.coverage_after) {
-      // flip USE_RADIAL_COVERAGE near the top of this script to switch back
-      // to the plain bar card - nothing else needs to change
+      // Flip USE_RADIAL_COVERAGE (declared near the top of this script) to
+      // switch back to the plain bar card — one line, no other changes needed.
       if (USE_RADIAL_COVERAGE) {
         add(makeRadialCard("Line Coverage", data.coverage_before.ratio, data.coverage_after.ratio));
       } else {
@@ -658,8 +613,8 @@ function makeRadialCard(label, beforeRatio, afterRatio) {
   const valueEl = card.querySelector(".radial-gauge-value");
   animateText(valueEl, "0", afterRatio.toFixed(1) + "%");
 
-  // animate the ring after layout so the CSS transition starts from the
-  // full-circle state instead of jumping straight to the target value
+  // Animate the ring after layout so the transition (declared in CSS) fires
+  // from the full-circle start state instead of jumping straight to target.
   const fillCircle = card.querySelector(".fill");
   requestAnimationFrame(() => requestAnimationFrame(() => {
     fillCircle.style.strokeDashoffset = offset;
